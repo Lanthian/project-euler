@@ -10,3 +10,4 @@ A collection of solutions to the Project Euler collection, available at https://
 * [006](006/main.py) - Sum Square Difference
 * [007](007/main.py) - 10001st Prime
 * [008](008/main.py) - Largest Product in a Series
+* [009](009/main.py) - Special Pythagorean Triplet

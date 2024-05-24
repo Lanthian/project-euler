@@ -8,3 +8,5 @@ A collection of solutions to the Project Euler collection, available at https://
 * [004](004/main.py) - Largest Palindrome Product
 * [005](005/main.py) - Smallest Multiple
 * [006](006/main.py) - Sum Square Difference
+* [007](007/main.py) - 10001st Prime
+* [008](008/main.py) - Largest Product in a Series

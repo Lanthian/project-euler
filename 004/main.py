@@ -9,7 +9,7 @@ https://projecteuler.net/problem=4
 __author__ = "Liam Anthian"
 
 # --- Conditions of the problem ---
-RANGE = (100,999)           # inclusive
+RANGE = (100,999)       # inclusive
 
 
 def palindrome(iterable) -> bool:

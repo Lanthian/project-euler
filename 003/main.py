@@ -14,5 +14,5 @@ from primes import prime_factors
 PRODUCT = 600851475143
 
 
-# --- Output ---
+# --- Calculation & Output ---
 print(prime_factors(PRODUCT)[-1]) # 6,857

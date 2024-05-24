@@ -29,8 +29,9 @@ def find_products(factors: list[int], limit: int) -> set[int]:
             cut_off = False
             products.add(v) 
 
+        if cut_off: break
     return products
 
 
-# --- Output ---
+# --- Calculation & Output ---
 print(sum(find_products(FACTORS, LIMIT))) # 233,168

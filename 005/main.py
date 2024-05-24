@@ -13,9 +13,8 @@ __author__ = "Liam Anthian"
 from operator import mul
 from primes import prime_factors
 
-
 # --- Conditions of the problem ---
-RANGE = (1,20)  
+RANGE = (1,20)          # inclusive
 
 
 def operate_list(base: ..., iterable, operator: 'function') -> ...:

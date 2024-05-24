@@ -7,3 +7,4 @@ A collection of solutions to the Project Euler collection, available at https://
 * [003](003/main.py) - Largest Prime Factor
 * [004](004/main.py) - Largest Palindrome Product
 * [005](005/main.py) - Smallest Multiple
+* [006](006/main.py) - Sum Square Difference

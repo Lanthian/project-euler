@@ -8,7 +8,7 @@ https://projecteuler.net/problem=1
 
 __author__ = "Liam Anthian"
 
-# Conditions of the problem
+# --- Conditions of the problem ---
 FACTORS = [3,5]
 LIMIT = 1000
 
@@ -32,5 +32,5 @@ def find_products(factors: list[int], limit: int) -> set[int]:
     return products
 
 
-# Output
+# --- Output ---
 print(sum(find_products(FACTORS, LIMIT))) # 233,168

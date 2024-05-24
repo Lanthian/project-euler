@@ -10,7 +10,7 @@ https://projecteuler.net/problem=2
 
 __author__ = "Liam Anthian"
 
-# Conditions of the problem
+# --- Conditions of the problem ---
 X0 = 1
 X1 = 2
 LIMIT = 4*10**6
@@ -23,6 +23,6 @@ def fibonacci(a1: int, a2: int, limit: int) -> list[int]:
     return [a1] + fibonacci(a2, a1+a2, limit)
 
 
-# Output
+# --- Output ---
 sequence = fibonacci(X0,X1,LIMIT)
 print(sum(filter(lambda x: x%2==0, sequence))) # 4,613,732

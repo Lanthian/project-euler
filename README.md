@@ -12,3 +12,4 @@ A collection of solutions to the Project Euler collection, available at https://
 * [008](008/main.py) - Largest Product in a Series
 * [009](009/main.py) - Special Pythagorean Triplet
 * [010](010/main.py) - Summation of Primes
+* [011](011/main.py) - Largest Product in a Grid

@@ -8,25 +8,11 @@ https://projecteuler.net/problem=10
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from primes import prime_generator
+from primes import prime_sieve
 
 # --- Conditions of the problem ---
 LIMIT = 2 * 10**6
 
 
-# --- Calculation ---
-sum = 0
-for p in prime_generator():
-    if p >= LIMIT: break
-    sum += p
-    print(p)
-
-
-# --- Output ---
-print(sum)
-
-
-# CURRENTLY WAY TOO SLOW
-
-
-
+# --- Calculation & Output ---
+print(sum(prime_sieve(LIMIT))) # 142,913,828,922

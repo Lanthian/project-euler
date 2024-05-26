@@ -2,6 +2,9 @@
 
 __author__ = "Liam Anthian"
 
+# --- Imports ---
+from math import sqrt
+
 
 # First seen in 005 - Smallest Multiple
 def factor(product: int, i: int) -> bool:
@@ -12,8 +15,11 @@ def factor(product: int, i: int) -> bool:
 def prime(num: int, primes: list[int]) -> bool:
     """Checks if an int `num` is prime, according to possible factors in 
     `primes`. Returns a boolean."""
-    for i in primes:
-        if factor(num, i): return False
+    # Break early if past last possible factor of num
+    limit = sqrt(num)
+    for p in primes:
+        if p > limit: return True
+        elif factor(num, p): return False
     return True
 
 # First seen in 003 - Largest Prime Factor
@@ -53,3 +59,19 @@ def prime_factors(product: int) -> list[int]:
         # Check for cut off
         if p > product or product == 0: break
     return factors
+
+# First seen in 010 - Summation of Primes
+def prime_sieve(limit: int) -> list[int]:
+    """Eratosthenes Sieve: Generates all primes up to `limit` (not inclusive) by 
+    filtering out factors as it works up the range of possible primes."""
+    primes = [1]*(limit+1)
+    primes[0] = 0
+    primes[1] = 0
+
+    for i in range(2, limit):
+        # If a prime, remove all greater composites
+        if primes[i]: 
+            for j in range(i**2, limit, i):
+                primes[j] = 0
+
+    return [p*i for i,p in enumerate(primes) if p]

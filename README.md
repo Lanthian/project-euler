@@ -16,3 +16,6 @@ A collection of solutions to the Project Euler collection, available at https://
 * [012](012/main.py) - Highly Divisible Triangular Number
 * [013](013/main.py) - Large Sum
 * [014](014/main.py) - Longest Collatz Sequence
+* [015](015/main.py) - Lattice Paths
+* 016 not done
+* [017](017/main.py) - Number Letter Counts

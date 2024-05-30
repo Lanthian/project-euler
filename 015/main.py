@@ -10,42 +10,64 @@ https://projecteuler.net/problem=15
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from math import factorial
+from math import factorial as fac
+from operator import mul
 
 # --- Conditions of the problem ---
-# DOMAIN = [4,2]
-SQUARE = 20
+DOMAIN = [20,20]
 
 
-# --- Calculation ---
+# First seen in 005 - Smallest Multiple
+def operate_list(base: ..., iterable, operator: 'function') -> ...:
+    """Apply a binary function `operator` between item `base` and elements of 
+    `iterable`."""
+    for i in iterable: base = operator(base, i)
+    return base
+
+
+# --- Testing/Research ---
 # start = [0] * len(DOMAIN)
-
+#
 # def lattice_step(current: list[int], end: list[int]) -> int:
 #     if current == end: return 1
-
+#
 #     count = 0
 #     for i in range(len(current)):
 #         # If at axis end, no further possible steps
 #         if current[i] == end[i]: continue
-
+#
 #         count += lattice_step(current[:i]+[current[i]+1]+current[i+1:], end)
 #     return count
-
+#
 # print(lattice_step(start, DOMAIN))
-# - Stepping through all paths is not feasible with larger domains -
+# # IMPROVEMENT NEEDED: Working through paths is not feasible with large domains 
 
 
-# --- Research ---
+# """
+# num: 1x1, 2x2, 3x3, 4x4, 5x5, 6x6
+# out:   2,   6,  20,  70, 252, 924
+# Central Binomial Coefficients!
+# """
+# SQUARE = 20
+#
+# def central_binom_coef(num: int) -> int:
+#     """Returns the central binomial coefficient of number `num`."""
+#     return fac(2*num) // (fac(num) ** 2)
+#
+# print(central_binom_coef(SQUARE)) # 137,846,528,820
+# # IMPROVEMENT NEEDED: Doesn't work with domains with more or less than 2 axes
+
+
 """
-num: 1, 2,  3,  4,   5,   6
-out: 2, 6, 20, 70, 252, 924
-Central Binomial Coefficients!
+Derived from investigation into binomial coefficients:
+    <binomial coefficient.png>
 """
 
-def central_binom_coef(num: int) -> int:
-    """Returns the central binomial coefficient of number `num`."""
-    return factorial(2*num) // (factorial(num) ** 2)
+def path(axes: list[int]) -> int:
+    """Finds the number of paths through a rectangular prism of any number of 
+    axes, with lengths of axes defined in `axes` list. Returns this count."""
+    return fac(sum(axes))//operate_list(1, [fac(i) for i in axes], mul)
 
 
-# --- Output ---
-print(central_binom_coef(SQUARE)) # 137,846,528,820
+# --- Calculation & Output ---
+print(path(DOMAIN)) # 137,846,528,820

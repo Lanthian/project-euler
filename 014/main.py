@@ -15,10 +15,10 @@ https://projecteuler.net/problem=14
 
 __author__ = "Liam Anthian"
 
-# Imports
+# --- Imports ---
 from primes import factor
 
-# Conditions of the problem
+# --- Conditions of the problem ---
 LIMIT = 1*10**6
 
 
@@ -36,7 +36,7 @@ def collatz_length(num: int, lengths: dict[int: int]) -> int:
     return lengths[num]
 
 
-# Calculation
+# --- Calculation ---
 c_lengths = {1: 1}
 max_length = 1
 max_num = 1
@@ -48,5 +48,5 @@ for i in range(1, LIMIT):
         max_num = i
 
 
-# Output
+# --- Output ---
 print(max_num) # 837,799

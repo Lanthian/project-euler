@@ -32,7 +32,7 @@ def main():
             c = SUM - a - b
             
             if pythag_trip(a,b,c): 
-                print(a*b*c) # 31875000
+                print(a*b*c) # 31,875,000
                 found = True
                 break
         if found: break

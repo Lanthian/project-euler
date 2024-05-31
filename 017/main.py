@@ -47,7 +47,6 @@ def number_to_english(num: int) -> str:
 
     return neg + " and ".join(outs)
 
-    
 def hundred_to_english(num: int) -> str:
     """Converts a number in range (0,1000) to English text. Returns this str."""
     # Conversion dictionaries

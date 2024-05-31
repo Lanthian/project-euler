@@ -8,9 +8,11 @@ https://projecteuler.net/problem=13
 
 __author__ = "Liam Anthian"
 
+# --- Imports ---
+from common.files import easy_open
+
 # --- Conditions of the problem ---
-fp = open("numbers.txt","r")
-NUMBERS = [line.strip() for line in fp.readlines()]
+FILE = "numbers.txt"
 DIGITS = 10
 
 
@@ -40,4 +42,9 @@ def sum_str_nums(nums: list[str]) -> str:
 
 # --- Calculation & Output ---
 def main():
-    print(sum_str_nums(NUMBERS)[:DIGITS])
+    # Read in data
+    fp = easy_open(__file__, FILE, "r")
+    numbers = [line.strip() for line in fp.readlines()]
+    fp.close()
+
+    print(sum_str_nums(numbers)[:DIGITS])

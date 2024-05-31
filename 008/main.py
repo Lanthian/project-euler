@@ -11,10 +11,10 @@ __author__ = "Liam Anthian"
 
 # --- Imports ---
 from operator import mul
+from common.files import easy_open
 
 # --- Conditions of the problem ---
-fp = open("number.txt","r")
-NUMBER = fp.readline()
+FILE = "number.txt"
 DIGITS = 13
 
 
@@ -28,6 +28,11 @@ def operate_list(base: ..., iterable, operator: 'function') -> ...:
 
 # --- Calculation ---
 def main():
+    # Read in data
+    fp = easy_open(__file__, FILE, "r")
+    NUMBER = fp.readline()
+    fp.close()
+
     # Split number up into int sub-sequences of length >= DIGITS. Drop seqs w/ 0.
     subseqs = [[int(c) for c in s] for s in NUMBER.split("0") if len(s) >= DIGITS]
 
@@ -46,4 +51,4 @@ def main():
 
 
     # --- Output ---
-    print(max_prod) # 23514624000
+    print(max_prod) # 23,514,624,000

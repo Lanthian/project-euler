@@ -1,6 +1,7 @@
 # project-euler
 A collection of solutions to the Project Euler collection, available at https://projecteuler.net/archives <br/>
-Run solutions via:   python -m [number]
+Run solutions from `project-euler` directory via:   python -m [number] <br/>
+e.g.   `python -m 008`
 
 ### Current solutions
 * [001](001/main.py) - Multiples of 3 or 5

@@ -27,21 +27,21 @@ def main():
     print(sqr_of_sums-sum_of_sqrs) # 25,164,150
 
 
-    # --- Further explored ---
-    """
-    # https://planetmath.org/squareofsum#:~:text=The%20square%20of%20a%20sum,jaiaj.
-    # sqr_of_sums = sum_of_sqrs + "sum of all double products of summands in twos"
+# --- Further explored ---
+"""
+# https://planetmath.org/squareofsum#:~:text=The%20square%20of%20a%20sum,jaiaj.
+# sqr_of_sums = sum_of_sqrs + "sum of all double products of summands in twos"
 
-    n = RANGE[1]
-    sum_of_sqrs = (n*(n+1)*(2*n+1)//6)
+n = RANGE[1]
+sum_of_sqrs = (n*(n+1)*(2*n+1)//6)
 
-    sum_of_biprods = 0
-    for i in range(RANGE[0],RANGE[1]+1):
-        for j in range(RANGE[0],i):
-            sum_of_biprods += i * j
-    sum_of_biprods *= 2
+sum_of_biprods = 0
+for i in range(RANGE[0],RANGE[1]+1):
+    for j in range(RANGE[0],i):
+        sum_of_biprods += i * j
+sum_of_biprods *= 2
 
-    sqr_of_sums = sum_of_sqrs + sum_of_biprods
+sqr_of_sums = sum_of_sqrs + sum_of_biprods
 
-    print(sum_of_biprods) # 25,164,150
-    """
+print(sum_of_biprods) # 25,164,150
+"""

@@ -12,18 +12,11 @@ __author__ = "Liam Anthian"
 # --- Imports ---
 from operator import mul
 from common.files import easy_open
+from common.iters import operate_list
 
 # --- Conditions of the problem ---
 FILE = "number.txt"
 DIGITS = 13
-
-
-# First seen in 005 - Smallest Multiple
-def operate_list(base: ..., iterable, operator: 'function') -> ...:
-    """Apply a binary function `operator` between item `base` and elements of 
-    `iterable`."""
-    for i in iterable: base = operator(base, i)
-    return base
 
 
 # --- Calculation ---
@@ -33,8 +26,9 @@ def main():
     NUMBER = fp.readline()
     fp.close()
 
-    # Split number up into int sub-sequences of length >= DIGITS. Drop seqs w/ 0.
-    subseqs = [[int(c) for c in s] for s in NUMBER.split("0") if len(s) >= DIGITS]
+    # Split number up into int sub-sequences of length >= DIGITS. Drop seqs w/ 0
+    subseqs = [[int(c) for c in s] for s in NUMBER.split("0") 
+               if len(s) >= DIGITS]
 
     max_prod = 0
     # For each subsequence, multiply terms all sequential slices of length DIGIT
@@ -42,7 +36,7 @@ def main():
         # Initial multiplication of first DIGIT-1 terms
         product = operate_list(1, s[0:DIGITS-1], mul)
 
-        # Step forward along slice: multiply in new term, check, divide out old term
+        # Step forward along slice: multiply in new term, check, divide out old
         for i in range(DIGITS-1, len(s)):
             product *= s[i]
             # Update max discovered if new max

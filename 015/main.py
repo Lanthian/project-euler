@@ -12,17 +12,10 @@ __author__ = "Liam Anthian"
 # --- Imports ---
 from math import factorial as fac
 from operator import mul
+from common.iters import operate_list
 
 # --- Conditions of the problem ---
 DOMAIN = [20,20]
-
-
-# First seen in 005 - Smallest Multiple
-def operate_list(base: ..., iterable, operator: 'function') -> ...:
-    """Apply a binary function `operator` between item `base` and elements of 
-    `iterable`."""
-    for i in iterable: base = operator(base, i)
-    return base
 
 
 # --- Testing/Research ---

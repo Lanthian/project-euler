@@ -10,9 +10,6 @@ https://projecteuler.net/problem=9
 
 __author__ = "Liam Anthian"
 
-# --- Imports ---
-from operator import mul
-
 # --- Conditions of the problem ---
 SUM = 1000
 

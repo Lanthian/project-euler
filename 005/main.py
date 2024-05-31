@@ -11,17 +11,12 @@ __author__ = "Liam Anthian"
 
 # --- Imports ---
 from operator import mul
+from common.iters import operate_list
 from common.primes import prime_factors
 
 # --- Conditions of the problem ---
 RANGE = (1,20)          # inclusive
 
-
-def operate_list(base: ..., iterable, operator: 'function') -> ...:
-    """Apply a binary function `operator` between item `base` and elements of 
-    `iterable`."""
-    for i in iterable: base = operator(base, i)
-    return base
 
 def count_dict(iterable) -> dict[...: int]:
     """Counts the number of occurences of each unique item in an iterable 

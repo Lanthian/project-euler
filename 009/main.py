@@ -23,15 +23,16 @@ def pythag_trip(a: int, b: int, c: int) -> bool:
 
 
 # --- Calculation & Output ---
-# Flag to get out of double loop without using a function / quit()
-found = False
+def main():
+    # Flag to get out of double loop without using a function / quit()
+    found = False
 
-for a in range(1, SUM//3):
-    for b in range(a+1, (SUM-a)//2):
-        c = SUM - a - b
-        
-        if pythag_trip(a,b,c): 
-            print(a*b*c) # 31875000
-            found = True
-            break
-    if found: break
+    for a in range(1, SUM//3):
+        for b in range(a+1, (SUM-a)//2):
+            c = SUM - a - b
+            
+            if pythag_trip(a,b,c): 
+                print(a*b*c) # 31875000
+                found = True
+                break
+        if found: break

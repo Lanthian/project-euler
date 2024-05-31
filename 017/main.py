@@ -98,13 +98,14 @@ def hundred_to_english(num: int) -> str:
 
 
 # --- Calculation ---
-count = 0
-for i in range(1, LIMIT+1):
-    count += len(re.sub(r"[ -]", "", number_to_english(i)))
+def main():
+    count = 0
+    for i in range(1, LIMIT+1):
+        count += len(re.sub(r"[ -]", "", number_to_english(i)))
 
 
-# --- Output ---
-print(count) # 21,124
+    # --- Output ---
+    print(count) # 21,124
 
 
 # --- Further improvements ---

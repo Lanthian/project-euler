@@ -11,7 +11,7 @@ __author__ = "Liam Anthian"
 
 # --- Imports ---
 from operator import mul
-from primes import prime_factors
+from common.primes import prime_factors
 
 # --- Conditions of the problem ---
 RANGE = (1,20)          # inclusive
@@ -34,23 +34,24 @@ def count_dict(iterable) -> dict[...: int]:
 
 
 # --- Calculation ---
-factor_count = {}
+def main():
+    factor_count = {}
 
-# Find the total needed count of each factor
-for i in range(RANGE[-1], RANGE[0]-1, -1):
+    # Find the total needed count of each factor
+    for i in range(RANGE[-1], RANGE[0]-1, -1):
 
-    # Iterate over counted prime factor frequency of number `i`
-    for f,count in count_dict(prime_factors(i)).items():
-        # Track newly seen factor, or update if new greater count needed
-        if f not in factor_count or count>factor_count[f]:
-            factor_count[f] = count
+        # Iterate over counted prime factor frequency of number `i`
+        for f,count in count_dict(prime_factors(i)).items():
+            # Track newly seen factor, or update if new greater count needed
+            if f not in factor_count or count>factor_count[f]:
+                factor_count[f] = count
 
-product = operate_list(1, [k**v for k,v in factor_count.items()], mul)
+    product = operate_list(1, [k**v for k,v in factor_count.items()], mul)
 
-# # Check divisible
-# for i in range(RANGE[0], RANGE[1]+1):
-#     print(f"ans / {i} -> {product/i}")
+    # # Check divisible
+    # for i in range(RANGE[0], RANGE[1]+1):
+    #     print(f"ans / {i} -> {product/i}")
 
 
-# --- Output ---
-print(product) # 232,792,560 
+    # --- Output ---
+    print(product) # 232,792,560 

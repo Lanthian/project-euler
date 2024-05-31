@@ -9,24 +9,26 @@ https://projecteuler.net/problem=7
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from primes import prime_generator
+from common.primes import prime_generator
 
 # --- Conditions of the problem ---
 NUMBER = 10001
 
 
 # --- Output ---
-i = 1
-for p in prime_generator():
-    if i == NUMBER:
-        print(p) # 104,743
-        break
-    i += 1
+def main():
+    i = 1
+    for p in prime_generator():
+        if i == NUMBER:
+            print(p) # 104,743
+            break
+        i += 1
 
 
-# --- Further explored ---
-"""
-# Single line solution supplied @ https://stackoverflow.com/a/54333239
-#   by user lovasoa https://stackoverflow.com/users/3579309/
-print(next(x for i,x in enumerate(prime_generator()) if i+1==NUMBER))
-"""
+    # --- Further explored ---
+    """
+    # Single line solution supplied @ https://stackoverflow.com/a/54333239
+    #   by user lovasoa https://stackoverflow.com/users/3579309/
+    print(next(x for i,x in enumerate(prime_generator()) if i+1==NUMBER))
+    """
+  

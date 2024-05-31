@@ -8,9 +8,6 @@ https://projecteuler.net/problem=13
 
 __author__ = "Liam Anthian"
 
-# --- Imports ---
-from operator import mul
-
 # --- Conditions of the problem ---
 fp = open("numbers.txt","r")
 NUMBERS = [line.strip() for line in fp.readlines()]
@@ -42,4 +39,5 @@ def sum_str_nums(nums: list[str]) -> str:
 
 
 # --- Calculation & Output ---
-print(sum_str_nums(NUMBERS)[:DIGITS])
+def main():
+    print(sum_str_nums(NUMBERS)[:DIGITS])

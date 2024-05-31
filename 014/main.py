@@ -16,7 +16,7 @@ https://projecteuler.net/problem=14
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from primes import factor
+from common.primes import factor
 
 # --- Conditions of the problem ---
 LIMIT = 1*10**6
@@ -37,16 +37,17 @@ def collatz_length(num: int, lengths: dict[int: int]) -> int:
 
 
 # --- Calculation ---
-c_lengths = {1: 1}
-max_length = 1
-max_num = 1
+def main():
+    c_lengths = {1: 1}
+    max_length = 1
+    max_num = 1
 
-for i in range(1, LIMIT):
-    l = collatz_length(i, c_lengths)
-    if l > max_length: 
-        max_length = l
-        max_num = i
+    for i in range(1, LIMIT):
+        l = collatz_length(i, c_lengths)
+        if l > max_length: 
+            max_length = l
+            max_num = i
 
 
-# --- Output ---
-print(max_num) # 837,799
+    # --- Output ---
+    print(max_num) # 837,799

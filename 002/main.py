@@ -24,5 +24,6 @@ def fibonacci(a1: int, a2: int, limit: int) -> list[int]:
 
 
 # --- Calculation & Output ---
-sequence = fibonacci(X0,X1,LIMIT)
-print(sum(filter(lambda x: x%2==0, sequence))) # 4,613,732
+def main():
+    sequence = fibonacci(X0,X1,LIMIT)
+    print(sum(filter(lambda x: x%2==0, sequence))) # 4,613,732

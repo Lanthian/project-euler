@@ -34,4 +34,5 @@ def find_products(factors: list[int], limit: int) -> set[int]:
 
 
 # --- Calculation & Output ---
-print(sum(find_products(FACTORS, LIMIT))) # 233,168
+def main():
+    print(sum(find_products(FACTORS, LIMIT))) # 233,168

@@ -27,22 +27,23 @@ def operate_list(base: ..., iterable, operator: 'function') -> ...:
 
 
 # --- Calculation ---
-# Split number up into int sub-sequences of length >= DIGITS. Drop seqs w/ 0.
-subseqs = [[int(c) for c in s] for s in NUMBER.split("0") if len(s) >= DIGITS]
+def main():
+    # Split number up into int sub-sequences of length >= DIGITS. Drop seqs w/ 0.
+    subseqs = [[int(c) for c in s] for s in NUMBER.split("0") if len(s) >= DIGITS]
 
-max_prod = 0
-# For each subsequence, multiply terms all sequential slices of length DIGIT
-for s in subseqs:
-    # Initial multiplication of first DIGIT-1 terms
-    product = operate_list(1, s[0:DIGITS-1], mul)
+    max_prod = 0
+    # For each subsequence, multiply terms all sequential slices of length DIGIT
+    for s in subseqs:
+        # Initial multiplication of first DIGIT-1 terms
+        product = operate_list(1, s[0:DIGITS-1], mul)
 
-    # Step forward along slice: multiply in new term, check, divide out old term
-    for i in range(DIGITS-1, len(s)):
-        product *= s[i]
-        # Update max discovered if new max
-        if product > max_prod: max_prod = product
-        product //= s[i-DIGITS+1]
+        # Step forward along slice: multiply in new term, check, divide out old term
+        for i in range(DIGITS-1, len(s)):
+            product *= s[i]
+            # Update max discovered if new max
+            if product > max_prod: max_prod = product
+            product //= s[i-DIGITS+1]
 
 
-# --- Output ---
-print(max_prod) # 23514624000
+    # --- Output ---
+    print(max_prod) # 23514624000

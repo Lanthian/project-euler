@@ -12,4 +12,5 @@ NUM = 2 ** (10**3)
 
 
 # --- Calculation & Output ---
-print(sum([int(d) for d in str(NUM)])) # 1,366
+def main():
+    print(sum([int(d) for d in str(NUM)])) # 1,366

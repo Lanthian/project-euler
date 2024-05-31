@@ -22,7 +22,7 @@ __author__ = "Liam Anthian"
 
 # --- Imports ---
 from math import sqrt
-from primes import factor
+from common.primes import factor
 
 # --- Conditions of the problem ---
 DIVISORS = 500
@@ -55,9 +55,10 @@ def factor_count(num: int) -> int:
 
 
 # --- Calculation & Output ---
-for i in triangle_generator():
-    factors = factor_count(i)
-    if factors > DIVISORS: 
-        # print(f"{i}: {factor_count(i)}") 
-        print(i) # 76,576,500
-        break
+def main():
+    for i in triangle_generator():
+        factors = factor_count(i)
+        if factors > DIVISORS: 
+            # print(f"{i}: {factor_count(i)}") 
+            print(i) # 76,576,500
+            break

@@ -25,26 +25,27 @@ def palindrome(iterable) -> bool:
 
 
 # --- Calculation ---
-palindromes = []
-max_j = RANGE[0]
+def main():
+    palindromes = []
+    max_j = RANGE[0]
 
-# Work backwards through range to avoid time spent on lesser palindromes
-for i in range(RANGE[-1], RANGE[0]-1, -1):
-    # If I < greatest seen J, no possibly larger palindromes left
-    if i < max_j: break
+    # Work backwards through range to avoid time spent on lesser palindromes
+    for i in range(RANGE[-1], RANGE[0]-1, -1):
+        # If I < greatest seen J, no possibly larger palindromes left
+        if i < max_j: break
 
-    for j in range(RANGE[-1], RANGE[0]-1, -1):
-        k = i*j
-        
-        # Check if product is a palindrome
-        if palindrome(str(k)): 
-            # Store and update new highest j
-            palindromes.append(k)
-            if j > max_j: max_j = j
+        for j in range(RANGE[-1], RANGE[0]-1, -1):
+            k = i*j
+            
+            # Check if product is a palindrome
+            if palindrome(str(k)): 
+                # Store and update new highest j
+                palindromes.append(k)
+                if j > max_j: max_j = j
 
-            # No greater palindromes possible from this point forth - break
-            break
+                # No greater palindromes possible from this point forth - break
+                break
 
 
-# --- Output ---
-print(max(palindromes)) #906,609
+    # --- Output ---
+    print(max(palindromes)) #906,609

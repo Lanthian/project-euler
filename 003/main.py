@@ -8,11 +8,13 @@ https://projecteuler.net/problem=3
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from primes import prime_factors
+from common.primes import prime_factors
+
 
 # --- Conditions of the problem ---
 PRODUCT = 600851475143
 
 
 # --- Calculation & Output ---
-print(prime_factors(PRODUCT)[-1]) # 6,857
+def main():
+    print(prime_factors(PRODUCT)[-1]) # 6,857

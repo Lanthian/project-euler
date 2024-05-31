@@ -31,31 +31,32 @@ def operate_list(base: ..., iterable, operator: 'function') -> ...:
     
 
 # --- Calculation ---
-max_prod = 0
+def main():
+    max_prod = 0
 
-# Check selection patterns for greatest product
-for r in range(GRID_ROWS):
-    for c in range(GRID_COLS):
-        # Column
-        if (r + SELECT-1) < GRID_ROWS: 
-            selection = [GRID[y][c] for y in range(r, r+SELECT)]
-            max_prod = max(max_prod, operate_list(1, selection, mul))
-        
-        # Row
-        if (c + SELECT-1) < GRID_COLS: 
-            selection = [GRID[r][x] for x in range(c, c+SELECT)]
-            max_prod = max(max_prod, operate_list(1, selection, mul))
+    # Check selection patterns for greatest product
+    for r in range(GRID_ROWS):
+        for c in range(GRID_COLS):
+            # Column
+            if (r + SELECT-1) < GRID_ROWS: 
+                selection = [GRID[y][c] for y in range(r, r+SELECT)]
+                max_prod = max(max_prod, operate_list(1, selection, mul))
+            
+            # Row
+            if (c + SELECT-1) < GRID_COLS: 
+                selection = [GRID[r][x] for x in range(c, c+SELECT)]
+                max_prod = max(max_prod, operate_list(1, selection, mul))
 
-        # Diagonal decreasing
-        if (r + (SELECT-1) < GRID_ROWS) and (c + (SELECT-1) < GRID_COLS):
-            selection = [GRID[r+i][c+i] for i in range(SELECT)]
-            max_prod = max(max_prod, operate_list(1, selection, mul))
+            # Diagonal decreasing
+            if (r + (SELECT-1) < GRID_ROWS) and (c + (SELECT-1) < GRID_COLS):
+                selection = [GRID[r+i][c+i] for i in range(SELECT)]
+                max_prod = max(max_prod, operate_list(1, selection, mul))
 
-        # Diagonal increasing
-        if (r - (SELECT-1) >= 0) and (c + (SELECT-1) < GRID_COLS):
-            selection = [GRID[r-i][c+i] for i in range(SELECT)]
-            max_prod = max(max_prod, operate_list(1, selection, mul))
+            # Diagonal increasing
+            if (r - (SELECT-1) >= 0) and (c + (SELECT-1) < GRID_COLS):
+                selection = [GRID[r-i][c+i] for i in range(SELECT)]
+                max_prod = max(max_prod, operate_list(1, selection, mul))
 
 
-# --- Output ---
-print(max_prod) # 70,600,674
+    # --- Output ---
+    print(max_prod) # 70,600,674

@@ -70,4 +70,5 @@ def path(axes: list[int]) -> int:
 
 
 # --- Calculation & Output ---
-print(path(DOMAIN)) # 137,846,528,820
+def main():
+    print(path(DOMAIN)) # 137,846,528,820

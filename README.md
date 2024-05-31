@@ -1,8 +1,10 @@
 # project-euler
-<p>A collection of solutions to the Project Euler collection, available at https://projecteuler.net/archives <br/>
-Run solutions from `project-euler` directory via:   python -m problems.[number] <br/>
-e.g.   `python -m problems.008`</p>
+<p>A collection of solutions to the Project Euler problem set, available at https://projecteuler.net/archives <br/>
+Run solutions from <code>project-euler</code> directory via:  <code>python -m problems.[number]</code><br/>
+  e.g.  <code>python -m problems.008</code><br/>
+or via the Jupyter Notebook <code>controller.ipynb</code>.</p>
 
+___
 ### Current solutions
 * [001](problems/001/main.py) - Multiples of 3 or 5
 * [002](problems/002/main.py) - Even Fibonacci Numbers

@@ -1,6 +1,6 @@
 ### 2024.05.24
 * Need to move primes.py and other reused code to some shared package(?), imported where needed
-
+  
 <!-- # Prepare backup output file
 """Below code inspired by stackoverflow post by user hetsch:
     Post: https://stackoverflow.com/a/14125914
@@ -12,3 +12,6 @@ if not os.path.exists(directory):
     os.makedirs(directory)
 # Open the file!
 fp = open(os.path.join(directory, file_name), "w") -->
+
+### 2024.05.31
+* Refactoring and reorganising of primes and other repeat code into packages finally done - see `common`

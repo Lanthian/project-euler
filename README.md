@@ -23,3 +23,4 @@ ___
 * [015](problems/015/main.py) - Lattice Paths
 * [016](problems/016/main.py) - Power Digit Sum
 * [017](problems/017/main.py) - Number Letter Counts
+* [018](problems/018/main.py) - Maximum Path Sum I

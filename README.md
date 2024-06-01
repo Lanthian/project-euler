@@ -24,3 +24,5 @@ ___
 * [016](problems/016/main.py) - Power Digit Sum
 * [017](problems/017/main.py) - Number Letter Counts
 * [018](problems/018/main.py) - Maximum Path Sum I
+* [019](problems/019/main.py) - Counting Sundays
+* [020](problems/029/main.py) - Factorial Digit Sum

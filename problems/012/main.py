@@ -21,8 +21,7 @@ https://projecteuler.net/problem=12
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from math import sqrt
-from common.primes import factor
+from common.primes import factors
 
 # --- Conditions of the problem ---
 DIVISORS = 500
@@ -41,24 +40,11 @@ def triangle_generator():
         i += 1
         num += i
 
-def factor_count(num: int) -> int:
-    """Returns the count of divisors in a number `num`. Includes 1 and num."""
-    count = 0
-    for i in range(1, num+1):
-        # Only check up until sqrt(num) to reduce computation
-        if i >= sqrt(num): break
-        if factor(num, i): count += 2
-
-    # Don't forget +1 if number is a square
-    if factor(num, sqrt(num)): count += 1
-    return count
-
 
 # --- Calculation & Output ---
 def main():
     for i in triangle_generator():
-        factors = factor_count(i)
-        if factors > DIVISORS: 
-            # print(f"{i}: {factor_count(i)}") 
+        fs = len(factors(i))
+        if fs > DIVISORS:
             print(i) # 76,576,500
             break

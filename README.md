@@ -25,4 +25,5 @@ ___
 * [017](problems/017/main.py) - Number Letter Counts
 * [018](problems/018/main.py) - Maximum Path Sum I
 * [019](problems/019/main.py) - Counting Sundays
-* [020](problems/029/main.py) - Factorial Digit Sum
+* [020](problems/020/main.py) - Factorial Digit Sum
+* [021](problems/021/main.py) - Amicable Numbers

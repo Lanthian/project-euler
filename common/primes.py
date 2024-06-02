@@ -11,6 +11,19 @@ def factor(product: int, i: int) -> bool:
     """Returns True if `i` is a factor of `product`. False if otherwise."""
     return product % i == 0
 
+# First seen in 012 - Highly Divisible Triangular Number
+def factors(num: int) -> set[int]:
+    """Returns a set of factors of `num`. Includes 1 and num."""
+    fs = set()
+    for i in range(1, num+1):
+        # Only check up until sqrt(num) to reduce computation
+        if i > sqrt(num): break
+        if factor(num, i): 
+            # In case of squareroot, only one instance added (benefit of set)
+            fs.add(i)
+            fs.add(num//i)
+    return fs
+
 # First seen in 003 - Largest Prime Factor
 def prime(num: int, primes: list[int]) -> bool:
     """Checks if an int `num` is prime, according to possible factors in 

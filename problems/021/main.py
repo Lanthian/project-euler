@@ -15,7 +15,7 @@ https://projecteuler.net/problem=21
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from common.primes import factors
+from common.primes import factors, prime_sieve
 
 # --- Conditions of the problem ---
 LIMIT = 10000       # Not inclusive
@@ -31,8 +31,13 @@ def main():
     amicable = set()
     not_amicable = set()
 
+    # Filter out len(primes) numbers
+    primes = set(prime_sieve(LIMIT))
+
     for m in range(2, LIMIT):
-        # Skip calculating numbers already seen
+        # Skip primes - cannot be amicable
+        if m in primes: continue
+        # Skip calculating numbers already labelled
         if m in amicable or m in not_amicable: continue
 
         s = proper_divisor_sum(m)
@@ -41,7 +46,7 @@ def main():
         else:
             next = proper_divisor_sum(s)
             if next == m: amicable.update([m,s])
-            else: not_amicable.update([m,s])
+            else: not_amicable.update([m,s,next])
 
 
     # --- Output ---

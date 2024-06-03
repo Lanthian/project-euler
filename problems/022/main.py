@@ -34,9 +34,11 @@ def main():
     # Read in data
     names = [n.strip('"') for n in 
              easy_open(__file__, FILE, "r").readline().split(DELIM)]
-    # print(names)
-    # print(len(names))
-    print(value_word("COLIN"))
+    
+    # Better sorting here would be ideal
+    names.sort()
+
 
     # --- Output ---
+    print(sum([i*value_word(n) for i,n in enumerate(names, 1)])) # 871,198,282
     return

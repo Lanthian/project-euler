@@ -27,3 +27,4 @@ ___
 * [019](problems/019/main.py) - Counting Sundays
 * [020](problems/020/main.py) - Factorial Digit Sum
 * [021](problems/021/main.py) - Amicable Numbers
+* [022](problems/022/main.py) - Names Scores

@@ -15,15 +15,10 @@ https://projecteuler.net/problem=21
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from common.primes import factors, prime_sieve
+from common.primes import prime_sieve, proper_divisor_sum
 
 # --- Conditions of the problem ---
 LIMIT = 10000       # Not inclusive
-
-
-def proper_divisor_sum(num: int) -> int:
-    """Shorthand function to return the proper divisor sum of a number `num`."""
-    return sum(factors(num).difference([num]))
 
 
 # --- Calculation ---

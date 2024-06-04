@@ -28,3 +28,4 @@ ___
 * [020](problems/020/main.py) - Factorial Digit Sum
 * [021](problems/021/main.py) - Amicable Numbers
 * [022](problems/022/main.py) - Names Scores
+* [023](problems/023/main.py) - Non-Abundant Sums

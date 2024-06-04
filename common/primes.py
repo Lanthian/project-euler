@@ -24,6 +24,11 @@ def factors(num: int) -> set[int]:
             fs.add(num//i)
     return fs
 
+# First seen in 021 - Amicable Numbers
+def proper_divisor_sum(num: int) -> int:
+    """Shorthand function to return the proper divisor sum of a number `num`."""
+    return sum(factors(num).difference([num]))
+
 # First seen in 003 - Largest Prime Factor
 def prime(num: int, primes: list[int]) -> bool:
     """Checks if an int `num` is prime, according to possible factors in 

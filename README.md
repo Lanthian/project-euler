@@ -29,3 +29,5 @@ ___
 * [021](problems/021/main.py) - Amicable Numbers
 * [022](problems/022/main.py) - Names Scores
 * [023](problems/023/main.py) - Non-Abundant Sums
+* [024](problems/024/main.py) - Lexicographic Permutations
+* [025](problems/025/main.py) - 1000-digit Fibonacci Number

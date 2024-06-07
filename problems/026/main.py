@@ -20,8 +20,12 @@ https://projecteuler.net/problem=26
 
 __author__ = "Liam Anthian"
 
+# --- Imports ---
+from re import sub
+
 # --- Conditions of the problem ---
-LIMIT = 1000
+DIVIDEND = 1
+LIMIT = 1000            # Exclusive
 
 
 def long_div(dividend: float, divisor: float, decimals: int) -> str:
@@ -64,10 +68,84 @@ def long_div(dividend: float, divisor: float, decimals: int) -> str:
     if trimmed[-1] == ".": trimmed = trimmed[:-1]   # drop pointless .
     return trimmed
 
+# def sub_reps(seq: str) -> list[str]:
+#     """Finds and returns a sorted list of all repeated sub-patterns in a string 
+#     sequence `seq`."""
+#     subs = set()
+#     for i in range(len(seq)):
+#         for j in range(i+1, len(seq)+1):
+#             if seq[i:j] in seq[j:]: subs.add(seq[i:j])
+#    
+#     out = list(subs)
+#     out.sort()
+#     return out
+
+# def sub_suc_reps(seq: str) -> list[str]:
+#     """Finds and returns a sorted list of all complete (max length) repeated, 
+#     successive sub-patterns within string `sequence`."""
+#     subs = set()
+#
+#     # Across each possible subsequence of the sequence `seq`;
+#     for i in range(len(seq)):
+#         for j in range(i+1, len(seq)+1):
+#
+#             # Check if successive subsequence is equal
+#             if seq[i:j] == seq[j:2*j-i]:
+#                 # And if no sub successive patterns within sequence, add to set
+#                 if len(sub_suc_reps(seq[i:j])) == 0: subs.add(seq[i:j])
+#    
+#     out = list(subs)
+#     out.sort()
+#     return out
+
+def sub_cycle(seq: str) -> str:
+    """Finds and returns the first repeated, successive sub-pattern (cycle) 
+    within string `sequence`. If no cycled pattern found, returns empty string. 
+    
+    Note: pattern is only checked to repeat once, strings such as "aab" will 
+    wrongfully return "a" as a cycle.
+    Would be more accurately named 'sub_successive_rep()'"""
+    subs = set()
+
+    # Across each possible subsequence of the sequence `seq`;
+    for i in range(len(seq)):
+        for j in range(i+1, len(seq)+1):
+
+            # Check if successive subsequence is equal
+            if seq[i:j] == seq[j:2*j-i]:
+                # And if no repeats of cycle within sequence, add to set
+                if len(sub_cycle(seq[i:j])) == 0: return seq[i:j]
+    
+    return ""
+
 
 # --- Calculation ---
 def main():
-    print(1/7)
-    print(long_div(1,7,20))
+    MAX_LENGTH_CHECKED = 100
+
+    max_cycle_divisor = None
+    max_cycle_length = 0
+
+    for i in range(1, LIMIT):
+        # Find decimal places for division by `i`, and then maximum cycle length
+        decimal = sub(r'\d+[.]', '', long_div(DIVIDEND, i, MAX_LENGTH_CHECKED))
+        length = len(sub_cycle(decimal))
+
+        # Update best divisor if new better divisor found
+        if length > max_cycle_length:
+            max_cycle_divisor = i
+            max_cycle_length = length
+            
+
     # --- Output ---
+    print(max_cycle_divisor)
     return
+
+
+# --- Future improvements ---
+"""
+Generate decimal places until a cycle is present (if divisor isn't even), rather 
+than generating a fixed number of decimal places for every division and THEN 
+checking if there is a cycle and of what length. This way, guaranteed to find 
+max cycle length for any limit, rather than having to change max_length_checked.
+"""

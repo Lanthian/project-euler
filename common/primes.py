@@ -24,6 +24,25 @@ def factors(num: int) -> set[int]:
             fs.add(num//i)
     return fs
 
+# First seen in 026 - Reciprocal Cycles
+def ordered_factors(num: int) -> list[int]:
+    """Returns an ordered list of factors of `num`. Includes 1 and num."""
+    front = []
+    back = []
+    root = sqrt(num)
+
+    for i in range(1, num+1):
+        # Only check up until sqrt(num) to reduce computation
+        if i == root: 
+            front.append(i)
+            break
+        elif i > root: break
+
+        if factor(num, i): 
+            front.append(i)
+            back.insert(0, num//i)
+    return front + back
+
 # First seen in 021 - Amicable Numbers
 def proper_divisor_sum(num: int) -> int:
     """Shorthand function to return the proper divisor sum of a number `num`."""

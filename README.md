@@ -31,3 +31,4 @@ ___
 * [023](problems/023/main.py) - Non-Abundant Sums
 * [024](problems/024/main.py) - Lexicographic Permutations
 * [025](problems/025/main.py) - 1000-digit Fibonacci Number
+* [026](problems/026/main.py) - Reciprocal Cycles

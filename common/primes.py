@@ -108,7 +108,7 @@ def prime_sieve(limit: int) -> list[int]:
     for i in range(2, limit):
         # If a prime, remove all greater composites
         if primes[i]: 
-            for j in range(i**2, limit, i):
+            for j in range(i**2, limit+1, i):
                 primes[j] = 0
 
     return [p*i for i,p in enumerate(primes) if p]

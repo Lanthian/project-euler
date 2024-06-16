@@ -101,14 +101,25 @@ def prime_factors(product: int) -> list[int]:
 def prime_sieve(limit: int) -> list[int]:
     """Eratosthenes Sieve: Generates all primes up to `limit` (not inclusive) by 
     filtering out factors as it works up the range of possible primes."""
-    primes = [1]*(limit+1)
-    primes[0] = 0
-    primes[1] = 0
+    # Shorthand functions for converting too and from array indexes to values
+    def to_val(index: int) -> int:
+        return 2*index+3
+    def from_val(val: int) -> int:
+        return (val-3)//2
+    
+    # Unsieved array
+    length = from_val(limit+1)
+    primes = [1]*length
 
-    for i in range(2, limit):
+    for i in range(0, length):
+        # Skip factors that are combinations of smaller primes
+        if primes[i] == 0: continue
+
         # If a prime, remove all greater composites
+        val = to_val(i)
+
         if primes[i]: 
-            for j in range(i**2, limit+1, i):
+            for j in range(from_val(val**2), length, val):
                 primes[j] = 0
 
-    return [p*i for i,p in enumerate(primes) if p]
+    return [2] + [p*to_val(i) for i,p in enumerate(primes) if p]

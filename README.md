@@ -32,5 +32,5 @@ ___
 * [024](problems/024/main.py) - Lexicographic Permutations
 * [025](problems/025/main.py) - 1000-digit Fibonacci Number
 * [026](problems/026/main.py) - Reciprocal Cycles
-* ...
+* [027](problems/027/main.py) - Quadratic Primes
 * [028](problems/028/main.py) - Number Spiral Diagonals

@@ -59,6 +59,12 @@ def prime(num: int, primes: list[int]) -> bool:
         elif factor(num, p): return False
     return True
 
+def is_prime(num: int) -> bool:
+    """Checks if an int `num` is prime. Returns a boolean."""
+    for prime in prime_generator():
+        if prime > num: return False
+        elif prime == num: return True
+
 # First seen in 003 - Largest Prime Factor
 def prime_generator():
     """A generator for prime numbers - uses `prime()` in prime construction."""

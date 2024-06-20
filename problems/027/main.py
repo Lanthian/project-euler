@@ -28,6 +28,9 @@ from common.primes import prime_sieve
 A_RANGE = range(-999,1000)
 B_RANGE = prime_sieve(1001) # b has to be a prime given n = 0 must be a prime
 
+A_LIMIT = -999          # Inclusive
+B_LIMIT = 1000          # Inclusive
+
 
 def int_gen(start: int):
     """A generator for increasing integer numbers - starts at `start` (incls)"""
@@ -38,26 +41,45 @@ def int_gen(start: int):
 
 # --- Calculation ---
 def main():
-    primes = set(prime_sieve(100000))
+    # primes = set(prime_sieve(100000))
+    #
+    # best = (None, None)
+    # best_streak = 0
+    #
+    # for b in B_RANGE:
+    #     for a in range(-abs(b),1000):
+    #         quad = lambda x: x**2 + a*x + b
+    #         streak = 0
+    #
+    #         for x in int_gen(0):
+    #             if quad(x) in primes: streak += 1
+    #             else: break
+    #        
+    #         if streak > best_streak: 
+    #             # print((a,b), streak, ":", b / a)  # temp
+    #             best_streak = streak
+    #             best = (a,b)
 
-    best = (None, None)
-    best_streak = 0
 
-    for b in B_RANGE:
-        for a in range(-abs(b),1000):
-            quad = lambda x: x**2 + a*x + b
-            streak = 0
+    # --- Further explored ---
+    """Through experimentation, noticed a pattern. Exploit it here for faster
+    calculation. Limits set must permit pre calculated a & b."""
+    prod = None
+    a = -1
+    b = 41
+    i = 1
+    # length = 41
 
-            for x in int_gen(0):
-                if quad(x) in primes: streak += 1
-                else: break
-            
-            if streak > best_streak: 
-                # print((a,b), streak, ":", b / a)  # temp
-                best_streak = streak
-                best = (a,b)
+    # Loop through pattern until max prime generation streak found for limits
+    while (a >= A_LIMIT and b <= B_LIMIT): 
+        prod = a * b
+        a -= 2
+        b += 2*i
+        i += 1
+        # length += 1
 
 
     # --- Output ---
-    print(best[0] * best[1]) # -59,231
+    # print(best[0] * best[1]) # -59,231
+    print(prod) # -59,231
     return

@@ -13,6 +13,9 @@ https://projecteuler.net/problem=24
 
 __author__ = "Liam Anthian"
 
+# --- Imports ---
+from math import factorial
+
 # --- Conditions of the problem ---
 PATTERN = "0123456789"
 NUMBER = 10**6
@@ -34,12 +37,44 @@ def permutation_generator(order: str, sep: str=''):
                 yield sep.join([item, i_next])
 
 
+def permutation_selection(order: str, number: int, validity_check: bool=True
+                          ) -> str | None:
+    """Takes a sequence in the form `order` and returns the nth (`number`) 
+    permutation of the sequence. Checks if the selection bounds are valid if 
+    `validity_check` flag is set to true. Leave this flag True by default."""
+    length = len(order)
+
+    if validity_check:
+        # Make sure selected permutation is not less than start
+        if 0 > number-1: return None
+        # Check if selection is greater than number of permutations present
+        elif factorial(length) < number-1: return None
+
+    # Terminating point
+    if length == 1: return order
+
+    # Stepping size of each permutation at this depth in string
+    step = factorial(length-1)
+    
+    for i,k in enumerate(order):
+        # Check if selected permutation is in this slice
+        if step > number-1: 
+            remaining = order[:i]+order[i+1:]
+            return k + permutation_selection(remaining, number)
+        # Otherwise step permutation size `step` closer to selection
+        else: number -= step
+
+    return "ERROR: Incomplete Validation"
+
+
 # --- Calculation & Output ---
 def main():
-    # Loop through all permutations until chosen permutation reached
-    for i,perm in enumerate(permutation_generator(PATTERN), 1):
-        if i != NUMBER: continue
+    # # Loop through all permutations until chosen permutation reached
+    # for i,perm in enumerate(permutation_generator(PATTERN), 1):
+    #     if i != NUMBER: continue
+    #
+    #     # Number reached - output permutation
+    #     print(perm) # 2,783,915,460
+    #     break
 
-        # Number reached - output permutation
-        print(perm) # 2,783,915,460
-        break
+    print(permutation_selection(PATTERN, NUMBER)) # 2,783,915,460

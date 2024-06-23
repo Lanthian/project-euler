@@ -35,3 +35,5 @@ ___
 * [027](problems/027/main.py) - Quadratic Primes
 * [028](problems/028/main.py) - Number Spiral Diagonals
 * [029](problems/029/main.py) - Distinct Powers
+* [030](problems/030/main.py) - Digit Fifth Powers
+* [031](problems/031/main.py) - Coin Sums

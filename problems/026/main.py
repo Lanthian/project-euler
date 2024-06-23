@@ -169,7 +169,10 @@ def main():
     max_cycle_divisor = None
     max_cycle_length = 0
 
-    for i in range(2, LIMIT):
+    for i in range(LIMIT-1, 1, -1):
+        # Max repetend length of i <= i-1; use this to break early
+        if i-1 < max_cycle_length: break
+
         # Divisors with factors of just 2 or 5 have no repetend.
         if len(set(prime_factors(i)).difference({2,5})) == 0: continue
 

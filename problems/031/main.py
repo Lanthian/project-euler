@@ -68,9 +68,31 @@ def simpler_sum_to(curr: int, goal: int, options: list[int]) -> int:
                 result += simpler_sum_to(next_val, goal, options[i:])
         
         return result
+    
+
+# # Failed attempt to shorthand solution
+# def dict_sum_to(goal: int, options: list[int]) -> int:
+#     paths = {0:1}
+#
+#     for i in range(1, goal+1):
+#         paths[i] = 0
+#
+#         for d in options:
+#             if d > i: break
+#             else: 
+#                 if (i-d) % d == 0: paths[i] += paths[i-d]
+#
+#     return paths[goal]
 
 
 # --- Calculation & Output ---
 def main():
-    print((simpler_sum_to(0,GOAL,DENOMS))) # 73,682
+    # print(len(sum_to(0,GOAL,DENOMS))) # 73,682
+    # print(simpler_sum_to(0,GOAL,DENOMS)) # 73,682
+
+    # for i in range(1, 21):
+    #     print(i, ":", dict_sum_to(i, DENOMS), "->", simpler_sum_to(0,i,DENOMS))
+
+    print(simpler_sum_to(0,GOAL,DENOMS)) # 73,682
+
     return

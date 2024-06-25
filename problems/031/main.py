@@ -85,14 +85,51 @@ def simpler_sum_to(curr: int, goal: int, options: list[int]) -> int:
 #     return paths[goal]
 
 
+# def sum3_to(goal: int, options: list[int]) -> int:
+#     # Terminating conditions
+#     if goal == 0: return 1
+#     elif len(options) == 0: return 1
+
+
 # --- Calculation & Output ---
 def main():
     # print(len(sum_to(0,GOAL,DENOMS))) # 73,682
     # print(simpler_sum_to(0,GOAL,DENOMS)) # 73,682
 
-    # for i in range(1, 21):
-    #     print(i, ":", dict_sum_to(i, DENOMS), "->", simpler_sum_to(0,i,DENOMS))
-
-    print(simpler_sum_to(0,GOAL,DENOMS)) # 73,682
+    print(DENOMS)
+    for i in range(1, 21):
+        # print(i, ":", dict_sum_to(i, DENOMS), "->", simpler_sum_to(0,i,DENOMS))
+        print(i, ":->", [simpler_sum_to(0,i,DENOMS[:d]) for d in range(1, len(DENOMS))])
 
     return
+
+
+# 10(17) = 5(7) + 5(17)
+#        = 2(2) + 2(7) + 2(2) + 2(17)
+#        = 1(0) + 1(2) + 1(1) + 1(7) + 1(0) + 1(2) + 1(1) + 1(17)
+
+
+"""
+[1, 2, 5, 10, 20, 50, 100, 200]
+1 :-> [1, 1, 1, 1, 1, 1, 1]
+2 :-> [1, 2, 2, 2, 2, 2, 2]
+3 :-> [1, 2, 2, 2, 2, 2, 2]
+4 :-> [1, 3, 3, 3, 3, 3, 3]
+5 :-> [1, 3, 4, 4, 4, 4, 4]
+6 :-> [1, 4, 5, 5, 5, 5, 5]
+7 :-> [1, 4, 6, 6, 6, 6, 6]
+8 :-> [1, 5, 7, 7, 7, 7, 7]
+9 :-> [1, 5, 8, 8, 8, 8, 8]
+10 :-> [1, 6, 10, 11, 11, 11, 11]
+11 :-> [1, 6, 11, 12, 12, 12, 12]
+12 :-> [1, 7, 13, 15, 15, 15, 15]
+13 :-> [1, 7, 14, 16, 16, 16, 16]
+14 :-> [1, 8, 16, 19, 19, 19, 19]
+15 :-> [1, 8, 18, 22, 22, 22, 22]
+16 :-> [1, 9, 20, 25, 25, 25, 25]
+17 :-> [1, 9, 22, 28, 28, 28, 28]
+18 :-> [1, 10, 24, 31, 31, 31, 31]
+19 :-> [1, 10, 26, 34, 34, 34, 34]
+20 :-> [1, 11, 29, 40, 41, 41, 41]
+
+"""

@@ -47,7 +47,6 @@ def sum_to(curr: int, goal: int, options: list[int]) -> list[list[int]] | bool:
     if len(result) == 0: return False
     else: return result
 
-
 def simpler_sum_to(curr: int, goal: int, options: list[int]) -> int:
     """Takes a current integer value `curr`, a `goal` integer value, and a list
     of possible addends `options` which can be permutated to reach this goal.
@@ -68,7 +67,6 @@ def simpler_sum_to(curr: int, goal: int, options: list[int]) -> int:
                 result += simpler_sum_to(next_val, goal, options[i:])
         
         return result
-    
 
 # # Failed attempt to shorthand solution
 # def dict_sum_to(goal: int, options: list[int]) -> int:
@@ -84,32 +82,48 @@ def simpler_sum_to(curr: int, goal: int, options: list[int]) -> int:
 #
 #     return paths[goal]
 
+def sum_from(goal: int, options: list[int]) -> int:
+    """Via recursion, returns an integer of the number of possible path 
+    permutations to a `goal` integer value, built from combinations of possible 
+    addends listed in `options`."""
+    # Terminating conditions
+    if goal == 0: return 1
+    elif len(options) <= 1: return 1
 
-# def sum3_to(goal: int, options: list[int]) -> int:
-#     # Terminating conditions
-#     if goal == 0: return 1
-#     elif len(options) == 0: return 1
+    # Recursive steps
+    output = 0 if options[-1] > goal else sum_from(goal - options[-1], options)
+    return output + sum_from(goal, options[:-1])
 
 
 # --- Calculation & Output ---
 def main():
     # print(len(sum_to(0,GOAL,DENOMS))) # 73,682
     # print(simpler_sum_to(0,GOAL,DENOMS)) # 73,682
-
-    print(DENOMS)
-    for i in range(1, 21):
-        # print(i, ":", dict_sum_to(i, DENOMS), "->", simpler_sum_to(0,i,DENOMS))
-        print(i, ":->", [simpler_sum_to(0,i,DENOMS[:d]) for d in range(1, len(DENOMS))])
-
+    print(sum_from(GOAL,DENOMS)) # 73,682
     return
 
 
-# 10(17) = 5(7) + 5(17)
-#        = 2(2) + 2(7) + 2(2) + 2(17)
-#        = 1(0) + 1(2) + 1(1) + 1(7) + 1(0) + 1(2) + 1(1) + 1(17)
+# # x(0) = 1, 1(x) = 1
 
+# 10(17) = 10(7)  5(17)
+#        = 0  5(7),  5(12)  2(17)
+#        = 0,  5(2)  2(7),  5(7)  2(12),  2(15)  1(17)
+#        = 0,  0  2(2),  2(5)  1(7),  5(2)  2(7),  2(10)  1(12),  2(13)  1(15),  1
+#        = 0,  0,  2(0)  1(2),  2(3)  1(5),  1,  0  2(2),  2(5)  1(7),  2(8)  1(10),  1,  2(11)  1(13),  1,  1
+#        = 0,  0,  1,  1,  2(1)  1(3),  1,  1,  0,  2(0)  1(2),  2(3)  1(5),  1,  2(6)  1(8),  1,  1,  2(9)  1(11),  1,  1
+#        = 0,  0,  1,  1,  0  1(1),  1,  1,  1,  0,  1,  1,  2(1)  1(3),  1,  1,  2(4)  1(6),  1,  1,  1,  2(7)  1(9),  1,  1,  1
+#        = 0,  0,  1,  1,  0  1,  1,  1,  1,  0,  1,  1,  0  1(1),  1,  1,  1,  2(2)  1(4),  1,  1,  1,  1,  2(5)  1(7),  1,  1,  1,  1
+#        = 0,  0,  1,  1,  0  1,  1,  1,  1,  0,  1,  1,  0,  1,  1,  1,  1,  2(0)  1(2),  1,  1,  1,  1,  1,  2(3)  1(5),  1,  1,  1,  1,  1
+#        = 0,  0,  1,  1,  0  1,  1,  1,  1,  0,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  2(1)  1(3),  1,  1,  1,  1,  1,  1
+#        = 0,  0,  1,  1,  0  1,  1,  1,  1,  0,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0  1(1),  1,  1,  1,  1,  1,  1,  1
+#        = 0,  0,  1,  1,  0  1,  1,  1,  1,  0,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0  1,  1,  1,  1,  1,  1,  1,  1
+#        = 28
 
 """
+print(DENOMS)
+for i in range(1, 21):
+    print(i, ":->", [simpler_sum_to(0,i,DENOMS[:d]) for d in range(1, len(DENOMS))])
+
 [1, 2, 5, 10, 20, 50, 100, 200]
 1 :-> [1, 1, 1, 1, 1, 1, 1]
 2 :-> [1, 2, 2, 2, 2, 2, 2]
@@ -131,5 +145,4 @@ def main():
 18 :-> [1, 10, 24, 31, 31, 31, 31]
 19 :-> [1, 10, 26, 34, 34, 34, 34]
 20 :-> [1, 11, 29, 40, 41, 41, 41]
-
 """

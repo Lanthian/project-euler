@@ -15,24 +15,26 @@ https://projecteuler.net/problem=30
 
 __author__ = "Liam Anthian"
 
-# --- Imports ---
-from operator import add, pow
-from common.iters import operate_list
-
 # --- Conditions of the problem ---
 POWER = 5
-CAP = 9**POWER*POWER+1  # Exclusive
+
+
+def find_cap(power: int) -> int:
+    x = 0
+    digit_cost = 9**POWER
+    while(digit_cost * x >= 10**x - 1): x+=1
+    return(digit_cost * x)
 
 
 # --- Calculation ---
 def main():
     total = 0
 
-    for num in range(10,CAP):
+    for num in range(10,find_cap(POWER)):
         if num == sum([int(n)**POWER for n in str(num)]):
             total += num
 
 
     # --- Output ---
-    print(total)
+    print(total) # 443,839
     return

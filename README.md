@@ -37,3 +37,4 @@ ___
 * [029](problems/029/main.py) - Distinct Powers
 * [030](problems/030/main.py) - Digit Fifth Powers
 * [031](problems/031/main.py) - Coin Sums
+* [032](problems/032/main.py) - Pandigital Products

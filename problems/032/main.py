@@ -37,54 +37,52 @@ def pandigital(seq: str, n: int, start: int=1) -> bool:
     
     return True
 
-
-def singular(seq: str, whitelist: set=set(range(1,DIGITS))) -> bool:
+def singular(seq: str, whitelist: set=set()) -> bool:
     """Returns a boolean regarding if a string sequence `seq` has duplicate 
-    characters in it - true if so, false otherwise. Whitelisted characters in 
-    `whitelist` may validly appear multiple times."""
-    filtered = [a for a in seq if a in whitelist]
+    characters in it - true if so, false otherwise. All characters not
+    whitelisted in `whitelist` may validly appear multiple times. Whitelist
+    ignored by default."""
+    if len(whitelist) == 0: filtered = seq
+    else: filtered = [a for a in seq if a in whitelist]
     return list(dict.fromkeys(filtered)) == filtered
 
 
 # --- Calculation ---
 def main():
     pan_list = set()
-
+    whitelist = set(range(1,DIGITS+1))
 
     # Select multiplicand up the highest possible option
-    for a in range(2, 10**((DIGITS-1)//2)):
+    max_a = 10**((DIGITS-1)//2)
+    for a in range(2, max_a):
         a_s = str(a)
         # Drop zeros
         if "0" in a_s: continue
-
         # Trim duplicate digits
-        if not singular(a_s): continue
+        elif not singular(a_s, whitelist): continue
 
         # Select multiplier up to the highest possible option
-        for b in range(2, 10**((DIGITS-len(a_s)-1))):
+        max_b = 10**((DIGITS-1)//2 - len(a_s) + 1)
+        for b in range(2, max_b):
             b_s = str(b)
             # Drop zeros
             if "0" in b_s: continue
-
             # Trim duplicate digits
-            flag = False
-            if not singular(a_s+b_s): continue
+            elif not singular(a_s+b_s, whitelist): continue
 
+            # Logic regarding product calculation
             prod = a * b
             prod_s = str(prod)
             # Drop zeros
             if "0" in prod_s: continue
+            # Trim too large products
+            elif len(prod_s) != len(a_s) + len(b_s) - 1: continue
 
-            if pandigital(a_s+b_s+prod_s, DIGITS):
-                print(a, "*", b, "=", prod)
-                # if flag: print(a_s+" * "+b_s+" = "+prod_s)
+            # Check and store pandigitals
+            elif pandigital(a_s+b_s+prod_s, DIGITS):
+                # print(a, "*", b, "=", prod)
                 pan_list.add(prod)
 
-    # print(pandigital("953916872948", DIGITS))
-        
-    
-
-    # print(pandigital("15234", 5))
 
     # --- Output ---
     print(sum(pan_list)) # 45,228

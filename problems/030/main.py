@@ -21,17 +21,15 @@ from common.iters import operate_list
 
 # --- Conditions of the problem ---
 POWER = 5
-CAP = 999999              # Exclusive
+CAP = 9**POWER*POWER+1  # Exclusive
 
 
 # --- Calculation ---
 def main():
     total = 0
-    func = lambda x: x**POWER
 
     for num in range(10,CAP):
         if num == sum([int(n)**POWER for n in str(num)]):
-            print(num)
             total += num
 
 

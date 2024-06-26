@@ -21,7 +21,7 @@ POWER = 5
 
 def find_cap(power: int) -> int:
     x = 0
-    digit_cost = 9**POWER
+    digit_cost = 9**power
     while(digit_cost * x >= 10**x - 1): x+=1
     return(digit_cost * x)
 

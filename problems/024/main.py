@@ -21,22 +21,6 @@ PATTERN = "0123456789"
 NUMBER = 10**6
 
 
-def permutation_generator(order: str, sep: str=''):
-    """A generator for permutations of characters in the string `order`. Joins 
-    characters together with `sep` connector."""
-    # Loop through each possible head of permutation level
-    for i,item in enumerate(order):
-        rest = order[:i] + order[i+1:]
-
-        # Base case (last item in iterable)
-        if len(rest) == 0: yield item
-        
-        # Otherwise recursively attach on next set of permutations
-        else: 
-            for i_next in permutation_generator(rest, sep):
-                yield sep.join([item, i_next])
-
-
 def permutation_selection(order: str, number: int, validity_check: bool=True
                           ) -> str | None:
     """Takes a sequence in the form `order` and returns the nth (`number`) 
@@ -69,12 +53,4 @@ def permutation_selection(order: str, number: int, validity_check: bool=True
 
 # --- Calculation & Output ---
 def main():
-    # # Loop through all permutations until chosen permutation reached
-    # for i,perm in enumerate(permutation_generator(PATTERN), 1):
-    #     if i != NUMBER: continue
-    #
-    #     # Number reached - output permutation
-    #     print(perm) # 2,783,915,460
-    #     break
-
     print(permutation_selection(PATTERN, NUMBER)) # 2,783,915,460

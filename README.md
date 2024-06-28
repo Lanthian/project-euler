@@ -39,3 +39,4 @@ ___
 * [031](problems/031/main.py) - Coin Sums
 * [032](problems/032/main.py) - Pandigital Products
 * [033](problems/033/main.py) - Digit Cancelling Fractions
+* [034](problems/034/main.py) - Digit Factorials

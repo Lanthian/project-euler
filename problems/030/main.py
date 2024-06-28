@@ -15,22 +15,18 @@ https://projecteuler.net/problem=30
 
 __author__ = "Liam Anthian"
 
+# --- Imports ---
+from common.iters import find_cap
+
 # --- Conditions of the problem ---
 POWER = 5
-
-
-def find_cap(power: int) -> int:
-    x = 0
-    digit_cost = 9**power
-    while(digit_cost * x >= 10**x - 1): x+=1
-    return(digit_cost * x)
 
 
 # --- Calculation ---
 def main():
     total = 0
 
-    for num in range(10,find_cap(POWER)):
+    for num in range(10,find_cap(9**POWER)):
         if num == sum([int(n)**POWER for n in str(num)]):
             total += num
 

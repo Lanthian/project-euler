@@ -8,20 +8,11 @@ https://projecteuler.net/problem=4
 
 __author__ = "Liam Anthian"
 
+# --- Imports ---
+from common.iters import palindrome
+
 # --- Conditions of the problem ---
 RANGE = (100,999)       # inclusive
-
-
-def palindrome(iterable) -> bool:
-    """Returns a boolean for if an iterable `iterable` is palindromic or not. 
-    Works on strings, arrays, tuples - any discrete iterables."""
-    # Compare front to back
-    for i in range(len(iterable)//2):
-        if iterable[i] == iterable[-(i+1)]: continue
-        
-        # If not palindromic, return false
-        else: return False
-    return True
 
 
 # --- Calculation ---

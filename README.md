@@ -41,3 +41,4 @@ ___
 * [033](problems/033/main.py) - Digit Cancelling Fractions
 * [034](problems/034/main.py) - Digit Factorials
 * [035](problems/035/main.py) - Circular Primes
+* [036](problems/036/main.py) - Double-base Palindromes

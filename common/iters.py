@@ -3,6 +3,18 @@
 __author__ = "Liam Anthian"
 
 
+# First seen in 004 - Largest Palindrome Product
+def palindrome(iterable) -> bool:
+    """Returns a boolean for if an iterable `iterable` is palindromic or not. 
+    Works on strings, arrays, tuples - any discrete iterables."""
+    # Compare front to back
+    for i in range(len(iterable)//2):
+        if iterable[i] == iterable[-(i+1)]: continue
+        
+        # If not palindromic, return false
+        else: return False
+    return True
+
 # First seen in 005 - Smallest Multiple
 def operate_list(base: ..., iterable, operator: 'function') -> ...:
     """Apply a binary function `operator` between item `base` and elements of 

@@ -14,28 +14,12 @@ https://projecteuler.net/problem=32
 
 __author__ = "Liam Anthian"
 
+# --- Imports ---
+from common.nums import pandigital
+
 # --- Conditions of the problem ---
 DIGITS = 9
 
-
-def pandigital(seq: str, n: int, start: int=1) -> bool:
-    """Returns if a string sequence `seq` is n-pandigital or not as a boolean. 
-    Pandigital if digits `start` through to `n` inclusive are present once and 
-    only once in `seq`."""
-    seen = {}
-
-    # Count characters in sequence
-    for d in seq:
-        if d not in seen: seen[d] = 0
-        seen[d] += 1
-
-    # Check digit frequency
-    for x in range(start, n+1):
-        c = str(x)
-        if c not in seen: return False
-        elif seen[c] != 1: return False
-    
-    return True
 
 def singular(seq: str, whitelist: set=set()) -> bool:
     """Returns a boolean regarding if a string sequence `seq` has duplicate 

@@ -16,7 +16,7 @@ https://projecteuler.net/problem=30
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from common.iters import find_cap
+from common.nums import find_cap
 
 # --- Conditions of the problem ---
 POWER = 5

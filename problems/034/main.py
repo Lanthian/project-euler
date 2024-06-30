@@ -11,7 +11,7 @@ __author__ = "Liam Anthian"
 
 # --- Imports ---
 from math import factorial
-from common.iters import find_cap
+from common.nums import find_cap
 
 
 # --- Calculation ---

@@ -23,6 +23,7 @@ __author__ = "Liam Anthian"
 
 # --- Imports ---
 from common.primes import prime_sieve
+from common.nums import int_gen
 
 # --- Conditions of the problem ---
 A_RANGE = range(-999,1000)
@@ -30,13 +31,6 @@ B_RANGE = prime_sieve(1001) # b has to be a prime given n = 0 must be a prime
 
 A_LIMIT = -999          # Inclusive
 B_LIMIT = 1000          # Inclusive
-
-
-def int_gen(start: int):
-    """A generator for increasing integer numbers - starts at `start` (incls)"""
-    while(True):
-        yield start
-        start += 1
 
 
 # --- Calculation ---

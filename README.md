@@ -44,3 +44,6 @@ ___
 * [036](problems/036/main.py) - Double-base Palindromes
 * [037](problems/037/main.py) - Truncatable Primes
 * [038](problems/038/main.py) - Pandigital Multiples
+* [039](problems/039/main.py) - Integer Right Triangles
+* [040](problems/040/main.py) - Champernowne's Constant
+* [041](problems/041/main.py) - Pandigital Prime

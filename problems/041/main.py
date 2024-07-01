@@ -20,7 +20,7 @@ MAX_DIGITS = 9
 # --- Calculation & Output ---
 def main():
     # Generate list of primes - bit of a slow implementation...
-    primes = prime_sieve(10**(MAX_DIGITS-1))
+    primes = prime_sieve(7654321)
 
     # Working backwards, first pandigital number is what we're looking for
     for i in reversed(primes):
@@ -28,4 +28,10 @@ def main():
         if pandigital(i_s, len(i_s)): 
             print(i) # 7,652,413
             break
-    return
+    
+
+# --- Further Research ---
+"""User 'gamma' notes on the projecteuler thread that 9 & 8 aren't possible,
+since 1+2+...+9=45 and 1+2+...+8=36, both always divisible by 3. We can 
+start with a lower ceiling in turn, instead using 7654321 and searching 
+backwards from there."""

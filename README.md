@@ -47,3 +47,4 @@ ___
 * [039](problems/039/main.py) - Integer Right Triangles
 * [040](problems/040/main.py) - Champernowne's Constant
 * [041](problems/041/main.py) - Pandigital Prime
+* [042](problems/042/main.py) - Coded Triangle Numbers

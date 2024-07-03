@@ -21,24 +21,11 @@ https://projecteuler.net/problem=12
 __author__ = "Liam Anthian"
 
 # --- Imports ---
+from common.nums import triangle_generator
 from common.primes import factors
 
 # --- Conditions of the problem ---
 DIVISORS = 500
-
-
-def triangle(num: int) -> int:
-    """Returns the `num`th triangle number."""
-    return (num * (num+1)) // 2
-
-def triangle_generator():
-    """A generator for triangle numbers."""
-    num = 1
-    i = 1
-    while(True):
-        yield num
-        i += 1
-        num += i
 
 
 # --- Calculation & Output ---

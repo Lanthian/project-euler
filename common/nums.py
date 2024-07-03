@@ -3,6 +3,28 @@
 __author__ = "Liam Anthian"
 
 
+# First seen in 012 - Highly Divisible Triangular Number
+def triangle(num: int) -> int:
+    """Returns the `num`th triangle number."""
+    return (num * (num+1)) // 2
+
+# First seen in 012 - Highly Divisible Triangular Number
+def triangle_generator():
+    """A generator for triangle numbers."""
+    num = 1
+    i = 1
+    while(True):
+        yield num
+        i += 1
+        num += i
+
+# First seen in 022 - Names Scores
+def value_word(word, zero=ord('A')-1) -> int:
+    """Takes in any character iterable `word` and returns the sum of all it's 
+    characters, treating `zero` as the base for 0 in character conversion.
+    Takes '@' (A-1) as 0 by default."""
+    return sum([ord(letter)-zero for letter in word])
+
 # First seen in 027 - Quadratic Primes
 def int_gen(start: int):
     """A generator for increasing integer numbers - starts at `start` (incls)"""

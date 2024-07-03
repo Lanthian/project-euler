@@ -16,18 +16,12 @@ __author__ = "Liam Anthian"
 
 # --- Imports ---
 from common.files import easy_open
+from common.nums import value_word
 
 # --- Conditions of the problem ---
 FILE = "0022_names.txt"
 DELIM = ","
 
-
-def value_word(word, zero=ord('A')-1) -> int:
-    """Takes in any character iterable `word` and returns the sum of all it's 
-    characters, treating `zero` as the base for 0 in character conversion.
-    Takes '@' (A-1) as 0 by default."""
-    return sum([ord(letter)-zero for letter in word])
-    
 
 # --- Calculation ---
 def main():

@@ -19,7 +19,7 @@ https://projecteuler.net/problem=43
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from common.iters import permutation_generator
+from common.iters import permutation_generator, ruled_perm_gen
 from common.nums import pandigital
 from common.primes import factor
 
@@ -41,11 +41,29 @@ def property(seq: str, valid: bool=True) -> bool:
 
 # --- Calculation ---
 def main():
-    total = 0
-    for p in permutation_generator("0123456789"):
-        if property(p): total += int(p)
+    # total = 0
+    # for p in permutation_generator("0123456789"):
+    #     if property(p): total += int(p)
 
 
-    # --- Output ---
-    print(total) # 16,695,334,890
+    # # --- Output ---
+    # print(total) # 16,695,334,890
+
+
+    # --- Further Exploration ---
+    """Checking if permutations follow the rules as they are generated can
+    massively cut the searched space down - failing invalid root combinations
+    early. New permutation code will need to be written for this."""
+    rules = {
+        # length : list[rules applicable up to (including) this length]
+        4: [lambda x: factor(int(x[4-3:4]),2)],
+        5: [lambda x: factor(int(x[5-3:5]),3)],
+        6: [lambda x: factor(int(x[6-3:6]),5)],
+        7: [lambda x: factor(int(x[7-3:7]),7)],
+        8: [lambda x: factor(int(x[8-3:8]),11)],
+        9: [lambda x: factor(int(x[9-3:9]),13)],
+        10: [lambda x: factor(int(x[10-3:10]),17)]
+    }
+    print(sum([int(p) for p in ruled_perm_gen("0123456789",rules)])) 
+        # 16,695,334,890
     return

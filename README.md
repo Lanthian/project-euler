@@ -1,8 +1,9 @@
 # project-euler
 <p>A collection of solutions to the Project Euler problem set, available at https://projecteuler.net/archives <br/>
+  It is <b>strongly advised</b> that you attempt the problems before viewing the below solutions if you are interested.<br/>
 Run solutions from <code>project-euler</code> directory via:  <code>python -m problems.[number]</code><br/>
   e.g.  <code>python -m problems.008</code><br/>
-or via the Jupyter Notebook <code>controller.ipynb</code>.</p>
+or via the Jupyter Notebook <code>controller.ipynb</code>. </p>
 
 ___
 ### Current solutions

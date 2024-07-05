@@ -19,43 +19,17 @@ https://projecteuler.net/problem=43
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from common.iters import permutation_generator, ruled_perm_gen
-from common.nums import pandigital
+from common.iters import ruled_perm_gen
 from common.primes import factor
 
-# --- Conditions of the problem ---
-def property(seq: str, valid: bool=True) -> bool:
-    """Checks if a 0-9 pandigital number `seq` obeys the property rules laid out
-    in projecteuler problem 43. Returns true if so, false if not."""
-    # Quick pandigital check if not guaranteed valid
-    if not valid:
-        if not pandigital(seq, 9, True, 0): return False
 
-    # Divisibility rules to check
-    factors = [2,3,5,7,11,13,17]
-    for i in range(0,len(factors)):
-        # If any rules fail, break out early
-        if not factor(int(seq[1+i:4+i]), factors[i]): return False
-    else: return True
-
-
-# --- Calculation ---
+# --- Calculation  & Output ---
 def main():
-    # total = 0
-    # for p in permutation_generator("0123456789"):
-    #     if property(p): total += int(p)
-
-
-    # # --- Output ---
-    # print(total) # 16,695,334,890
-
-
-    # --- Further Exploration ---
     """Checking if permutations follow the rules as they are generated can
     massively cut the searched space down - failing invalid root combinations
     early. New permutation code will need to be written for this."""
     rules = {
-        # length : list[rules applicable up to (including) this length]
+        # length : [rules applicable up to (including) this length]
         4: [lambda x: factor(int(x[4-3:4]),2)],
         5: [lambda x: factor(int(x[5-3:5]),3)],
         6: [lambda x: factor(int(x[6-3:6]),5)],

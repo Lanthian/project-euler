@@ -46,7 +46,6 @@ def champernowne_digit(n: int) -> int:
     def num_of(x: int) -> int: 
         """Sub function. Returns the index distance of numbers up to length `x` 
         into Champernowne's constant."""
-        if x == 0: return 0
         return sum([(9*10**(i-1)) * i for i in range(1,x+1)])
 
     # Iterate through possible necessary distances into Champernowne constant

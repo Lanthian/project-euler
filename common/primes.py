@@ -103,6 +103,25 @@ def prime_factors(product: int) -> list[int]:
         if p > product or product == 0: break
     return factors
 
+# First seen in 047 - Largest Prime Factor
+def powered_prime_factors(product: int) -> list[int]:
+    """Takes a number `product` and finds and returns a list of all fully 
+    powered prime factors that build it."""
+    factors = []
+
+    # Incrementally generate primes and check if they are factors of product
+    for p in prime_generator():
+        i = 0
+        while factor(product, p):
+            # Count and remove factor from product
+            i += 1
+            product = product//p
+        if i > 0: factors.append(p ** i)
+
+        # Check for cut off
+        if p > product or product == 0: break
+    return factors
+
 # First seen in 010 - Summation of Primes
 def prime_sieve(limit: int) -> list[int]:
     """Eratosthenes Sieve: Generates all primes up to `limit` (not inclusive) by 

@@ -19,26 +19,39 @@ from common.nums import int_gen
 from common.primes import powered_prime_factors
 
 # --- Conditions of the problem ---
-CONSECUTIVE = 3
-FACTORS = 3
+CONSECUTIVE = 4
+FACTORS = 4
 
 
-# --- Calculation & Output ---
+# --- Calculation ---
 def main():
-    # Prestore necessary prime factors for previous numbers
-    stored = {k: powered_prime_factors(k) for k in range(1, CONSECUTIVE)}
+    # Trackers
+    count = 0
+    start = None
+    factors = set()
 
-    for i in int_gen(CONSECUTIVE):
-        stored[i] = powered_prime_factors(i)
+    # Iterate through numbers until sequence found
+    for i in int_gen(644):
+        if count == 0: start = i
 
-        # Check if prime factors are distinct
-        facs = set()
-        for j in range(i+1 - CONSECUTIVE, i+1):
-            if len(stored[j]) != FACTORS: break
-            facs.update(stored[j])
-        
-        if len(facs) == CONSECUTIVE * FACTORS: 
-            print(i+1 - CONSECUTIVE)
-            break
-            
+        p = powered_prime_factors(i)
+        count += 1
+        factors.update(p)
+
+        # Skip ahead and reset trackers if invalid
+        if len(factors) != FACTORS * count: 
+            i += CONSECUTIVE -1
+            count = 0
+            start = None
+            factors = set()
+            continue
+
+        elif count == CONSECUTIVE: break
+    
+
+    # --- Output ---
+    print(start)  
     return
+
+
+# Next step - generate primes in advance?

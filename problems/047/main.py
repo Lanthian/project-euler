@@ -16,7 +16,7 @@ __author__ = "Liam Anthian"
 
 # --- Imports ---
 from common.nums import int_gen
-from common.primes import powered_prime_factors
+from common.primes import powered_prime_factors, prime_sieve
 
 # --- Conditions of the problem ---
 CONSECUTIVE = 4
@@ -30,11 +30,14 @@ def main():
     start = None
     factors = set()
 
+    # Prepare primes
+    primes = prime_sieve(1000000)
+
     # Iterate through numbers until sequence found
     for i in int_gen(644):
         if count == 0: start = i
 
-        p = powered_prime_factors(i)
+        p = powered_prime_factors(i, primes)
         count += 1
         factors.update(p)
 
@@ -50,8 +53,5 @@ def main():
     
 
     # --- Output ---
-    print(start)  
+    print(start) # 134043
     return
-
-
-# Next step - generate primes in advance?

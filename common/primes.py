@@ -87,13 +87,15 @@ def prime_generator():
         i += 1
 
 # First seen in 003 - Largest Prime Factor
-def prime_factors(product: int) -> list[int]:
+def prime_factors(product: int, primes: list[int]=[]) -> list[int]:
     """Takes a number `product` and finds and returns a list of all prime 
-    factors that build it."""
+    factors that build it. Can take in a prior sufficiently large list of 
+    `primes` instead of generating."""
     factors = []
 
-    # Incrementally generate primes and check if they are factors of product
-    for p in prime_generator():
+    incrementor = primes if len(primes) > 0 else prime_generator()
+    # Check if primes are factors of product
+    for p in incrementor:
         while factor(product, p):
             # Store and remove factor from product
             factors.append(p)
@@ -104,13 +106,15 @@ def prime_factors(product: int) -> list[int]:
     return factors
 
 # First seen in 047 - Largest Prime Factor
-def powered_prime_factors(product: int) -> list[int]:
+def powered_prime_factors(product: int, primes: list[int]=[]) -> list[int]:
     """Takes a number `product` and finds and returns a list of all fully 
-    powered prime factors that build it."""
+    powered prime factors that build it. Can take in a prior sufficiently large 
+    list of `primes` instead of generating."""
     factors = []
 
-    # Incrementally generate primes and check if they are factors of product
-    for p in prime_generator():
+    incrementor = primes if len(primes) > 0 else prime_generator()
+    # Check if primes are factors of product
+    for p in incrementor:
         i = 0
         while factor(product, p):
             # Count and remove factor from product

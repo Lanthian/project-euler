@@ -54,3 +54,4 @@ ___
 * [045](problems/045/main.py) - Triangular, Pentagonal, and Hexagonal
 * [046](problems/046/main.py) - Goldbach's Other Conjecture
 * [047](problems/047/main.py) - Distinct Primes Factors
+* [048](problems/048/main.py) - Self Powers

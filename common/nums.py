@@ -18,6 +18,16 @@ def triangle_generator():
         i += 1
         num += i
 
+# First seen in 044 - Pentagon Numbers
+def pentagonal(num: int) -> int:
+    """Returns the `num`th pentagonal number."""
+    return (num * (3*num-1)) // 2
+
+# First seen in 045 - Triangular, Pentagonal and Hexagonal
+def hexagonal(num: int) -> int:
+    """Returns the `num`th hexagonal number."""
+    return num * (2*num-1)
+
 # First seen in 022 - Names Scores
 def value_word(word, zero=ord('A')-1) -> int:
     """Takes in any character iterable `word` and returns the sum of all it's 

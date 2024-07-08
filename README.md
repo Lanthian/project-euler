@@ -50,3 +50,7 @@ ___
 * [041](problems/041/main.py) - Pandigital Prime
 * [042](problems/042/main.py) - Coded Triangle Numbers
 * [043](problems/043/main.py) - Sub-string Divisibility
+...
+* [045](problems/045/main.py) - Triangular, Pentagonal, and Hexagonal
+* [046](problems/046/main.py) - Goldbach's Other Conjecture
+* [047](problems/047/main.py) - Distinct Primes Factors

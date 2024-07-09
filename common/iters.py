@@ -83,3 +83,9 @@ def ruled_perm_gen(order: str, rules: dict[int,list['function']]={},
     
     # No possible children means this permutation branch needs to be terminated
     if not any_valid: yield False
+
+# First seen in 049 - Prime Permutations
+def permutation(a, b) -> bool:
+    """Takes two iterables `a` and `b` and returns if they are permutations of 
+    each other (boolean)."""
+    return (len(a) == len(b) and set(a) == set(b))

@@ -15,17 +15,29 @@ def main():
     primes = prime_sieve(LIMIT)
     prime_set = set(primes)
     
-    total_longest = 0
+    best_p = None
+    longest = 0
+
     for i,p in enumerate(primes):
         total = p
-        longest = 1
+        curr_best = p
+        length = 1
+
         for j in range(i+1, len(primes)):
             total += primes[j]
-            if total in prime_set: longest = j-i
+            if total >= LIMIT: break
+
+            # If summation up until this point is prime, new best for p found
+            elif total in prime_set: 
+                length = j-i+1
+                curr_best = total
         
-        if longest > total_longest: total_longest = longest
+        # Update if new best found
+        if length > longest: 
+            longest = length
+            best_p = curr_best
 
 
     # --- Output ---
-    print(total_longest)
+    print(best_p) # 997,651
     return

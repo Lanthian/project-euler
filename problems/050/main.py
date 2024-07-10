@@ -1,4 +1,13 @@
-"""
+""" Consecutive Prime Sum
+
+The prime 41, can be written as the sum of six consecutive primes:
+    41 = 2 + 3 + 5 + 7 + 11 + 13
+This is the longest sum of consecutive primes that adds to a prime below 
+  one-hundred.
+The longest sum of consecutive primes below one-thousand that adds to a prime, 
+  contains 21 terms, and is equal to 953.
+Which prime, below one-million, can be written as the sum of the most 
+  consecutive primes?
 https://projecteuler.net/problem=50
 """
 
@@ -10,6 +19,7 @@ from common.primes import prime_sieve
 # --- Conditions of the problem ---
 LIMIT = 1000000         # Exclusive
 
+
 # --- Calculation ---
 def main():
     primes = prime_sieve(LIMIT)
@@ -18,13 +28,20 @@ def main():
     best_p = None
     longest = 0
 
+    # Loop through all prime slices
     for i,p in enumerate(primes):
+        # Primes over half of limit won't sum to anything less than limit
+        if p > LIMIT // 2: break
+
+        # Trackers / initial values
         total = p
-        curr_best = p
+        curr_best = total
         length = 1
 
+        # Sum with greater primes to try and find a later consec-sum-prime
         for j in range(i+1, len(primes)):
             total += primes[j]
+            # A total greater than limit is a stopping point
             if total >= LIMIT: break
 
             # If summation up until this point is prime, new best for p found

@@ -15,7 +15,7 @@ https://projecteuler.net/problem=51
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from common.iters import permutation_generator, sublists
+from common.iters import sublists
 from common.primes import prime_sieve
 
 # --- Conditions of the problem ---
@@ -40,14 +40,12 @@ def remove_index(word: str, indices: list[int]) -> str:
 
 # --- Calculation ---
 def main():
-    digits = 0
+    digits = 2  # 2 -> Can't replace part of a single digit number
 
     replacements = {}
     best = None
     # Incrementally increase digit count until answer found
     while(True):
-        digits += 1
-
         # Prepare index replacement sublists - dropping empty and full set
         subs = sublists(list(range(digits)))[1:-1]
 
@@ -62,6 +60,8 @@ def main():
             replacements.clear()
 
             for p in primes:
+                # If no lower prime found, move onto next index selection
+                if best != None and p > best and replacements == {}: break
                 p_s = str(p)
 
                 # Check if valid index replacement here
@@ -69,19 +69,22 @@ def main():
                     key = i_s+'.'+remove_index(p_s,indices)
 
                     # Create initial dict entry if unstored, and update counts        
-                    if key not in replacements: replacements[key] = [0, p]
+                    if key not in replacements: 
+                        # Skip processing worse matches
+                        if best != None and p > best: continue
+                        else: replacements[key] = [0, p]
                     replacements[key][0] += 1
 
                     # Check if answer found - update new best if needed
                     if replacements[key][0] == FAMILY_SIZE: 
                         found = replacements[key][1]
-                        # print(found, indices)
                         if best == None or found < best: best = found
                         # Move onto next index selection
                         break
         
         # If a match at this digit level has been found, return result
         if best != None: break
+        digits += 1
 
 
     # --- Output ---

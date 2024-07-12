@@ -89,3 +89,20 @@ def permutation(a, b) -> bool:
     """Takes two iterables `a` and `b` and returns if they are permutations of 
     each other (boolean)."""
     return (len(a) == len(b) and set(a) == set(b))
+
+# First seen in 051 - Prime Digit Replacements
+def sublists(ite: list) -> list:
+    """Takes a list `ite` and returns a list of the subsets of its items. 
+    Includes the full set and empty set []."""
+    subs = []
+
+    # Base cases
+    if len(ite) == 1: return [ite, []]
+    elif ite == []: return [[]]         # sublist(s) of [] is []
+
+    # Recursive cases
+    s2 = sublists(ite[1:]) 
+    subs += [[ite[0]]+s for s in s2]
+    subs += s2
+
+    return subs

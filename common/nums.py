@@ -23,6 +23,16 @@ def pentagonal(num: int) -> int:
     """Returns the `num`th pentagonal number."""
     return (num * (3*num-1)) // 2
 
+# First seen in 044 - Pentagon Numbers
+def pentagon_generator():
+    """A generator for pentagonal numbers."""
+    num = 1
+    i = 0
+    while(True):
+        yield num
+        i += 1
+        num += 5*i - (2*i-1)
+
 # First seen in 045 - Triangular, Pentagonal and Hexagonal
 def hexagonal(num: int) -> int:
     """Returns the `num`th hexagonal number."""

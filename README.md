@@ -55,3 +55,8 @@ ___
 * [046](problems/046/main.py) - Goldbach's Other Conjecture
 * [047](problems/047/main.py) - Distinct Primes Factors
 * [048](problems/048/main.py) - Self Powers
+* [049](problems/049/main.py) - Prime Permutations
+* [050](problems/050/main.py) - Consecutive Prime Sum
+* [051](problems/051/main.py) - Prime Digit Replacements
+* [052](problems/052/main.py) - Permuted Multiples
+* [053](problems/053/main.py) - Combinatoric Selections

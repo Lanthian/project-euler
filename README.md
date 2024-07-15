@@ -60,3 +60,5 @@ ___
 * [051](problems/051/main.py) - Prime Digit Replacements
 * [052](problems/052/main.py) - Permuted Multiples
 * [053](problems/053/main.py) - Combinatoric Selections
+...
+* [054](problems/054/main.py) - Lychrel Numbers

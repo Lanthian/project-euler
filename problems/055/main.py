@@ -35,6 +35,50 @@ LIMIT = 10000           # Exclusive
 ITERS = 50
 
 
+def is_lychrel(x: int, loops: int=50) -> bool:
+    """Iterates through 'x + x reversed ?= palindrome' lychral process for
+    `loops` many iterations. Returns False if number `x` is not lychrel, and 
+    True if number is lychral within loops testing bound."""
+    x_s = str(x)
+    path = []
+    for _ in range(loops):
+        # Add reverses together
+        path.append(x)
+        x += int(x_s[::-1])
+        x_s = str(x)
+
+        if palindrome(x_s):
+            # (Every non-reversed number up until this point also isn't Lychrel)
+            return False
+        
+    # Otherwise, every number up until this point is Lychrel (based on loops).
+    return True
+
+def lychrel_step(cur: int, lych: set[int]=set(), not_lych: set[int]=set(), 
+                 path: list[int]=[]) -> bool | int:
+        """Performs 1 step of lychrel processing of a given `path`, with known
+        lychrel `lych` and non-lychrel `not_lych` numbers. Updates findings in
+        these number sets, returning True (bool) if processing is done at end of
+        time of calling, current number (int) next in chain if otherwise."""
+        path.append(cur)
+        # Add reverses together
+        cur += int(str(cur)[::-1])
+
+        # Skip already categorized numbers, categorizing chain so far
+        if cur in lych: 
+            lych.update(path)
+        elif cur in not_lych:
+            not_lych.update(path)
+
+        # If palindrome found, chain is not Lychrel
+        elif palindrome(str(cur)):
+            not_lych.update(path)
+  
+        # Returns cur and continues if none of the above apply. Otherwise, True.
+        else: return cur
+        return True
+
+
 # --- Calculation ---
 def main():
     not_lychrel = set()
@@ -44,57 +88,28 @@ def main():
     for i in range(1,LIMIT):
         # Skip numbers already categorized in other iterations
         if i in not_lychrel or i in lychrel: continue
-        
+
         path = []
-        i_s = str(i)
-        x = False
+        # Boolean flag to measure if chain is determinably not lychrel
+        not_done = True
 
-        # Find lychrel / not lychrel chains beneath LIMIT
-        while i < LIMIT:
-            alt = int(i_s[::-1])
-            path.append(i)
-            # Add reverses together
-            i += alt
-
-            # Once again, skip already categorized numbers
-            if i in lychrel: 
-                lychrel.update(path)
-                break
-            elif i in not_lychrel:
-                not_lychrel.update(path)
-                break
-
-            i_s = str(i)
-            # If palindrome found, chain is not lychrel
-            if palindrome(i_s):
-                not_lychrel.update(path)
-                break
+        # Find Lychrel / not Lychrel chains beneath LIMIT
+        while not_done and i < LIMIT:
+            i = lychrel_step(i, lychrel, not_lychrel, path)
+            if i == True: not_done = False
             
-        # Classify chain via looping 50 iterations deep
-        else:
+        # Classify chain via looping ITERS iterations deep
+        if not_done:
             for _ in range(ITERS-1):
-                alt = int(i_s[::-1])
-                path.append(i)
-                # Add reverses together
-                i += alt
-
-                # Once again, skip already categorized numbers
-                if i in lychrel: 
-                    lychrel.update(path)
+                i = lychrel_step(i, lychrel, not_lychrel, path)
+                if i == True: 
+                    not_done = False
                     break
-                elif i in not_lychrel:
-                    not_lychrel.update(path)
-                    break
-
-                i_s = str(i)
-                # If palindrome, every number up until this point is not lychrel
-                if palindrome(i_s):
-                    not_lychrel.update(path)
-                    break
-            # Otherwise, every number up until this point it lychreal
-            else: lychrel.update(path)
+            # Otherwise, every number up until this point is a Lychrel number
+            if not_done: lychrel.update(path)
 
 
     # --- Output ---
     print(len([l for l in lychrel if l < LIMIT])) # 249
+    # print(len([x for x in range(1,LIMIT) if is_lychrel(x)])) # 249
     return

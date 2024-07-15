@@ -26,7 +26,7 @@ def num_append(nums: list[int]) -> int:
 
 def reduce(fraction: tuple[int, int]) -> tuple[int, int]:
     """Reduces a `fraction` represented as a tuple to smallest equivalent
-    from. Returns this reduction as a tuple of numerator and denominator."""
+    form. Returns this reduction as a tuple of numerator and denominator."""
     # Unpack fraction
     (numer, denom) = fraction
     # Find greatest common factor (GCF) to divide by

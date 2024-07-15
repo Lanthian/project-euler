@@ -61,4 +61,5 @@ ___
 * [052](problems/052/main.py) - Permuted Multiples
 * [053](problems/053/main.py) - Combinatoric Selections
 ...
-* [054](problems/054/main.py) - Lychrel Numbers
+* [055](problems/055/main.py) - Lychrel Numbers
+* [056](problems/056/main.py) - Powerful Digit Sum

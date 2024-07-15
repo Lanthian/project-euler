@@ -44,6 +44,7 @@ def main():
     for i in range(1,LIMIT):
         # Skip numbers already categorized in other iterations
         if i in not_lychrel or i in lychrel: continue
+        
         path = []
         i_s = str(i)
         x = False
@@ -51,7 +52,7 @@ def main():
         # Find lychrel / not lychrel chains beneath LIMIT
         while i < LIMIT:
             alt = int(i_s[::-1])
-            path.extend([i, alt])
+            path.append(i)
             # Add reverses together
             i += alt
 
@@ -73,7 +74,7 @@ def main():
         else:
             for _ in range(ITERS-1):
                 alt = int(i_s[::-1])
-                path.extend([i, alt])
+                path.append(i)
                 # Add reverses together
                 i += alt
 
@@ -94,25 +95,6 @@ def main():
             else: lychrel.update(path)
 
 
-
-    lychrel_list = [l for l in lychrel if l < LIMIT]
-    # lychrel_list.sort()
-    # print(lychrel_list)
-    print(len(lychrel_list))
-
-    not_lychrel_list = [l for l in not_lychrel if l < LIMIT]
-    print(len(not_lychrel_list))
-
-    # k = []
-    # for j in lychrel:
-    #     if j in not_lychrel: k.append(j)
-    # k.sort()
-    # print(k)
-    # print(len(k))
-
-    # print(len(lychrel_list +))
-
-        
-
     # --- Output ---
+    print(len([l for l in lychrel if l < LIMIT])) # 249
     return

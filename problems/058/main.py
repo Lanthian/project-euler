@@ -22,40 +22,31 @@ https://projecteuler.net/problem=58
 __author__ = "Liam Anthian"
 
 # --- Import ---
-from common.primes import prime_sieve
+from common.primes import is_prime2
 
 # --- Conditions of the problem ---
 LIMIT = 0.1             # Exclusive
 
 
-def prime_ratio(nums: list[int], primes: set[int]=set()) -> float:
-    """Takes a sorted list of numbers, and returns the prime ratio of them."""
-    if len(primes) == 0: primes = set(prime_sieve(nums[-1]))
-    return len([n for n in nums if n in primes])/len(nums)
-
-
 # --- Calculation ---
 def main():
     num = 1
-    corners = [num]
     i = 1       # current depth of spiral from centre
-    p_length = 10
-    prime_set = set(prime_sieve(p_length))
-
+    
+    primes = 0
+    corners = 1
+    
     # Spiral through numbers until ratio breaks limit, storing the diagonals
     while (True):
         # Check each corner of current spiral depth
         for _ in range(4):
             num += 2*i
-            corners.append(num)
-        
-        # Update primes if needed
-        if num > p_length:
-            p_length *= 10
-            prime_set = set(prime_sieve(p_length))
+
+            if is_prime2(num): primes += 1
+            corners += 1
 
         # Check ratio
-        if prime_ratio(corners, prime_set) < LIMIT: break
+        if primes / corners < LIMIT: break
         i+=1
 
 

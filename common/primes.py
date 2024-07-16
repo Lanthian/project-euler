@@ -65,6 +65,14 @@ def is_prime(num: int) -> bool:
         if prime > num: return False
         elif prime == num: return True
 
+# First seen in 058 - Spiral Primes
+def is_prime2(num: int) -> bool:
+    """Checks if an int `num` is prime. Returns a boolean."""
+    root = sqrt(num)
+    for p in prime_generator():
+        if p > root: return True
+        elif factor(num, p): return False
+
 # First seen in 003 - Largest Prime Factor
 def prime_generator():
     """A generator for prime numbers - uses `prime()` in prime construction."""

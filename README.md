@@ -63,3 +63,5 @@ ___
 ...
 * [055](problems/055/main.py) - Lychrel Numbers
 * [056](problems/056/main.py) - Powerful Digit Sum
+* [057](problems/057/main.py) - Square Root Convergents
+* [058](problems/058/main.py) - Spiral Primes

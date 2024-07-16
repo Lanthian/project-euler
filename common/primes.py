@@ -61,17 +61,43 @@ def prime(num: int, primes: list[int]) -> bool:
 
 def is_prime(num: int) -> bool:
     """Checks if an int `num` is prime. Returns a boolean."""
-    for prime in prime_generator():
-        if prime > num: return False
-        elif prime == num: return True
-
-# First seen in 058 - Spiral Primes
-def is_prime2(num: int) -> bool:
-    """Checks if an int `num` is prime. Returns a boolean."""
     root = sqrt(num)
     for p in prime_generator():
         if p > root: return True
-        elif factor(num, p): return False
+        elif num % p == 0: return False
+
+# First seen in 058 - Spiral Primes
+def is_prime2(num: int) -> bool:
+    """Checks if an int `num` is prime. Returns a boolean. 
+    Faster than is_prime()."""
+    if num == 2: return True
+    elif num % 2 == 0: return False
+    
+    i = 3
+    root = sqrt(num)
+    # Work through odd numbers instead of primes - just quicker
+    while(i <= root):
+        if num % i == 0: return False
+        i += 2
+    return True
+
+# First seen in 058 - Spiral Primes
+def is_prime3(num: int) -> bool:
+    """Checks if an int `num` is prime. Returns a boolean. 
+    Faster than is_prime2()."""
+    if num == 2: return True
+    elif num % 2 == 0: return False
+    elif num == 3: return True
+    elif num % 3 == 0: return False
+
+    i = 1
+    root = sqrt(num)
+    # Work through 6 adjacent numbers instead of primes or odds - just quicker
+    while(6 * i - 1 <= root):
+        if num % (6 * i - 1) == 0: return False
+        elif num % (6 * i + 1) == 0: return False
+        i += 1
+    return True
 
 # First seen in 003 - Largest Prime Factor
 def prime_generator():

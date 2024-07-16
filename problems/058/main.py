@@ -22,7 +22,7 @@ https://projecteuler.net/problem=58
 __author__ = "Liam Anthian"
 
 # --- Import ---
-from common.primes import is_prime2
+from common.primes import is_prime3
 
 # --- Conditions of the problem ---
 LIMIT = 0.1             # Exclusive
@@ -42,7 +42,7 @@ def main():
         for _ in range(4):
             num += 2*i
 
-            if is_prime2(num): primes += 1
+            if is_prime3(num): primes += 1
             corners += 1
 
         # Check ratio

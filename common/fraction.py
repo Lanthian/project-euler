@@ -38,18 +38,29 @@ class Fraction():
     def __int__(self) -> int:
         return int(self.numer / self.denom)
     def remainder(self) -> 'Fraction':
+        """Returns the a new fraction instance of just the fraction portion of a 
+        potentially composite fraction."""
         return Fraction(self.numer%self.denom, self.denom)
     
     def add(self, other: 'Fraction', simplify: bool = True):
-        """Adds another fraction to itself."""
+        """Adds another fraction to itself. Simplifies fraction if `simplify` 
+        flag set to True."""
         self.numer = self.numer*other.denom + other.numer*self.denom
         self.denom = self.denom*other.denom
         if simplify: self.simplify()
 
     def mul(self, other: 'Fraction', simplify: bool = True):
+        """Multiplies itself by another fraction. Simplifies fraction if 
+        `simplify` flag set to True."""
         self.numer = self.numer * other.numer
         self.denom = self.denom * other.denom
         if simplify: self.simplify()
+
+    def invert(self):
+        """Inverts itself - switching numerator and denominator."""
+        temp = self.numer
+        self.numer = self.denom
+        self.denom = temp
 
     def simplify(self):
         """Simplifies itself to smallest form."""
@@ -59,3 +70,17 @@ class Fraction():
                 self.numer = self.numer//f
                 self.denom = self.denom//f
                 return
+
+
+# First seen in 057 - Square Root Convergents
+def fr_add(a: 'Fraction', b: 'Fraction', simplify: bool = True) -> 'Fraction':
+    """Adds two fractions together and returns their result as a new instance. 
+    Simplifies fraction if `simplify` flag set to True."""
+    f =  Fraction(a.numer*b.denom + b.numer*a.denom, a.denom*b.denom)
+    if simplify: f.simplify()
+    return f
+
+# First seen in 057 - Square Root Convergents
+def fr_flip(a: 'Fraction') -> 'Fraction':
+    """Inverts a fraction, returning a new instance.."""
+    return Fraction(a.denom,a.numer)

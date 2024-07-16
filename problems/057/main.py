@@ -19,30 +19,25 @@ https://projecteuler.net/problem=57
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from fractions import Fraction
+from common.fraction import Fraction, fr_add, fr_flip
 
 # --- Conditions of the problem ---
 LIMIT = 1000
 
 
-def sqrt_2_generator():
-    num = 1 + 1/2
-    while(True):
-        yield num
-        num = 1 + 1/(1+num)
-
-
 # --- Calculation ---
 def main():
+    # Reused fraction form of one
+    one = Fraction(1,1)
+    # Base case
+    f = fr_add(one, Fraction(1,2))
+
     tally = 0
-    for i,v in enumerate(sqrt_2_generator()):
-        if i == LIMIT: break
-        # Convert decimal into a fraction, and compare numer' and denom' length
-        f = Fraction(v).limit_denominator()
-        # print(i, f)
-        if len(str(f.numerator)) > len(str(f.denominator)): tally += 1
- 
+    for _ in range(LIMIT):
+        if len(str(f.numer)) > len(str(f.denom)): tally += 1
+        f = fr_add(one,fr_flip(fr_add(one,f,simplify=False)),simplify=False)
+
 
     # --- Output ---
-    print(tally)
+    print(tally) # 153
     return

@@ -26,6 +26,8 @@ class Value:
         return None
     def __repr__(self) -> str:
         return "Value(val=%s)" % self.val
+    def __int__(self) -> int:
+        return self.val
     
     def __lt__(self, other: 'Value') -> bool:
         return self.val < other.val
@@ -68,12 +70,15 @@ class Card:
         return str(self.val)+str(self.suit)
     def __repr__(self) -> str:
         return "Card(value=%s, suit=%s)" % (repr(self.val), repr(self.suit))
+    def __int__(self) -> int:
+        """Return card value as an integer."""
+        return int(self.val)
 
     # Card suit is not used to determine if cards have equal value
     def __lt__(self, other: 'Card') -> bool:
-        return self.val < other.val
+        return int(self) < int(other)
     def __eq__(self, other: 'Card') -> bool:
-        return self.val == other.val
+        return int(self) == int(other)
 
 # @total_ordering
 class Hand: 
@@ -87,31 +92,42 @@ class Hand:
     def __repr__(self) -> str:
         return "Hand(cards=%s)" % self.cards
 
-    def high_card(cards: list[Card]) -> list[Value]:
-        """Takes a list of Cards `cards` and returns a list of descending card
-        values."""
-        # Base case - empty hand
-        if cards == []: return []
 
-        # Otherwise sort by descending card value
-        cards.sort(reverse=True)
-        return [card.val for card in cards]
-    
-    def group_cards(cards: list[Card]) -> dict[Value,int]:
-        """Takes a list of Cards `cards` and returns a dictionary of card value
-        counts."""
-        seen = {}
-        for c in cards:
-            if c.val not in seen: seen[c.val] = 0
-            seen[c.val] += 1
-        return seen
-    
-    def flush_cards(cards: list[Card]) -> bool:
-        """Takes a list of Cards `cards` and returns a boolean of if cards are 
-        flushed (all same suit) or not."""
-        # Here we have defined empty lists as flushed.
-        if len(cards) == 0: return True
-        base = cards[0].suit
-        for c in cards[1:]:
-            if c.suit != base: return False
-        return True
+def high_cards(cards: list[Card]) -> list[Value]:
+    """Takes a list of Cards `cards` and returns a list of descending card
+    values."""
+    # Base case - empty hand
+    if cards == []: return []
+
+    # Otherwise sort by descending card value
+    cards.sort(reverse=True)
+    return [card.val for card in cards]
+
+def group_cards(cards: list[Card]) -> dict[Value,int]:
+    """Takes a list of Cards `cards` and returns a dictionary of card value
+    counts."""
+    seen = {}
+    for c in cards:
+        if c.val not in seen: seen[c.val] = 0
+        seen[c.val] += 1
+    return seen
+
+def flush_cards(cards: list[Card]) -> bool:
+    """Takes a list of Cards `cards` and returns a boolean of if cards are 
+    flushed (all same suit) or not."""
+    # Here we have defined empty lists as flushed.
+    if len(cards) == 0: return True
+    base = cards[0].suit
+    for c in cards[1:]:
+        if c.suit != base: return False
+    return True
+
+def straight_cards(cards: list[Card], size:int=5, miss=0) -> Value:
+    """Takes a list of Cards `cards` and returns the highest card Value if a
+    straight of length `size` is present. Returns `miss` if otherwise."""
+    top = max(cards)
+    straight = list(range(int(top), int(top)-size,-1))
+    # If straight decending from highest card == cards descending, success
+    if straight == [int(c) for c in high_cards(cards)]:
+        return top.val
+    return miss

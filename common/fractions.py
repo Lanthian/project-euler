@@ -1,4 +1,4 @@
-"""fraction.py: Class for handling and utilising functions."""
+"""fractions.py: Class for handling and utilising fractions."""
 
 __author__ = "Liam Anthian"
 

@@ -19,7 +19,7 @@ https://projecteuler.net/problem=57
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from common.fraction import Fraction, fr_add, fr_flip
+from common.fractions import Fraction, fr_add, fr_flip
 
 # --- Conditions of the problem ---
 LIMIT = 1000

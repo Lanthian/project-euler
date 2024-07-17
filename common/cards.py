@@ -81,14 +81,14 @@ class Card:
     def __eq__(self, other: 'Card') -> bool:
         return int(self) == int(other)
 
-# @total_ordering
+@total_ordering
 class Hand: 
     cards: list[Card]
 
     def __init__(self, cards: list[Card]) -> 'Hand':
         self.cards = cards
-    def __init__(self, cards: str, delim: str=" ") -> 'Hand':
-        self.cards = [Card(s) for s in cards.split(delim)]
+    # def __init__(self, cards: str, delim: str=" ") -> 'Hand':
+    #     self.cards = [Card(s) for s in cards.split(delim)]
 
     def __str__(self, delim: str=" ") -> str:
         return delim.join([str(card) for card in self.cards])
@@ -99,23 +99,23 @@ class Hand:
         """Returns a list of comparable values, summarising how a hand scores.
         Assumes only 1 deck is in play (no 5 of a kind, or pairs within flushes)
         """
+        MISS = None
         high = high_cards(self.cards)
-        straight = straight_cards(self.cards, miss=None)
+        straight = straight_cards(self.cards, miss=MISS)
 
         # Check if flushed
         if flush_cards(self.cards):
             # 6: Regular flush
-            if straight == None: return [6, high]
+            if straight == MISS: return [6, high]
             # 9: Straight flush
             else: return [9, straight]
 
         # 5: Regular Straight
-        elif straight != False: return [5, straight]
+        elif straight != MISS: return [5, straight]
         
         # Check groupings
         groups = [(v,int(k)) for k,v in group_cards(self.cards).items()]
         groups.sort(reverse=True)
-        print(groups)
 
         if len(groups) == 2:
             # 8: 4 of a kind
@@ -133,7 +133,11 @@ class Hand:
         elif len(groups) == 4: return [2, [v[1] for v in groups]]
         # 1: Just high card
         else: return [1, high_cards]
-            
+
+    def __lt__(self, other: 'Card') -> bool:
+        return self.rank() < other.rank()
+    def __eq__(self, other: 'Card') -> bool:
+        return self.rank() == other.rank()
 
 
 def high_cards(cards: list[Card]) -> list[Value]:
@@ -165,7 +169,7 @@ def flush_cards(cards: list[Card]) -> bool:
         if c.suit != base: return False
     return True
 
-def straight_cards(cards: list[Card], size:int=5, miss=0) -> Value:
+def straight_cards(cards: list[Card], size:int=5, miss=None) -> Value:
     """Takes a list of Cards `cards` and returns the highest card Value if a
     straight of length `size` is present. Returns `miss` if otherwise."""
     top = max(cards)
@@ -174,3 +178,32 @@ def straight_cards(cards: list[Card], size:int=5, miss=0) -> Value:
     if straight == [int(c) for c in high_cards(cards)]:
         return top.val
     return miss
+
+
+# --- Testing ---
+"""
+# P2 wins
+h1_1 = Hand("5H 5C 6S 7S KD")
+h1_2 = Hand("2C 3S 8S 8D TD")
+print(max(h1_1, h1_2))
+
+# P1 wins
+h2_1 = Hand("5D 8C 9S JS AC")
+h2_2 = Hand("2C 5C 7D 8S QH")
+print(max(h2_1, h2_2))
+
+# P2 wins
+h3_1 = Hand("2D 9C AS AH AC")
+h3_2 = Hand("3D 6D 7D TD QD")
+print(max(h3_1, h3_2))
+
+# P1 wins
+h4_1 = Hand("4D 6S 9H QH QC")
+h4_2 = Hand("3D 6D 7H QD QS")
+print(max(h4_1, h4_2))
+
+# P1 wins
+h5_1 = Hand("2H 2D 4C 4D 4S")
+h5_2 = Hand("3C 3D 3S 9S 9D")
+print(max(h5_1, h5_2))
+"""

@@ -46,74 +46,13 @@ https://projecteuler.net/problem=54
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from enum import Enum
-from functools import total_ordering
+from common.cards import *
 from common.files import easy_open
 
 # --- Conditions of the problem ---
 FILE = 'poker.txt'
 DELIM = ' '
 
-@total_ordering
-class Value:
-    val: int
-
-    conversion = {str(i):i for i in range(1,10)}
-    conversion.update({"T":10, "J":11, "Q":12, "K":13, "A":14})
-
-    def __init__(self, char: str) -> 'Value':
-        self.val = self.conversion[char]
-
-    def __str__(self) -> str:
-        """Character representation of face value identifier."""
-        for k,v in self.conversion.items():
-            if v == self.val: return k
-        # Return None if no match
-        return None
-    
-    def __lt__(self, other: 'Value') -> bool:
-        return self.val < other.val
-    def __eq__(self, other: 'Value') -> bool:
-        return self.val == other.val
-
-class Suit(Enum):
-    CLUB = "C"
-    SPADE = "S"
-    DIME = "D"
-    HEART = "H"
-
-    def read(char: str) -> 'Suit':
-        """Equivalent to a __init__ but works with Enum"""
-        for suit in Suit:
-            if char == str(suit): return suit
-        return None
-
-    def __str__(self) -> str:
-        """Character representation of suit identifier."""
-        return str(self.value)
-    
-    def __eq__(self, other: 'Suit') -> bool:
-        return str(self) == str(other)
-
-@total_ordering
-class Card:
-    value: Value
-    suit: Suit
-    
-    def __init__(self, text: str) -> 'Card':
-        (VAL,SUIT) = (0,1)
-        self.value = Value(text[VAL])
-        self.suit = Suit.read(text[SUIT])
-
-    def __str__(self) -> str: 
-        return str(self.value)+str(self.suit)
-
-    # Card suit is not used to determine if cards have equal value
-    def __lt__(self, other: 'Card') -> bool:
-        return self.value < other.value
-    def __eq__(self, other: 'Card') -> bool:
-        return self.value == other.value
-    
 
 # --- Calculation ---
 def main():
@@ -140,6 +79,14 @@ def main():
 
     print(c1.suit == c2.suit)
     print(c1.suit == c3.suit)
+
+    h = Hand([c1,c2,c3])
+    print(h)
+    print(Hand.high_card(h.cards))
+    print(Hand.group_cards(h.cards))
+    print(Hand.flush_cards(h.cards))
+    print(Hand.flush_cards([c1,c3]))
+    print([str(s) for s in Hand.high_card(h.cards)])
 
 
     # --- Output ---

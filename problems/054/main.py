@@ -46,7 +46,7 @@ https://projecteuler.net/problem=54
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from common.cards import *
+from common.cards import Card, Hand
 from common.files import easy_open
 
 # --- Conditions of the problem ---
@@ -56,38 +56,15 @@ DELIM = ' '
 
 # --- Calculation ---
 def main():
+    p1_wins = 0
+
     # Read in data
-    # with easy_open(__file__, FILE) as fp:
-    #     # print(fp.readlines())
-    #     for game in fp.readlines():
-    #         cards = game.strip('\n').split(DELIM)
-    #     # print(fp.readline().split(DELIM))
-
-
-    s = Suit.read("S")
-    print(s)
-    v = Value("K")
-    print(v, v.val)
-
-    c1 = Card("5D")
-    c2 = Card("8H")
-    c3 = Card("8D")
-    
-    print(c1, c2, c3)
-    print(c1 < c2)
-    print(c2 == c3)
-
-    print(c1.suit == c2.suit)
-    print(c1.suit == c3.suit)
-
-    h = Hand([c1,c2,c3])
-    print(h)
-    print(Hand.high_card(h.cards))
-    print(Hand.group_cards(h.cards))
-    print(Hand.flush_cards(h.cards))
-    print(Hand.flush_cards([c1,c3]))
-    print([str(s) for s in Hand.high_card(h.cards)])
+    with easy_open(__file__, FILE) as fp:
+        for game in fp.readlines():
+            cards = [Card(c) for c in game.strip('\n').split(DELIM)]
+            if Hand(cards[:5]) > Hand(cards[5:]): p1_wins += 1
 
 
     # --- Output ---
+    print(p1_wins) # 376
     return

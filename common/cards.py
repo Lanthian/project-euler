@@ -132,7 +132,7 @@ class Hand:
         # 2: One pair
         elif len(groups) == 4: return [2, [v[1] for v in groups]]
         # 1: Just high card
-        else: return [1, high_cards]
+        else: return [1, high]
 
     def __lt__(self, other: 'Card') -> bool:
         return self.rank() < other.rank()

@@ -32,6 +32,7 @@ class Value:
     def __lt__(self, other: 'Value') -> bool:
         return self.val < other.val
     def __eq__(self, other: 'Value') -> bool:
+        if type(other) != type(self): return False
         return self.val == other.val
     
     def __hash__(self) -> int:
@@ -86,11 +87,53 @@ class Hand:
 
     def __init__(self, cards: list[Card]) -> 'Hand':
         self.cards = cards
+    def __init__(self, cards: str, delim: str=" ") -> 'Hand':
+        self.cards = [Card(s) for s in cards.split(delim)]
 
     def __str__(self, delim: str=" ") -> str:
         return delim.join([str(card) for card in self.cards])
     def __repr__(self) -> str:
         return "Hand(cards=%s)" % self.cards
+    
+    def rank(self):
+        """Returns a list of comparable values, summarising how a hand scores.
+        Assumes only 1 deck is in play (no 5 of a kind, or pairs within flushes)
+        """
+        high = high_cards(self.cards)
+        straight = straight_cards(self.cards, miss=None)
+
+        # Check if flushed
+        if flush_cards(self.cards):
+            # 6: Regular flush
+            if straight == None: return [6, high]
+            # 9: Straight flush
+            else: return [9, straight]
+
+        # 5: Regular Straight
+        elif straight != False: return [5, straight]
+        
+        # Check groupings
+        groups = [(v,int(k)) for k,v in group_cards(self.cards).items()]
+        groups.sort(reverse=True)
+        print(groups)
+
+        if len(groups) == 2:
+            # 8: 4 of a kind
+            if groups[0][0] == 4: return [8, [v[1] for v in groups]]
+            # 7: Full house
+            else: return [7, [v[1] for v in groups]]
+        
+        elif len(groups) == 3: 
+            # 4: 3 of a kind
+            if groups[0][0] == 3: return [4, [v[1] for v in groups]]
+            # 3: Two pair
+            else: return [3, [v[1] for v in groups]]
+
+        # 2: One pair
+        elif len(groups) == 4: return [2, [v[1] for v in groups]]
+        # 1: Just high card
+        else: return [1, high_cards]
+            
 
 
 def high_cards(cards: list[Card]) -> list[Value]:

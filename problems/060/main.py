@@ -16,7 +16,7 @@ __author__ = "Liam Anthian"
 from common.primes import is_prime3 as is_prime, prime_generator 
 
 # --- Conditions of the problem ---
-FAMILY = 4
+FAMILY = 5
 
 
 def paired(a: int, b: int) -> bool:
@@ -26,27 +26,35 @@ def paired(a: int, b: int) -> bool:
     if is_prime(int(a_s+b_s)) and is_prime(int(b_s+a_s)): return True
     return False
 
+def expand_pair_set(value: int, pair_set: dict[int,dict]) -> list[int]:
+    """Takes a recursive dictionary of pair set primes `pair_set` and attaches
+    `value` onto valid sets of pairs. Returns longest retrievable pair set that
+    includes `value`."""
+    best = []
+    for k,k_dict in pair_set.items():
+        if paired(k, value): 
+            new = [k] + expand_pair_set(value, k_dict)
+            if len(new) > len(best): best = new
+            k_dict[value] = {}
+    
+    if best == []: return [value]
+    return best
+
 
 # --- Calculation & Output ---
 def main():
-    pair_sets = []
+    pair_sets = {}
 
     # Build up through primes
     for p in prime_generator():
-        # Try including new prime in each existing pair set
-        for p_set in pair_sets:
-            # If matches, track new longer pair set
-            # if all([paired(p,x) for x in p_set]): 
-            for x in p_set:
-                if not paired(p,x): break
-            else:
-                new = p_set.union({p})
-                pair_sets.append(new)
 
-                # Terminating point
-                if len(new) == FAMILY: 
-                    print(sum(new)) # 26,033
-                    return
+        # Find longest pair set including p
+        p_longest = expand_pair_set(p, pair_sets)
+        if len(p_longest) == FAMILY: break
 
-        pair_sets.append({p})
-        # print(pair_sets)
+        # Create new 'set' of just p
+        pair_sets[p] = {}
+    
+
+    # --- Output ---
+    print(sum(p_longest))

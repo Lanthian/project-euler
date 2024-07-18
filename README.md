@@ -60,8 +60,10 @@ ___
 * [051](problems/051/main.py) - Prime Digit Replacements
 * [052](problems/052/main.py) - Permuted Multiples
 * [053](problems/053/main.py) - Combinatoric Selections
-...
+* [054](problems/054/main.py) - Poker Hands
 * [055](problems/055/main.py) - Lychrel Numbers
 * [056](problems/056/main.py) - Powerful Digit Sum
 * [057](problems/057/main.py) - Square Root Convergents
 * [058](problems/058/main.py) - Spiral Primes
+...
+* [060](problems/060/main.py) - Prime Pair Sets

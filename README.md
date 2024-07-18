@@ -65,5 +65,5 @@ ___
 * [056](problems/056/main.py) - Powerful Digit Sum
 * [057](problems/057/main.py) - Square Root Convergents
 * [058](problems/058/main.py) - Spiral Primes
-...
+* [059](problems/059/main.py) - XOR Decryption
 * [060](problems/060/main.py) - Prime Pair Sets

@@ -29,7 +29,7 @@ def paired(a: int, b: int) -> bool:
 def expand_pair_set(value: int, pair_set: dict[int,dict]) -> list[int]:
     """Takes a recursive dictionary of pair set primes `pair_set` and attaches
     `value` onto valid sets of pairs. Returns longest retrievable pair set that
-    includes `value`."""
+    includes `value`, in list form."""
     best = []
     for k,k_dict in pair_set.items():
         if paired(k, value): 
@@ -41,7 +41,7 @@ def expand_pair_set(value: int, pair_set: dict[int,dict]) -> list[int]:
     return best
 
 
-# --- Calculation & Output ---
+# --- Calculation ---
 def main():
     pair_sets = {}
 
@@ -57,4 +57,4 @@ def main():
     
 
     # --- Output ---
-    print(sum(p_longest))
+    print(sum(p_longest)) # 26,033

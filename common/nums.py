@@ -35,8 +35,26 @@ def pentagon_generator():
 
 # First seen in 045 - Triangular, Pentagonal and Hexagonal
 def hexagonal(num: int) -> int:
-    """Returns the `num`th hexagonal number."""
+    """Returns the `num`th hexagonal number. Works by splitting n_gons up into 
+    triangles."""
     return num * (2*num-1)
+
+# First seen in 061 - Cyclical Figurate Numbers
+def n_gonal(n: int, num: int) -> int:
+    """Returns the `num`th n-gonal number. Works by splitting n_gons up into 
+    triangles, using the `triangle_generator()` function."""
+    return num + (n-2) * triangle(num-1)
+
+# First seen in 061 - Cyclical Figurate Numbers
+def n_gonal_generator(n: int):
+    """A generator for n-gonal numbers."""
+    i = 1
+    yield i
+
+    for t in triangle_generator():
+        i += 1
+        yield (n-2) * t + i
+
 
 # First seen in 022 - Names Scores
 def value_word(word, zero=ord('A')-1) -> int:

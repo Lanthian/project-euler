@@ -67,3 +67,4 @@ ___
 * [058](problems/058/main.py) - Spiral Primes
 * [059](problems/059/main.py) - XOR Decryption
 * [060](problems/060/main.py) - Prime Pair Sets
+* [061](problems/061/main.py) - Cyclical Figurate Numbers

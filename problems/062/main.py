@@ -11,8 +11,6 @@ https://projecteuler.net/problem=62
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from math import cbrt
-from common.iters import permutation_generator
 from common.nums import int_gen
 from common.valwrap import ValWrap
 
@@ -28,7 +26,7 @@ def sort_digits(num: int, reverse: bool=False) -> str:
     return "".join(ls)
 
 
-# --- Calculation ---
+# --- Calculation & Output ---
 def main():
     cubes = {}
     length = 0
@@ -42,16 +40,16 @@ def main():
             length = len(c_s)
 
             for wrap in cubes.values():
+                # If cube permutations match requirement, answer found
                 if wrap.val == COUNT: 
-                    print(wrap.item)
-                    print(cubes)
+                    print(wrap.item) # 127,035,954,683
                     return
 
             # Reset dictionary store if no matches
             cubes.clear()
 
-        # Populate dictionary with new cube values entry
-        if c_s not in cubes: cubes[c_s] = ValWrap(1, i)
+        # Populate / update dictionary with new cube values entry
+        if c_s not in cubes: cubes[c_s] = ValWrap(1, cube)
         else: cubes[c_s].increment()
 
 

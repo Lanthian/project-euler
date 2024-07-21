@@ -7,10 +7,13 @@ https://projecteuler.net/problem=16
 
 __author__ = "Liam Anthian"
 
+# --- Imports ---
+from common.nums import digit_sum
+
 # --- Conditions of the problem ---
 NUM = 2 ** (10**3)
 
 
 # --- Calculation & Output ---
 def main():
-    print(sum([int(d) for d in str(NUM)])) # 1,366
+    print(digit_sum(NUM)) # 1,366

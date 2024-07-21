@@ -56,17 +56,17 @@ def n_gonal_generator(n: int):
         yield (n-2) * t + i
 
 
+# First seen in 016 - Power Digit Sum
+def digit_sum(num: int) -> int:
+    """Takes a number `num` and returns the sum of it's digits as an int."""
+    return sum([int(c) for c in str(num)])
+
 # First seen in 022 - Names Scores
 def value_word(word, zero=ord('A')-1) -> int:
     """Takes in any character iterable `word` and returns the sum of all it's 
     characters, treating `zero` as the base for 0 in character conversion.
     Takes '@' (A-1) as 0 by default."""
     return sum([ord(letter)-zero for letter in word])
-
-# First seen in 056 - Powerful Digit Sum
-def digit_sum(num: int) -> int:
-    """Takes a number `num` and returns the sum of it's digits as an int."""
-    return sum([int(c) for c in str(num)])
 
 # First seen in 027 - Quadratic Primes
 def int_gen(start: int):

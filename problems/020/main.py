@@ -11,6 +11,7 @@ __author__ = "Liam Anthian"
 
 # --- Imports ---
 from math import factorial
+from common.nums import digit_sum
 
 # --- Conditions of the problem ---
 NUMBER = 100
@@ -18,4 +19,4 @@ NUMBER = 100
 
 # --- Calculation & Output ---
 def main():
-    print(sum([int(c) for c in str(factorial(NUMBER))])) # 648
+    print(digit_sum(factorial(NUMBER))) # 648

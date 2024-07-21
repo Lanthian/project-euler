@@ -63,6 +63,11 @@ def value_word(word, zero=ord('A')-1) -> int:
     Takes '@' (A-1) as 0 by default."""
     return sum([ord(letter)-zero for letter in word])
 
+# First seen in 056 - Powerful Digit Sum
+def digit_sum(num: int) -> int:
+    """Takes a number `num` and returns the sum of it's digits as an int."""
+    return sum([int(c) for c in str(num)])
+
 # First seen in 027 - Quadratic Primes
 def int_gen(start: int):
     """A generator for increasing integer numbers - starts at `start` (incls)"""

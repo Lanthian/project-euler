@@ -10,13 +10,11 @@ https://projecteuler.net/problem=56
 
 __author__ = "Liam Anthian"
 
+# --- Imports ---
+from common.nums import digit_sum
+
 # --- Conditions of the problem ---
 LIMIT = 100             # Exclusive
-
-
-def digit_sum(num: int) -> int:
-    """Takes a number `num` and returns the sum of it's digits as an int."""
-    return sum([int(c) for c in str(num)])
 
 
 # --- Calculation ---

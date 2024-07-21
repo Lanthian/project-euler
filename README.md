@@ -69,3 +69,4 @@ ___
 * [060](problems/060/main.py) - Prime Pair Sets
 * [061](problems/061/main.py) - Cyclical Figurate Numbers
 * [062](problems/062/main.py) - Cubic Permutations
+* [063](problems/063/main.py) - Powerful Digit Counts

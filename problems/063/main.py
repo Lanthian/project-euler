@@ -11,28 +11,22 @@ __author__ = "Liam Anthian"
 # --- Imports ---
 from common.nums import int_gen
 
-# --- Conditions of the problem ---
-
 
 # --- Calculation ---
 def main():
     count = 0
 
-    # Iterate through possible powers until tipping point reached for digits
-    power = 1
-    while(len(str(4**power)) <= power):
-        # print(power)
-        for i in int_gen(1):
-            p_s = str(i**power)
-            # print(power, p_s)
-            if len(p_s) > power: break
-            elif len(p_s) == power: 
-                print(power, f"{i}**{power}", p_s)
-                count += 1
+    # Iterate through possible bases (for base 10 and up, digits always > power)
+    for base in range(1,10):
+        # Try increasing the power until power exceeds digits
+        for power in int_gen(1):
+            # If digit count match, increment tally
+            digits = len(str(base**power))
+            if digits == power: count += 1
+            # Otherwise, power exceeds digit count
+            else: break
 
-        power += 1
-
-    print(count)
 
     # --- Output ---
+    print(count) # 49
     return

@@ -31,30 +31,38 @@ LIMIT = 1000            # Inclusive
 def minimal_diophantine(d: int) -> tuple[int, int]:
     """Finds and returns the the minimum value of (x,y) in Diophantine equation 
     x^2 - `d`*y^2 = 1, minimised according to x."""
-    for x in int_gen(2):
-        d_y2 = x**2 - 1
-        if d_y2 % d != 0: continue
-        y = sqrt(d_y2//d)
+    for y in int_gen(1):
+        # d_y2 = x**2 - 1
+        # if d_y2 % d != 0: continue
+        # y = sqrt(d_y2//d)
+        # # Check if y is a whole number (y^2 is a valid square)
+        # if y % 1 == 0: return (x,int(y))
+
+        x2 = 1 + d*y**2
+        x = sqrt(x2)
         # Check if y is a whole number (y^2 is a valid square)
-        if y % 1 == 0: return (x,int(y))
+        if x % 1 == 0: return (x,int(y))
+
 
 
 # --- Calculation ---
 def main():
     greatest = 0
     sqrs = set()
-    for d in range(2,LIMIT+1):
-        # Track squares to skip later
-        sqrs.add(d**2)
-        # Check if this d needs skipping
-        if d in sqrs: continue
+    # for d in range(2,LIMIT+1):
+    #     # Track squares to skip later
+    #     sqrs.add(d**2)
+    #     # Check if this d needs skipping
+    #     if d in sqrs: continue
         
-        # Find x & y for this d
-        (x,_) = minimal_diophantine(d)
-        if x > greatest: 
-            print("%s: %s -> %s" % (d, greatest,x))
-            greatest = x
+    #     # Find x & y for this d
+    #     (x,_) = minimal_diophantine(d)
+    #     if x > greatest: 
+    #         print("%s: %s -> %s" % (d, greatest,x))
+    #         greatest = x
     
+
+    print(61, minimal_diophantine(61))
     
     # --- Output ---
     print(greatest)

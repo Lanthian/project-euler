@@ -35,7 +35,7 @@ def int_root(num: int) -> int | None:
     as_int = int(root)
     if as_int == root: return as_int
     # Otherwise not a whole number, thus `num` is not square
-    return False
+    return None
 
 def minimal_diophantine(d: int) -> tuple[int, int]:
     """Finds and returns the the minimum value of x in Diophantine equation 
@@ -48,26 +48,54 @@ def minimal_diophantine(d: int) -> tuple[int, int]:
 
 # --- Calculation ---
 def main():
-    greatest = 0
-    sqrs = set()
-    for d in range(2,LIMIT+1):
-        # Track squares to skip later
-        sqrs.add(d**2)
-        # Check if this d needs skipping
-        if d in sqrs: continue
+    # greatest = 0
+    # sqrs = set()
+    # for d in range(2,LIMIT+1):
+    #     # Track squares to skip later
+    #     sqrs.add(d**2)
+    #     # Check if this d needs skipping
+    #     if d in sqrs: continue
         
-        # Find x & y for this d
-        x = minimal_diophantine(d)
-        if x > greatest: 
-            print("%s: %s -> %s" % (d, greatest,x))
-            greatest = x
+    #     # Find x & y for this d
+    #     x = minimal_diophantine(d)
+    #     if x > greatest: 
+    #         print("%s: %s -> %s" % (d, greatest,x))
+    #         greatest = x
     
-
     # Benchmark for improvement
-    # print(61, minimal_diophantine(61))
+    # print(61, minimal_diophantine(61)) # 61 335,159,612
+
+    # - Filter squares out of d values -
+    selection = list(range(2,LIMIT+1))
+
+    # Populate squares
+    sqrs = set()
+    for s in square_generator():
+        if s > selection[-1]: break
+        sqrs.add(s)
+    # Drop squares from d-s
+    ds = {d for d in selection if d not in sqrs}
     
+    # Building up from lowest y square, filter out lower minimum x's
+    for y2 in square_generator():
+        new_ds = set()
+
+        # Check if lowest x possible for any d's with this y**2 value
+        for d in ds:
+            x = int_root(1 + d*y2)
+            # Drop respective d if match found
+            if x: continue
+            new_ds.add(d)
+        
+        
+        # Update d set and check terminating condition
+        ds = new_ds
+        if len(ds) == 1: break    
+
+
     # --- Output ---
-    print(greatest)
+    # print(greatest)
+    print(list(ds)[0])
     return
 
 

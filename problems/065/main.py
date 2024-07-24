@@ -60,6 +60,6 @@ def main():
     numerator = fr_add(two, convergent_part, simplify=False).numer
 
 
-    # # --- Output ---
+    # --- Output ---
     print(digit_sum(numerator)) # 272
     return

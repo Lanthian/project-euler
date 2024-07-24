@@ -18,6 +18,16 @@ def triangle_generator():
         i += 1
         num += i
 
+# First seen in 066 - Diophantine Equation
+def square_generator():
+    """A generator for square numbers."""
+    num = 1
+    i = 1
+    while(True):
+        yield num
+        i += 2
+        num += i
+
 # First seen in 044 - Pentagon Numbers
 def pentagonal(num: int) -> int:
     """Returns the `num`th pentagonal number."""

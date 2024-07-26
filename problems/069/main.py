@@ -13,7 +13,7 @@ https://projecteuler.net/problem=69
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from common.primes import prime_factors, prime_sieve
+from common.primes import prime_factors, prime_generator, prime_sieve 
 
 # --- Conditions of the problem ---
 LIMIT = 10**6           # Inclusive
@@ -21,40 +21,49 @@ LIMIT = 10**6           # Inclusive
 
 # --- Calculation ---
 def main():
-    primes = prime_sieve(LIMIT)
-    prime_set = set(primes)
-    not_prime = []
+    # primes = prime_sieve(LIMIT)
+    # prime_set = set(primes)
+    # not_prime = []
+    #
+    # factors = {}
+    # phi = {}
+    #
+    # best_n_div_phi = 1
+    # best_n = 1
+    # for n in range (2, LIMIT+1):
+    #     factors[n] = set(prime_factors(n, primes, reduced=True))
+    #     # If prime, don't need to check factor overlap
+    #     if n in prime_set: phi[n] = n-1
+    #    
+    #     # Otherwise, count up relatively prime lower numbers
+    #     else:
+    #         count = 1
+    #         for i in range(2,n):
+    #
+    #             # Check if any factor overlap
+    #             for factor in factors[n]:
+    #                 if factor in factors[i]: break
+    #             else: count += 1
+    #         # And update phi(n) accordingly
+    #         phi[n] = count
+    #        
+    #     # Update greatest n/phi(n)
+    #     n_div_phi = n / phi[n]
+    #     if n_div_phi > best_n_div_phi:
+    #         print("%s -> %s, %s -> %s" % (best_n, n, best_n_div_phi, n_div_phi))
+    #         best_n_div_phi = n_div_phi
+    #         best_n = n
 
-    factors = {}
-    phi = {}
+    # Greatest n/phi(n) will be maximised when it is the multiplicand of the
+    #   most primes; can quickly find best by just multiplying primes < LIMIT
+    best = 1
+    for p in prime_generator():
+        next_best = best * p
+        if next_best < LIMIT: best = next_best
+        else: break
 
-    best_n_div_phi = 1
-    best_n = 1
-    for n in range (2, LIMIT+1):
-        factors[n] = set(prime_factors(n, primes, reduced=True))
-        # If prime, don't need to check factor overlap
-        if n in prime_set: phi[n] = n-1
-        
-        # Otherwise, count up relatively prime lower numbers
-        else:
-            count = 1
-            for i in range(2,n):
-
-                # Check if any factor overlap
-                for factor in factors[n]:
-                    if factor in factors[i]: break
-                else: count += 1
-            # And update phi(n) accordingly
-            phi[n] = count
-        
-        # Update greatest n/phi(n)
-        n_div_phi = n / phi[n]
-        if n_div_phi > best_n_div_phi:
-            print("%s -> %s, %s -> %s" % (best_n, n, best_n_div_phi, n_div_phi))
-            best_n_div_phi = n_div_phi
-            best_n = n
-        
 
     # --- Output ---
-    print(best_n)
+    # print(best_n)
+    print(best) # 510,510
     return

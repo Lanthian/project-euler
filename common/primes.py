@@ -121,10 +121,12 @@ def prime_generator():
         i += 1
 
 # First seen in 003 - Largest Prime Factor
-def prime_factors(product: int, primes: list[int]=[]) -> list[int]:
+def prime_factors(product: int, primes: list[int]=[], reduced: bool=False
+                  ) -> list[int]:
     """Takes a number `product` and finds and returns a list of all prime 
     factors that build it. Can take in a prior sufficiently large list of 
-    `primes` instead of generating."""
+    `primes` instead of generating. Only returns one instance of repeat prime
+    factors if `reduced` flag is set to True."""
     factors = []
 
     incrementor = primes if len(primes) > 0 else prime_generator()
@@ -137,6 +139,7 @@ def prime_factors(product: int, primes: list[int]=[]) -> list[int]:
 
         # Check for cut off
         if p > product or product == 0: break
+    if reduced: return list(set(factors))
     return factors
 
 # First seen in 047 - Largest Prime Factor

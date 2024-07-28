@@ -184,7 +184,7 @@ def tupled_prime_factors(product: int, primes: list[int]=[]) -> list[tuple[int,i
     return factors
 
 # First seen in 010 - Summation of Primes
-def prime_sieve(limit: int) -> list[int]:
+def eratosthenes_sieve(limit: int) -> list[int]:
     """Eratosthenes Sieve: Generates all primes up to `limit` (not inclusive) by 
     filtering out factors as it works up the range of possible primes."""
     # Shorthand functions for converting too and from array indexes to values
@@ -210,45 +210,9 @@ def prime_sieve(limit: int) -> list[int]:
 
     return [2] + [p*to_val(i) for i,p in enumerate(primes) if p]
 
-# def sieve_extend(primes: list, new_limit: int) -> list[int]:
-#     """Eratosthenes Sieve: """
-#     # Shorthand functions for converting too and from array indexes to values
-#     def to_val(index: int) -> int:
-#         return 2*index+3
-#     def from_val(val: int) -> int:
-#         return (val-3)//2
-    
-#     # Base case
-#     if len(primes) == 0: return prime_sieve(new_limit)
-    
-#     # return ['a','b','c']
-#     # Unsieved array
-#     length = from_val(new_limit-primes[-1]+1)
-#     new_primes = [1]*length
-
-#     return primes + new_primes
-
-#     # Update new selection
-#     for i in range:
-#         i += 1
-
-
-#     for i in range(0, length):
-#         # Skip factors that are combinations of smaller primes
-#         if primes[i] == 0: continue
-
-#         # If a prime, remove all greater composites
-#         val = to_val(i)
-
-#         if primes[i]: 
-#             for j in range(from_val(val**2), length, val):
-#                 primes[j] = 0
-
-#     return [2] + [p*to_val(i) for i,p in enumerate(primes) if p]
-
-# p = prime_sieve(100)
-# print(p)
-# ps = sieve_extend(p, 110)
-# print(ps)
-# ps = prime_sieve(110)
-# print(ps)
+# Shorthand function to avoid renaming
+def prime_sieve(limit: int) -> list[int]: 
+    """Shorthand for primes.py eratosthenes_sieve():
+    Eratosthenes Sieve: Generates all primes up to `limit` (not inclusive) by 
+    filtering out factors as it works up the range of possible primes."""
+    return eratosthenes_sieve(limit)

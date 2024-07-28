@@ -24,30 +24,33 @@ from common.primes import tupled_prime_factors, prime_factors, prime_sieve
 LIMIT = 10**7           # Exclusive
 
 
-def phi(n: int) -> int:
+def phi(n: int, primes: list[int]=[]) -> int:
     """Returns the totient / phi function value for number `n`."""
-    paired_facs = tupled_prime_factors(n)
+    paired_facs = tupled_prime_factors(n, primes)
     return operate_list(1,[p**(i-1) * (p-1) for (p,i) in paired_facs],mul)
 
 
 # --- Calculation ---
 def main():
+    # Generate primes in advance
+    primes = prime_sieve(LIMIT)
+
     best_ratio = 1000
     best_n = 1
     for n in range (2, LIMIT):
-        pn = phi(n)
+        pn = phi(n, primes)
 
         # Update smallest perm ratio if necessary
         if permutation(str(n), str(pn)):
             ratio = n / pn
             if ratio < best_ratio:
-                print("%s -> %s, %s -> %s" % (best_n, n, best_ratio, ratio))
+                print("%s -> %s (%s), %s -> %s" % (best_n, n, pn, best_ratio, ratio))
                 best_ratio = ratio
                 best_n = n
 
     # Hypothesising it'll be better to work backwards from the limit to some 
     #   tipping point, rather than forwards
-    
+
 
     # --- Output ---
     print(best_n)

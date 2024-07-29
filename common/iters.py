@@ -88,7 +88,23 @@ def ruled_perm_gen(order: str, rules: dict[int,list['function']]={},
 def permutation(a, b) -> bool:
     """Takes two iterables `a` and `b` and returns if they are permutations of 
     each other (boolean)."""
-    return (len(a) == len(b) and set(a) == set(b))
+    if len(a) != len(b): return False
+
+    # Convert b to list form if necessary
+    b = list(b)
+
+    # Iterate through elements in a
+    for a_c in a:
+        # Try and match them with an element in b
+        for i,b_c in enumerate(b):
+            if a_c == b_c: break
+
+        # If no match, not a permutation
+        else: return False
+        # otherwise, drop matched element
+        b = b[:i] + b[i+1:]
+
+    return True
 
 # First seen in 051 - Prime Digit Replacements
 def sublists(ite: list) -> list:

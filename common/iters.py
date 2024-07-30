@@ -3,58 +3,6 @@
 __author__ = "Liam Anthian"
 
 
-class count_dict:
-    """Custom set built from a dictionary with keys=items, values=counts."""
-    items: dict[...: int]
-
-    def __init__(self, iterable: iter=[]):
-        self.items = {}
-        self.update(iterable)
-
-    def __str__(self) -> str:
-        return str(self.items)
-
-
-    def __contains__(self, item: ...):
-        """Returns if a value `item` is in a count_dict."""
-        return item in self.items
-    
-    def remove(self, item: ...):
-        """Raises an error if item is not in count_dict."""
-        self.items[item] -= 1
-        if self.items[item] == 0: del self.items[item]
-
-    def discard(self, item: ...):
-        """Does not raise an error if item is not in count_dict."""
-        if item in self.items: self.remove(item)
-
-    def add(self, item: ...):
-        """Adds an item into self.items, incrementing count if necessary."""
-        # Increment item count if second+ occurence
-        if item in self.items: self.items[item] += 1
-        # otherwise Initialise item if first occurence
-        else: self.items[item] = 1
-
-    def update(self, iterable: iter):
-        """Adds items from `iterable` into self.items, incrementing the counts 
-        of already existing instances."""
-        for item in iterable: self.add(item)
-            
-
-    def __eq__(self, other: 'count_dict') -> bool:
-        """Returns if two `count_dict`s are equal."""
-        # Quick check if same number of items between count_dicts
-        if len(self.items.keys()) != len(other.items.keys()): return False
-
-        # Otherwise, check items and counts match up
-        for item,count in self.items.items():
-            if item not in other.items: return False
-            elif other.items[item] != count: return False
-
-        # If all items and all counts match up, equal
-        return False
-
-
 # First seen in 004 - Largest Palindrome Product
 def palindrome(iterable) -> bool:
     """Returns a boolean for if an iterable `iterable` is palindromic or not. 

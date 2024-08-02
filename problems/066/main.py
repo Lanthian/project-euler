@@ -89,6 +89,7 @@ def main():
         
         
         # Update d set and check terminating condition
+        if len(ds) != len(new_ds): print(y2, new_ds)
         ds = new_ds
         if len(ds) == 1: break    
 

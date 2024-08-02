@@ -20,7 +20,6 @@ https://projecteuler.net/problem=67
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from operator import add
 from common.files import easy_open
 from common.valwrap import ValWrap
 
@@ -60,9 +59,9 @@ def main():
 
     # Find max path
     last_row = len(triangle) - 1
-    max_path_value = max([wrap.val for (r,_),wrap in tree.items() if r == last_row])
+    max_path = max([wrap.val for (r,_),wrap in tree.items() if r == last_row])
     
 
     # --- Output ---
-    print(max_path_value) # 7,273
+    print(max_path) # 7,273
     return

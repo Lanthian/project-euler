@@ -33,6 +33,11 @@ def pentagonal(num: int) -> int:
     """Returns the `num`th pentagonal number."""
     return (num * (3*num-1)) // 2
 
+# First seen in 078 - Coin Partitions
+def pentagonal_alt(num: int) -> int:
+    """Returns the 'num'th pentagonal number of an alt pentagonal sequence."""
+    return (num * (3*num+1)) // 2
+
 # First seen in 044 - Pentagon Numbers
 def pentagon_generator():
     """A generator for pentagonal numbers."""
@@ -79,11 +84,12 @@ def value_word(word, zero=ord('A')-1) -> int:
     return sum([ord(letter)-zero for letter in word])
 
 # First seen in 027 - Quadratic Primes
-def int_gen(start: int):
-    """A generator for increasing integer numbers - starts at `start` (incls)"""
+def int_gen(start: int, step: int=1):
+    """A generator for integer numbers - starts at `start` (incls) and steps by
+    `step` (+1 by default)."""
     while(True):
         yield start
-        start += 1
+        start += step
 
 # First seen in 030 - Digit Fifth Powers
 def find_cap(digit_cost: int) -> int:

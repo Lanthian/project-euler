@@ -11,6 +11,7 @@ https://projecteuler.net/problem=78
 __author__ = "Liam Anthian"
 
 # --- Imports ---
+import time
 from common.nums import int_gen, pentagonal, pentagonal_alt as pent_alt
 from common.primes import factor
 
@@ -69,11 +70,13 @@ def partition(n: int) -> int:
 
 # --- Calculation ---
 def main():
+    start = time.time()
     for i in int_gen(1):
         result = partition(i)
         if factor(result, DIVISOR): break
 
 
     # --- Output ---
-    print(result) 
+    print("Time:", time.time() - start)
+    print(result, i) # 55374, 1100 seconds
     return

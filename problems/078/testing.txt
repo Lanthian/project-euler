@@ -1,0 +1,72 @@
+The first 15 values to the coin piles formula are seen below. 
+
+1 : 1
+2 : 2    
+3 : 3    
+4 : 5    
+5 : 7    
+6 : 11   
+7 : 15   
+8 : 22   
+9 : 30   
+10 : 42  
+11 : 56  
+12 : 77  
+13 : 101 
+14 : 135 
+15 : 176 
+
+An approach to try modelling them:
+For each number 'n', recursively calculate the coin piles of possible divisions. In the following, p' refers to p but 
+    limited such that it can only be made with numbers smaller than or equal to it's guard, 'g &'.
+  
+  p(n) = n & p'(0) +
+    n-1 & p'(1) +
+    n-2 & p'(2) +
+    ... +
+    2 & p'(n-2) +
+    1 & p'(n-1)
+    == [n] + [n-1,1] + [n-2,2; n-2,1,1] + ... + [2,(n-1)*1; ...] + [n*1]
+    == 1 + 1 + 2 + 
+
+
+  Example for n = 4.
+
+  p(4) = 4 & p'(0) + 
+    3 & p'(1) + 
+    2 & p'(2) +
+    1 & p'(3)
+    == [4] + [3,1] + [2,2; 2,1,1] + [1,1,1,1]
+    == 1 + 1 + 2 + 1 == 5
+
+
+  And an example for n = 5
+
+  p(5) = 5 & p'(0) +
+    4 & p'(1) +
+    3 & p'(2) + 
+    2 & p'(3) +
+    1 & p'(4)
+    == [5] + [4,1] + [3,2; 3,1,1] + [2,2,1; 2,1,1,1] + [1,1,1,1,1]
+    == 1 + 1 + 2 + 2 + 1 == 7
+
+
+A clear problem with this approach is recalculating the p' values in regards to their changing guards. A simpler 
+  realisation is that the guard of each p value increases by 1 each iteration. Replacing g & p'(n) with P(g,n), we 
+  observe the following.
+
+  P(1,n) = 1
+  P(2,1) = 1
+    P(2,2) = 2
+    P(2,3) = 2
+    P(2,4) = 3
+    P(2,5) = 3
+    P(2,n) = n//2 + 1
+  P(3,1) = 1
+    P(3,2) = 2
+    P(3,3) = 3
+    P(3,4) = 4
+    P(3,5) = 4
+    P(3,6) = 7 ...
+  
+  Pattern gets much more complex as it builds up - no clear simple algebraic expression

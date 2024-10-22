@@ -17,6 +17,7 @@ from common.primes import factor
 # --- Conditions of the problem ---
 DIVISOR = 10**6
 
+sums = {}
 
 # Modified from 031 - Coin Sums
 def simpler_sum_to(curr: int, goal: int, option_start: int=1) -> int:
@@ -25,6 +26,11 @@ def simpler_sum_to(curr: int, goal: int, option_start: int=1) -> int:
     `goal`. Via recursion, returns an integer of the number of possible path 
     permutations to goal."""
     if curr == goal: return 1
+
+    # Reuse previous sums
+    if goal not in sums: sums[goal] = {}
+    if curr not in sums[goal]: sums[goal][curr] = {}
+    if option_start in sums[goal][curr]: return sums[goal][curr][option_start]
 
     else:
         # For each possible action from current, check sum sub paths to goal
@@ -38,6 +44,7 @@ def simpler_sum_to(curr: int, goal: int, option_start: int=1) -> int:
                 # Add total (recursive) valid sub paths to result
                 result += simpler_sum_to(next_val, goal, n)
         
+        sums[goal][curr][option_start] = result
         return result
 
 

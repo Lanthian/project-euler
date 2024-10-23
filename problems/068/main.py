@@ -34,15 +34,18 @@ from common.iters import ruled_perm_gen
 from common.nums import charlist_to_int as t  # Aliased for shorthand
 
 # --- Conditions of the problem ---
-RING_SIZE = 3
-NUMBERS = [str(e) for e in range(1,2*RING_SIZE+1)]
+RING_SIZE = 5
+TOTAL_SIZE = 2*RING_SIZE
+NUMBERS = [str(e) for e in range(1,TOTAL_SIZE+1)]
+
+SOUGHT_LENGTH = 16
 
 
 def order_to_ring(seq: list, N: int) -> str:
     """Shorthand function to convert a permutation of elements that represent an
     N-gon ring (side length 3) into their full ring list."""
     # Append 2nd term to end of sequence (to reuse later in final side overlap)
-    seq.append(seq[1])
+    seq = list(seq) + [seq[1]]
 
     # Define first side, then build up remaining sides
     full = seq[:3]
@@ -58,18 +61,29 @@ def main():
     rules = {
         # length : [rules applicable up to (including) this length]
         # Not needed, but the sooner we check, the more permutations pruned
-        4: [lambda x: str(int(x[0])+int(x[1])-int(x[3])) in NUMBERS], 
-        5: [lambda x: int(x[0])+int(x[1]) == int(x[3])+int(x[4])],
-        6: [lambda x: int(x[3])+int(x[2]) == int(x[5])+int(x[1])],
+        4:  [lambda x: str(int(x[0])+int(x[1])-int(x[3])) in NUMBERS], 
+        5:  [lambda x: int(x[0])+int(x[1]) == int(x[3])+int(x[4])],
+        7:  [lambda x: int(x[3])+int(x[2]) == int(x[5])+int(x[6])],
+        9:  [lambda x: int(x[5])+int(x[4]) == int(x[7])+int(x[8])],
+        11: [lambda x: int(x[7])+int(x[6]) == int(x[9])+int(x[10])],
     }
+
+    # Include final loop
+    final = [lambda x: int(x[TOTAL_SIZE-3])+int(x[TOTAL_SIZE-4]) == 
+             int(x[TOTAL_SIZE-1])+int(x[1])]
+    if TOTAL_SIZE in rules: rules[TOTAL_SIZE].extend(final)
+    else: rules[TOTAL_SIZE] = final
+        
     x = 0
     for i in ruled_perm_gen(NUMBERS, rules):
+        if not i: continue
         print(t(i))
         x += 1
     print("matches", x)
 
-    print(t(order_to_ring(list("423516"), RING_SIZE)))
-
+    print(t(order_to_ring("423516", 3)))
+    print(t(str(s) for s in order_to_ring(list(range(1,11)), 5)))
+    print(t(str(s) for s in order_to_ring(['1','10','2','3','4','5','6','7','8','9'], 5)))
 
     # --- Output ---
     return

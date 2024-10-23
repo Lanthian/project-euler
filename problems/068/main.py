@@ -30,6 +30,7 @@ https://projecteuler.net/problem=68
 __author__ = "Liam Anthian"
 
 # --- Imports ---
+import time
 from common.iters import ruled_perm_gen
 from common.nums import charlist_to_int as t  # Aliased for shorthand
 
@@ -57,33 +58,38 @@ def order_to_ring(seq: list, N: int) -> str:
 
 # --- Calculation ---
 def main():
-    # 4,2,3; 5,3,1; 6,1,2
+    start = time.time()
+
+    """Build permutations rules for N-gons with N > 2"""
+    # Prepare additional early stage rules to prune permutations faster
     rules = {
         # length : [rules applicable up to (including) this length]
-        # Not needed, but the sooner we check, the more permutations pruned
-        4:  [lambda x: str(int(x[0])+int(x[1])-int(x[3])) in NUMBERS], 
-        5:  [lambda x: int(x[0])+int(x[1]) == int(x[3])+int(x[4])],
-        7:  [lambda x: int(x[3])+int(x[2]) == int(x[5])+int(x[6])],
-        9:  [lambda x: int(x[5])+int(x[4]) == int(x[7])+int(x[8])],
-        11: [lambda x: int(x[7])+int(x[6]) == int(x[9])+int(x[10])],
+        4: [lambda x: str(int(x[0])+int(x[1])-int(x[3])) in NUMBERS]
     }
+    # Add in N-gon loop requirements
+    rules.update({
+        i: [lambda x, i=i: int(x[i-4])+int(x[i-5]) == int(x[i-2])+int(x[i-1])] 
+            for i in range(5,TOTAL_SIZE,2)
+    })
+    # Include final loop requirement (looping back to start)
+    end = [lambda x: int(x[TOTAL_SIZE-3])+int(x[TOTAL_SIZE-4]) == 
+        int(x[TOTAL_SIZE-1])+int(x[1])]
+    if TOTAL_SIZE in rules: rules[TOTAL_SIZE].extend(end)
+    else: rules[TOTAL_SIZE] = end
 
-    # Include final loop
-    final = [lambda x: int(x[TOTAL_SIZE-3])+int(x[TOTAL_SIZE-4]) == 
-             int(x[TOTAL_SIZE-1])+int(x[1])]
-    if TOTAL_SIZE in rules: rules[TOTAL_SIZE].extend(final)
-    else: rules[TOTAL_SIZE] = final
-        
-    x = 0
+    max_ngon = 0
     for i in ruled_perm_gen(NUMBERS, rules):
-        if not i: continue
-        print(t(i))
-        x += 1
-    print("matches", x)
+        if not i: 
+            print("No valid permutations discovered.")
+            continue
+        
+        ngon = t(order_to_ring(i, RING_SIZE))
+        # Update maximum SOUGHT_LENGTH digit ngon as necessary
+        if SOUGHT_LENGTH is None or len(str(ngon)) == SOUGHT_LENGTH: 
+            if ngon > max_ngon: max_ngon = ngon
 
-    print(t(order_to_ring("423516", 3)))
-    print(t(str(s) for s in order_to_ring(list(range(1,11)), 5)))
-    print(t(str(s) for s in order_to_ring(['1','10','2','3','4','5','6','7','8','9'], 5)))
 
     # --- Output ---
+    print("Time:", time.time() - start)
+    print(max_ngon)
     return

@@ -136,3 +136,10 @@ def pandigital(seq: str, n: int, strict: bool=True, start: int=1) -> bool:
             elif seen[x] != 1: return False
         
     return True
+
+
+# First seen in 043 - Sub-string Divisibility
+def charlist_to_int(char_list: list) -> int:
+    """Helper function to convert character lists into concatenated integers:
+    ['1', '2', '3'] -> 123"""
+    return int("".join(char_list))

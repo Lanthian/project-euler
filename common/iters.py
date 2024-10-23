@@ -39,16 +39,15 @@ def permutation_generator(order: str, sep: str=''):
                 yield sep.join([item, i_next])
 
 # First seen in 043 - Sub-string Divisibility
-def ruled_perm_gen(order: str, rules: dict[int,list['function']]={}, 
-                   prefix: str='', sep: str=''):
-    """A generator for permutations of characters in the string `order`. Joins 
-    characters together with `sep` connector. Recursively passes previous 
-    items down through `cur` to check the properties `rules` against - trimming
-    any permutations which break any rules."""
+def ruled_perm_gen(order: list, rules: dict[int,list['function']]={}, 
+                   prefix: list=[]):
+    """A generator for permutations of elements in the list `order`. Recursively 
+    passes previous items down through `cur` to check the properties `rules` 
+    against - trimming any permutations which break any rules."""
 
-    def check_rules(state: str, rules: dict) -> bool:
+    def check_rules(state: list, rules: dict) -> bool:
             """Helper function for `ruled_perm_gen`. By length, checks if 
-            `state` (current permutation prefix as a string) passes all boolean 
+            `state` (current permutation prefix as a list) passes all boolean 
             functions `rules` at related depth/length. Returns a boolean."""
             # Current length
             cur = len(state)
@@ -66,20 +65,20 @@ def ruled_perm_gen(order: str, rules: dict[int,list['function']]={},
     #   children can be generated, yield false
     any_valid = False
     for i,item in enumerate(order):
-        if not check_rules(prefix+item, rules): continue
+        if not check_rules(prefix+[item], rules): continue
 
         rest = order[:i] + order[i+1:]
         # Base case (last item in iterable)
-        if len(rest) == 0: yield item
+        if len(rest) == 0: yield [item]
         
         # Otherwise recursively attach on next set of permutations
         else: 
-            for suffix in ruled_perm_gen(rest, rules, prefix+item, sep):
+            for suffix in ruled_perm_gen(rest, rules, prefix+[item]):
                 # Toggle flag if valid perm path found
                 if suffix == False: continue
                 else: any_valid = True
 
-                yield sep.join([item, suffix])
+                yield [item] + suffix
     
     # No possible children means this permutation branch needs to be terminated
     if not any_valid: yield False

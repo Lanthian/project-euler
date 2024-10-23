@@ -31,22 +31,23 @@ __author__ = "Liam Anthian"
 
 # --- Imports ---
 from common.iters import ruled_perm_gen
+from common.nums import charlist_to_int as t  # Aliased for shorthand
 
 # --- Conditions of the problem ---
 RING_SIZE = 3
 NUMBERS = [str(e) for e in range(1,2*RING_SIZE+1)]
 
 
-def order_to_ring(seq: str, N: int) -> str:
-    """Shorthand function to convert a permutation of numbers that represent an
-    N-gon ring (side length 3) into their full digit string."""
+def order_to_ring(seq: list, N: int) -> str:
+    """Shorthand function to convert a permutation of elements that represent an
+    N-gon ring (side length 3) into their full ring list."""
     # Append 2nd term to end of sequence (to reuse later in final side overlap)
-    seq += seq[1]
+    seq.append(seq[1])
 
     # Define first side, then build up remaining sides
     full = seq[:3]
     for side in range(1,N):
-        full += seq[2*side+1] + full[-1] + seq[2*(side+1)]
+        full.extend([seq[2*side+1], full[-1], seq[2*(side+1)]])
 
     return full
 
@@ -63,11 +64,11 @@ def main():
     }
     x = 0
     for i in ruled_perm_gen(NUMBERS, rules):
-        print(i)
+        print(t(i))
         x += 1
     print("matches", x)
 
-    print(order_to_ring("423516", RING_SIZE))
+    print(t(order_to_ring(list("423516"), RING_SIZE)))
 
 
     # --- Output ---

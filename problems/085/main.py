@@ -11,37 +11,35 @@ https://projecteuler.net/problem=85
 __author__ = "Liam Anthian"
 
 # --- Imports ---
-from common.nums import int_gen
+from common.nums import triangle
 
 # --- Conditions of the problem ---
 GOAL = 2*10**6
+STOPPING_MARGIN = 25    # After this many increases in X, stop in no improvement
 
 
 def rectangles(x: int, y: int) -> int:
     """Counts and returns the number of possible rectangles inside a grid of 
     size `x` by `y`."""
-    count = 0
-    for i in range(x):
-        for j in range(y):
-            count += (x-i) * (y-j)
-    return count
-            
+    return triangle(x) * triangle(y) 
+
 
 # --- Calculation ---
 def main():
     best_dif = GOAL
-    best_val = None
+    best_val = (0,0)
     for x in range(1, GOAL):
+        # Lazy stopping condition if no improvement after STOPPING_MARGIN tests
+        if x - STOPPING_MARGIN > best_val[0]: break
+
         for y in range(1, x+1):
-            r = rectangles(x,y)
-            dif = abs(GOAL-r)
+            dif = abs(GOAL-rectangles(x,y))
             if dif < best_dif:
                 best_dif = dif
                 best_val =  (x,y)
-                print((x,y), ":", r) # 2772
 
 
     # --- Output ---
     x,y = best_val
-    print(x*y)
+    print(x*y) # 2772
     return

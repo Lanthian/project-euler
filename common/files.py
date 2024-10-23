@@ -30,10 +30,13 @@ def make_problem(num: int):
         fp.write(f'"""\nhttps://projecteuler.net/problem={num}\n"""\n')
         fp.write('\n__author__ = "Liam Anthian"\n')
         fp.write('\n# --- Imports ---\n')
+        fp.write('\nimport time\n')
         fp.write('\n# --- Conditions of the problem ---\n')
         fp.write('\n\n# --- Calculation ---\n')
         fp.write('def main():\n')
+        fp.write('    start = time.time()\n')
         fp.write('    # --- Output ---\n')
+        fp.write('    print("Time:", time.time() - start)\n')
         fp.write('    return\n')
 
     # Make __main__.py file if non-existant

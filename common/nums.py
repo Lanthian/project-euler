@@ -76,6 +76,12 @@ def digit_sum(num: int) -> int:
     """Takes a number `num` and returns the sum of it's digits as an int."""
     return sum([int(c) for c in str(num)])
 
+# First seen in 92 - Square Digit Chains
+def digit_sum_op(num: int, op=lambda x: x) -> int:
+    """Takes a number `num` and returns the sum of it's digits as an int, 
+    applying operation `op` to each digit before summing."""
+    return sum([op(int(c)) for c in str(num)])
+
 # First seen in 022 - Names Scores
 def value_word(word, zero=ord('A')-1) -> int:
     """Takes in any character iterable `word` and returns the sum of all it's 

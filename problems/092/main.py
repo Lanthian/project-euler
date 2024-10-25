@@ -33,9 +33,9 @@ def main():
     # Iterate through all numbers, tracking the 89s
     nums = [0]*(LIMIT+1)
     count = 0
-    for n,val in enumerate(nums[1:], 1):
+    for n in range(1, LIMIT+1):
         # Skip already seen numbers
-        if val: continue
+        if nums[n]: continue
 
         path = [n]
         while(n != 1 and n != 89):
@@ -47,11 +47,13 @@ def main():
             path.append(n)
         
         # Backpropagate chain end value through path
-        for i in path: nums[i] = n
+        for i in path: 
+            # Avoid out of bounds array accesses
+            if i < LIMIT: nums[i] = n
         if n == 89: count += len(path)    
     
 
     # --- Output ---
     print("Time:", time.time() - start)
-    print(count)
+    print(count) # 8581146
     return

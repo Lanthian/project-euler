@@ -71,6 +71,11 @@ def main():
         i: [lambda x, i=i: int(x[i-4])+int(x[i-5]) == int(x[i-2])+int(x[i-1])] 
             for i in range(5,TOTAL_SIZE,2)
     })
+    # Define unique magic N-gon loops by minimised starting value
+    rules.update({
+        i: [lambda x, i=i: int(x[0]) < int(x[i-1])] 
+            for i in range(4,TOTAL_SIZE+1,2)
+    })
     # Include final loop requirement (looping back to start)
     end = [lambda x: int(x[TOTAL_SIZE-3])+int(x[TOTAL_SIZE-4]) == 
         int(x[TOTAL_SIZE-1])+int(x[1])]
@@ -91,5 +96,5 @@ def main():
 
     # --- Output ---
     print("Time:", time.time() - start)
-    print(max_ngon)
+    print(max_ngon) # 6531031914842725
     return

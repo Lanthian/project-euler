@@ -30,7 +30,7 @@ def quadratic_formula(a: int, b: int, c: int) -> tuple[float, float]:
     return ((-b - root)/denom, (-b + root)/denom)
 
 
-# --- Calculation & Output ---
+# --- Calculation ---
 def main():
     start = time.time()
 
@@ -39,15 +39,21 @@ def main():
     neg_c = denom*(denom-1)//2  
     while (True):
         # blue^2 - blue = denom*(denom-1)/2
+        # Use a rough evaluation to skip definitely incorrect values
         blue = quadratic_formula(1,-1,-neg_c)[1]
-
-        # Check if root is integer, print denom and solution if so
-        if (blue.is_integer()):
-            print("Time:", time.time() - start)
-            print(int(blue)) # 707106783028
-            # return
+        if blue.is_integer(): 
+          blue = int(blue)
+          # Check if evaluation is accurate
+          if blue**2 - blue == neg_c:    
+              break
 
         # Notice that c follows a triangle number pattern, so can just increment 
         # it by the denominator instead of remultiplying each time
         neg_c += denom
         denom += 1
+
+
+    # --- Output ---
+    print("Time:", time.time() - start)
+    print(blue)
+    return

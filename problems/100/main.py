@@ -36,14 +36,18 @@ def main():
 
     # Iterate through denominator until valid perfect Pr(BB) = 1/2 found.
     denom = LOWER_BOUND + 1
+    neg_c = denom*(denom-1)//2  
     while (True):
-        c = -denom*(denom-1)//2
-        blue = quadratic_formula(1,-1,c)[1]
+        # blue^2 - blue = denom*(denom-1)/2
+        blue = quadratic_formula(1,-1,-neg_c)[1]
 
         # Check if root is integer, print denom and solution if so
         if (blue.is_integer()):
             print("Time:", time.time() - start)
             print(int(blue)) # 707106783028
-            return
+            # return
 
+        # Notice that c follows a triangle number pattern, so can just increment 
+        # it by the denominator instead of remultiplying each time
+        neg_c += denom
         denom += 1

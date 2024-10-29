@@ -86,3 +86,55 @@ def main():
     print("Time:", time.time() - start)
     print(min(longest_chain) if longest_chain else "No chain found.") # 14316
     return
+
+
+# --- Further testing ---
+"""
+Tried to replace the proper_divisor_sum function with something hopefully 
+faster but was unsuccessful - 170% slower
+
+# First seen in 021 - Amicable Numbers, Refined in 095 - Amicable Chains
+def proper_divisor_sum(num: int, primes: list[int]=[]) -> int:
+    # Shorthand function to return the proper divisor sum of a number `num`.
+    # Can take in a prior sufficiently large list of `primes` instead of 
+    # generating.
+    # Safety
+    if num == 0: return 0
+    # return sum(factors(num).difference([num]))
+    def helper(f: int, e: int):
+        # Helper function: for f,e returns f^0 + f^1 + ... + f^e.
+        return sum([f**i for i in range(e+1)])
+    return prod([helper(f,e) for f,e in tupled_prime_factors(num, primes)]) - num
+
+    
+Still no improvement again even when removing the middleman by canabalising 
+common.primes.tupled_prime_factors().
+
+# First seen in 021 - Amicable Numbers, Refined in 095 - Amicable Chains
+def proper_divisor_sum(num: int, primes: list[int]=[]) -> int:
+    # Shorthand function to return the proper divisor sum of a number `num`.
+    # Can take in a prior sufficiently large list of `primes` instead of 
+    # generating.
+    # Safety
+    if num <= 1: return 0
+    # return sum(factors(num).difference([num]))
+
+    factors = []
+
+    incrementor = primes if len(primes) > 0 else prime_generator()
+    # Check if primes are factors of product
+    product = num
+    for p in incrementor:
+        total, i = 0, 1
+        while factor(product, p):
+            # Count and remove factor from product
+            i *= p
+            total += i
+            product = product//p
+
+        if i > 0: factors.append(total+1)
+
+        # Check for cut off
+        if p > product or product == 0: break
+    return prod(factors) - num
+"""

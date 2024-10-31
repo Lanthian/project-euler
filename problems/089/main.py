@@ -44,12 +44,21 @@ NUMERALS = {
     'D': 500,
     'M': 1000
 }
+NUMBERS = [
+    (1000,"M"),(900,"CM"),
+    (500,"D"),(400,"CD"),
+    (100,"C"),(90,"XC"),
+    (50,"L"),(40,"XL"),
+    (10,"X"),(9,"IX"),
+    (5,"V"),(4,"IV"),
+    (1,"I")
+]
 
     
 def roman_to_int(roman: str) -> int:
-    """Translates a roman numeral `roman` to an integer. Returns False if roman 
-    numeral is invalid. Can read invalid roman numerals so long as they do not
-    represent a 0 or negative number."""
+    """Translates a Roman numeral `roman` to an integer. Can read invalid Roman 
+    numerals so long as they equate to natural numbers. Returns -1 if numeral is 
+    overly invalid (illegal characters or <=0)."""
     LETTER, VALUE = (0,1)
     INVALID = -1
     # Try loop to catch any invalid numerals
@@ -91,19 +100,40 @@ def roman_to_int(roman: str) -> int:
     except KeyError:
         # Invalid character or no characters present
         return INVALID
+    
+def int_to_roman(num: int) -> str:
+    """Tranlates an integer `num` to a minimal Roman numeral string. Returns "N" 
+    if number is not natural."""
+    if num <= 0: return "N"
+
+    roman = ""
+    for value,letter in NUMBERS:
+        # Find how many times `value` occurs in `num`
+        n = num // value
+        if n > 0:
+            # Decrease num by this much and update string output
+            num %= value
+            roman += letter * n
+        
+        # Break early as necessary
+        if num == 0: break
+
+    return roman
 
 
 # --- Calculation ---
 def main():
     start = time.time()
 
+    chars_saved = 0
     # Read in roman numerals from file
     with easy_open(__file__, FILE) as fp:
         for line in fp.readlines():
             line = line.strip()
-            print(roman_to_int(line), line)
+            chars_saved += len(line) - len(int_to_roman(roman_to_int(line)))
 
 
     # --- Output ---
     print("Time:", time.time() - start)
+    print(chars_saved) # 743
     return

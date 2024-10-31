@@ -120,6 +120,12 @@ def int_to_roman(num: int) -> str:
 
     return roman
 
+def simplify_roman(roman: str) -> str:
+    """Simplifies a Roman numeral `roman` to simplest string form. Returns "N" 
+    if input is illegal -- <=0 or has an invalid character. Can handle otherwise
+    invalid Roman numerals."""
+    return int_to_roman(roman_to_int(roman))
+
 
 # --- Calculation ---
 def main():
@@ -130,7 +136,7 @@ def main():
     with easy_open(__file__, FILE) as fp:
         for line in fp.readlines():
             line = line.strip()
-            chars_saved += len(line) - len(int_to_roman(roman_to_int(line)))
+            chars_saved += len(line) - len(simplify_roman(line))
 
 
     # --- Output ---

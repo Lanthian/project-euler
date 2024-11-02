@@ -27,6 +27,7 @@ https://projecteuler.net/problem=96
 __author__ = "Liam Anthian"
 
 # --- Imports ---
+from copy import deepcopy
 import time
 from common.files import easy_open
 
@@ -40,50 +41,91 @@ COLS = "col"
 SQRS = "sqr"
 
 
-def sqr(row: int, col: int) -> int:
-    """Takes a row and column number for a sudoku coordinate (0,0 is top left).
-    Returns the given square number in which this cell exists. For sudoku of 
-    size 9, square numbers are as follows - [[0,1,2],[3,4,5],[6,7,8]]."""
-    return SQR_SIZE*(row//SQR_SIZE) + col//SQR_SIZE
+class Sudoku():
+    # --- Initialisation ---
+    def __init__(self, sudoku_grid: list[list[int]]):
+        """Takes a 2d grid `sudoku_grid` of dimensions SUDOKU_SIZE x SUDOKU_SIZE
+        and stores it. Generates available pattern values (options)."""
+        # Deepcopy 2d array to avoid potential reuse
+        self.grid = deepcopy(sudoku_grid)
+        
+        # Otherwise generate them fresh
+        self.generate_options()
+        return
+    
+    def generate_options(self):
+        """Generates a dictionary `open_patterns` of available values for each 
+        pattern present in the sudoku grid (rows, columns and squares). 
+        Additionally generates and stores a list `unsolved` of all cells that 
+        still need to be solved. 
+        * `open_patterns`:  dict[str: dict[int: list[int]]]
+        * `unsolved`:       list[tuple[int,int]]"""
+        # Safety check that sudoku exists before checking for available options
+        assert(self.grid)
 
-def solve_sudoku(sudoku: list[list[int]]) -> bool:
-    """Takes a sudoku (2 dimensional square of size SUDOKU_SIZE) and solves it 
-    in place. Returns True if successfully solved, False if otherwise. Assumes
-    no faults exist in sudoku read in."""
-    # Track the open values for each category of the sudoku
-    options = {
-        ROWS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)}, 
-        COLS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)}, 
-        SQRS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)}
-    }
+        # Track the open values for each category of the sudoku
+        self.open_patterns = {
+            ROWS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)}, 
+            COLS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)}, 
+            SQRS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)}
+        }
 
-    # Track initially unsolved cells
-    unsolved = []
-    for row in range(SUDOKU_SIZE):
-        for col in range(SUDOKU_SIZE):
-            value = sudoku[row][col]
-            # If unsolved cell, stop here (tracking it)
-            if value == 0: unsolved.append((col,row)) # (x,y)
-            
-            # Otherwise remove solved value as options for relevant categories
-            else:
-                options[ROWS][row].discard(value)
-                options[COLS][col].discard(value)
-                options[SQRS][sqr(row,col)].discard(value)
+        # Track initially unsolved cells
+        self.unsolved = []
+        for row in range(SUDOKU_SIZE):
+            for col in range(SUDOKU_SIZE):
+                value = self.grid[row][col]
+                # If unsolved cell, track it
+                if value == 0: self.unsolved.append((col,row)) # (x,y)
+                
+                # Otherwise remove value availability for relevant categories
+                else: self.discard(value, row, col)
 
-    # Iterate over it until complete or no change
-    while(len(unsolved)):
-        prev = len(unsolved)
 
-        # TODO - solving code
-        for c,r in unsolved:
-          print((c,r), "=", options[ROWS][r].union(options[COLS][c].union(options[SQRS][sqr(r,c)])))
-          pass
+    # --- Available pattern retrieval & updating --- 
+    def _patterns(self, row: int, col: int) -> list[set[int]]:
+        """Returns a list of sets of available values for a cell (`col`,`row`) -
+        aka grid[row][col]."""
+        return [self.open_patterns[ROWS][row], 
+                self.open_patterns[COLS][col],
+                self.open_patterns[SQRS][Sudoku._sqr(row,col)]]
 
-        # No changes made in iteration, not solvable by this solver
-        if len(unsolved) == prev: return False
+    def discard(self, value: int, row: int, col: int):
+        """Removes a number `value` from the availability of all patterns 
+        regarding cell (`col`,`row`)."""
+        assert(self.open_patterns)
+        for pattern in self._patterns(row,col): pattern.discard(value)
 
-    return True
+    def available(self, row: int, col: int) -> set[int]:
+        """Returns a set of all available values for a cell (`col`,`row`)."""
+        return set().union(*self._patterns(row,col))
+
+    def _sqr(row: int, col: int) -> int:
+        """Takes a row and column number for a sudoku coordinate (0,0 is top 
+        left). Returns the given square number in which this cell exists. For 
+        sudoku of size 9, square numbers are as follows:
+            [[0,1,2],[3,4,5],[6,7,8]]."""
+        return SQR_SIZE*(row//SQR_SIZE) + col//SQR_SIZE
+    
+
+    # --- Solve the Sudoku instance ---
+    def solve(self) -> bool:
+        """Takes a sudoku (2 dimensional square of size SUDOKU_SIZE) and solves 
+        it in place. Returns True if successfully solved, False if otherwise. 
+        Assumes no faults exist in sudoku read in."""
+        # Iterate over it until complete or no change
+        while(len(self.unsolved)):
+            prev = len(self.unsolved)
+
+            # TODO - solving code
+            for c,r in self.unsolved:
+                print((c,r), "=", self.available(r,c))
+                pass
+
+            # No changes made in iteration, not solvable by this solver
+            if len(self.unsolved) == prev: return False
+
+        return True
 
 
 # --- Calculation ---
@@ -105,13 +147,13 @@ def main():
             sud = [None]*SUDOKU_SIZE
             for row in range(SUDOKU_SIZE): 
                 sud[row] = [int(c) for c in fp.readline().strip()]
-            sudokus.append(sud)
+            sudokus.append(Sudoku(sud))
 
     # Solve Sudokus
     for sudoku in sudokus:
       # x = sudoku[0][:3]
       # if not 0 in x: print(x)
-      if solve_sudoku(sudoku):
+      if sudoku.solve():
         print(sudoku)
       exit(1)
             

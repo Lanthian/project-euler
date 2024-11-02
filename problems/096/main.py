@@ -33,6 +33,57 @@ from common.files import easy_open
 # --- Conditions of the problem ---
 FILE = "sudoku.txt"
 SUDOKU_SIZE = 9
+SQR_SIZE = 3
+
+ROWS = "rows"
+COLS = "col"
+SQRS = "sqr"
+
+
+def sqr(row: int, col: int) -> int:
+    """Takes a row and column number for a sudoku coordinate (0,0 is top left).
+    Returns the given square number in which this cell exists. For sudoku of 
+    size 9, square numbers are as follows - [[0,1,2],[3,4,5],[6,7,8]]."""
+    return SQR_SIZE*(row//SQR_SIZE) + col//SQR_SIZE
+
+def solve_sudoku(sudoku: list[list[int]]) -> bool:
+    """Takes a sudoku (2 dimensional square of size SUDOKU_SIZE) and solves it 
+    in place. Returns True if successfully solved, False if otherwise. Assumes
+    no faults exist in sudoku read in."""
+    # Track the open values for each category of the sudoku
+    options = {
+        ROWS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)}, 
+        COLS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)}, 
+        SQRS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)}
+    }
+
+    # Track initially unsolved cells
+    unsolved = []
+    for row in range(SUDOKU_SIZE):
+        for col in range(SUDOKU_SIZE):
+            value = sudoku[row][col]
+            # If unsolved cell, stop here (tracking it)
+            if value == 0: unsolved.append((col,row)) # (x,y)
+            
+            # Otherwise remove solved value as options for relevant categories
+            else:
+                options[ROWS][row].discard(value)
+                options[COLS][col].discard(value)
+                options[SQRS][sqr(row,col)].discard(value)
+
+    # Iterate over it until complete or no change
+    while(len(unsolved)):
+        prev = len(unsolved)
+
+        # TODO - solving code
+        for c,r in unsolved:
+          print((c,r), "=", options[ROWS][r].union(options[COLS][c].union(options[SQRS][sqr(r,c)])))
+          pass
+
+        # No changes made in iteration, not solvable by this solver
+        if len(unsolved) == prev: return False
+
+    return True
 
 
 # --- Calculation ---
@@ -56,6 +107,14 @@ def main():
                 sud[row] = [int(c) for c in fp.readline().strip()]
             sudokus.append(sud)
 
+    # Solve Sudokus
+    for sudoku in sudokus:
+      # x = sudoku[0][:3]
+      # if not 0 in x: print(x)
+      if solve_sudoku(sudoku):
+        print(sudoku)
+      exit(1)
+            
 
     # --- Output ---
     print("Time:", time.time() - start)

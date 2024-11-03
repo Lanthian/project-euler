@@ -73,5 +73,26 @@ ___
 <!-- ... -->
 * [065](problems/065/main.py) - Convergents of e
 <!-- ... -->
+* [067](problems/067/main.py) - Maximum Path Sum II
+* [068](problems/068/main.py) - Magic 5-gon Ring
 * [069](problems/069/main.py) - Totient Maximum
 * [070](problems/070/main.py) - Totient Permutation
+<!-- ... -->
+* [077](problems/077/main.py) - Prime Summations
+<!-- ... -->
+* [085](problems/085/main.py) - Counting Rectangles
+<!-- ... -->
+* [089](problems/089/main.py) - Roman Numerals
+<!-- ... -->
+* [092](problems/092/main.py) - Square Digit Chains
+<!-- ... -->
+* [097](problems/097/main.py) - Large Non-Mersenne Prime
+
+___
+### Works in progress
+* [066](problems/066/main.py) - Diophantine Equation
+* [078](problems/078/main.py) - Coin Partitions - *Correct but slow (1100s)*
+* [095](problems/095/main.py) - Amicable Chains - *Correct but slow (127s)*
+* [096](problems/096/main.py) - Su Doku
+* [100](problems/100/main.py) - Arranged Probability
+

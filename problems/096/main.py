@@ -37,18 +37,27 @@ SUDOKU_SIZE = 9
 SQR_SIZE = 3
 
 ROWS = "rows"
-COLS = "col"
-SQRS = "sqr"
+COLS = "cols"
+SQRS = "sqrs"
+COUNT = "count"
 
 
 class Sudoku():
     # --- Initialisation ---
-    def __init__(self, sudoku_grid: list[list[int]]):
+    def __init__(self, sudoku_grid: list[list[int]], patterns: 
+                 tuple[dict[str: dict[int: list[int]]], 
+                        list[tuple[int,int]]] = None):
         """Takes a 2d grid `sudoku_grid` of dimensions SUDOKU_SIZE x SUDOKU_SIZE
-        and stores it. Generates available pattern values (options)."""
+        and stores it. Generates available pattern values (options) by default, 
+        unless passed via `patterns` tuple (open_patterns, unsovled) - 
+        reused if so."""
         # Deepcopy 2d array to avoid potential reuse
         self.grid = deepcopy(sudoku_grid)
         
+        # Reuse options if given
+        if patterns:
+            self.open_patterns = deepcopy(patterns[0])
+            self.unsolved = deepcopy(patterns[1])
         # Otherwise generate them fresh
         self.generate_options()
         return
@@ -67,7 +76,8 @@ class Sudoku():
         self.open_patterns = {
             ROWS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)}, 
             COLS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)}, 
-            SQRS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)}
+            SQRS: {k:set(range(1,SUDOKU_SIZE+1)) for k in range(SUDOKU_SIZE)},
+            COUNT: {k:SUDOKU_SIZE for k in range(1,SUDOKU_SIZE+1)}
         }
 
         # Track initially unsolved cells
@@ -95,10 +105,12 @@ class Sudoku():
         regarding cell (`col`,`row`)."""
         assert(self.open_patterns)
         for pattern in self._patterns(row,col): pattern.discard(value)
+        # Decrease total available count of a value
+        self.open_patterns[COUNT][value] -= 1
 
     def available(self, row: int, col: int) -> set[int]:
         """Returns a set of all available values for a cell (`col`,`row`)."""
-        return set().union(*self._patterns(row,col))
+        return set.intersection(*self._patterns(row,col))
 
     def _sqr(row: int, col: int) -> int:
         """Takes a row and column number for a sudoku coordinate (0,0 is top 
@@ -111,21 +123,78 @@ class Sudoku():
     # --- Solve the Sudoku instance ---
     def solve(self) -> bool:
         """Takes a sudoku (2 dimensional square of size SUDOKU_SIZE) and solves 
-        it in place. Returns True if successfully solved, False if otherwise. 
-        Assumes no faults exist in sudoku read in."""
-        # Iterate over it until complete or no change
-        while(len(self.unsolved)):
-            prev = len(self.unsolved)
+        it recursively and in place. Returns True if successfully solved, False 
+        if otherwise. Assumes no faults exist in sudoku read in."""
+        # Base case
+        if len(self.unsolved) == 0: return True
 
-            # TODO - solving code
-            for c,r in self.unsolved:
-                print((c,r), "=", self.available(r,c))
-                pass
+        # print(self)
+        # print("=======================")
 
-            # No changes made in iteration, not solvable by this solver
-            if len(self.unsolved) == prev: return False
+        # Recursive code via backtracking
+        for c,r in self.unsolved:
+            # TODO - sort here to tackle most promising options first
+            for val in self.available(r,c):
+                child = self.child(val,r,c)
+                # Skip invalid moves
+                if child == None: continue
 
-        return True
+                # If this action lead to success, update self
+                if child.solve():
+                    self.grid = child.grid
+                    self.open_patterns = child.open_patterns
+                    self.unsolved.clear()
+                    return True
+                # Otherwise, continue with loop
+        
+        return False
+    
+    def make_action(self, value: int, row: int, col: int) -> bool:
+        """Updates a Sudoku instance with a move played to a certain cell.
+        Returns True if successful, False if an illegal move."""
+        try:
+            # Adds value to grid, removes unsolved cell, and updates patterns
+            self.grid[row][col] = value
+            self.unsolved.remove((col,row))
+            for p in self._patterns(row, col): p.remove(value)
+            # Decrease total available count of a value
+            self.open_patterns[COUNT][value] -= 1
+            return True
+        
+        # If move is invalid, an exception will be raised. Return False.
+        except:
+            print(f"Error: Illegal action selected - '{value}' to", 
+                  f"{(col+1,row+1)} for \n{str(self).strip()}")
+            return False
+        
+    def child(self, value: int, row: int, col: int) -> 'Sudoku':
+        """Generates a deepcopy and then makes an action of placing `value` at
+        coordinate (`col`,`row`). Returns this child Sudoku if succesful, None 
+        if otherwise."""
+        child_state = self.deepcopy()
+        success = child_state.make_action(value, row, col)
+        # If failed to make action return None
+        return child_state if success else None
+    
+    def deepcopy(self) -> 'Sudoku':
+        """Initialises a new Sudoku instance with deepcopied reused patterns."""
+        return Sudoku(self.grid, (self.open_patterns, self.unsolved))
+
+
+    # --- General methods ---
+    def __str__(self) -> str:
+        """Returns a Sudoku instance's grid as a multiline string."""
+        line = "--" * (SUDOKU_SIZE+SQR_SIZE) + "- \n"
+        
+        out = line
+        for r in range(SUDOKU_SIZE):
+            out += "| "
+            for c in range(SUDOKU_SIZE):
+                out += f"{self.grid[r][c]} "
+                if not (c+1)%SQR_SIZE: out += "| "
+            out += "\n"
+            if not (r+1)%SQR_SIZE: out += line
+        return out
 
 
 # --- Calculation ---
@@ -151,11 +220,11 @@ def main():
 
     # Solve Sudokus
     for sudoku in sudokus:
-      # x = sudoku[0][:3]
-      # if not 0 in x: print(x)
-      if sudoku.solve():
-        print(sudoku)
-      exit(1)
+        # x = sudoku[0][:3]
+        # if not 0 in x: print(x)
+        if sudoku.solve():
+            print(sudoku)
+        exit(1)
             
 
     # --- Output ---

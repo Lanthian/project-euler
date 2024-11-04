@@ -44,9 +44,9 @@ COUNT = "count"
 
 class Sudoku():
     # --- Initialisation ---
-    def __init__(self, sudoku_grid: list[list[int]], patterns: 
-                 tuple[dict[str: dict[int: list[int]]], 
-                        list[tuple[int,int]]] = None):
+    def __init__(self, sudoku_grid: list[list[int]], 
+                 patterns: tuple[dict[str: dict[int: list[int]]], 
+                                 list[tuple[int,int]]] = None):
         """Takes a 2d grid `sudoku_grid` of dimensions SUDOKU_SIZE x SUDOKU_SIZE
         and stores it. Generates available pattern values (options) by default, 
         unless passed via `patterns` tuple (open_patterns, unsovled) - 
@@ -124,29 +124,33 @@ class Sudoku():
     def solve(self) -> bool:
         """Takes a sudoku (2 dimensional square of size SUDOKU_SIZE) and solves 
         it recursively and in place. Returns True if successfully solved, False 
-        if otherwise. Assumes no faults exist in sudoku read in."""
+        if otherwise. Assumes no faults exist in sudoku read in. <br>
+        Treats the Sudoku as a Constraint Satisfaction Problem."""
         # Base case
         if len(self.unsolved) == 0: return True
 
-        # print(self)
-        # print("=======================")
-
-        # Recursive code via backtracking
-        for c,r in self.unsolved:
-            # TODO - sort here to tackle most promising options first
-            for val in self.available(r,c):
-                child = self.child(val,r,c)
-                # Skip invalid moves
-                if child == None: continue
-
-                # If this action lead to success, update self
-                if child.solve():
-                    self.grid = child.grid
-                    self.open_patterns = child.open_patterns
-                    self.unsolved.clear()
-                    return True
-                # Otherwise, continue with loop
+        # Select the most promising position in the grid to solve from
+        # (Reduce branching via 'Most constraining variable')
+        # TODO
+        c,r = self.unsolved[0]
         
+        # Recursively solve via backtracking - reduce branching via sorting on
+        # (Leave flexibility via 'Least constraining value')
+        # TODO
+        for val in self.available(r,c):
+            child = self.child(val,r,c)
+            # Skip invalid moves
+            if child == None: continue
+
+            # If this action lead to success, update self
+            if child.solve():
+                self.grid = child.grid
+                self.open_patterns = child.open_patterns
+                self.unsolved.clear()
+                return True
+            # Otherwise, continue with to next possible value
+    
+        # If no solution from available values, impossible to solve this variant
         return False
     
     def make_action(self, value: int, row: int, col: int) -> bool:
@@ -171,15 +175,11 @@ class Sudoku():
         """Generates a deepcopy and then makes an action of placing `value` at
         coordinate (`col`,`row`). Returns this child Sudoku if succesful, None 
         if otherwise."""
-        child_state = self.deepcopy()
+        child_state = deepcopy(self)
         success = child_state.make_action(value, row, col)
         # If failed to make action return None
         return child_state if success else None
     
-    def deepcopy(self) -> 'Sudoku':
-        """Initialises a new Sudoku instance with deepcopied reused patterns."""
-        return Sudoku(self.grid, (self.open_patterns, self.unsolved))
-
 
     # --- General methods ---
     def __str__(self) -> str:
@@ -218,15 +218,15 @@ def main():
                 sud[row] = [int(c) for c in fp.readline().strip()]
             sudokus.append(Sudoku(sud))
 
-    # Solve Sudokus
+    # Solve and sum Sudokus
+    total = 0
     for sudoku in sudokus:
-        # x = sudoku[0][:3]
-        # if not 0 in x: print(x)
         if sudoku.solve():
-            print(sudoku)
-        exit(1)
-            
+            total += int("".join(str(c) for c in sudoku.grid[0][:3]))     
+        else: 
+            print(f"Error: Failed to solve Sudoku\n{str(sudoku).strip()}")
 
     # --- Output ---
     print("Time:", time.time() - start)
+    print(total)
     return

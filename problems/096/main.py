@@ -130,13 +130,15 @@ class Sudoku():
         if len(self.unsolved) == 0: return True
 
         # Select the most promising position in the grid to solve from
-        # (Reduce branching via 'Most constraining variable')
-        # TODO
-        c,r = self.unsolved[0]
+        #   (Reduce branching via 'Most constraining variable')
+        c,r = min(self.unsolved, key=lambda x: len(self.available(x[1],x[0])))
         
         # Recursively solve via backtracking - reduce branching via sorting on
-        # (Leave flexibility via 'Least constraining value')
-        # TODO
+        #   (Leave flexibility via 'Least constraining value')
+        # UPDATE: Testing found that this LCV approach resulting in actual 
+        #   slower solving than random selection - disabled.
+        # lcv = list(self.available(r,c))
+        # lcv.sort(key=lambda x: self.open_patterns[COUNT][x])
         for val in self.available(r,c):
             child = self.child(val,r,c)
             # Skip invalid moves

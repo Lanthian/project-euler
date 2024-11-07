@@ -86,6 +86,7 @@ ___
 <!-- ... -->
 * [092](problems/092/main.py) - Square Digit Chains
 <!-- ... -->
+* [096](problems/096/main.py) - Su Doku
 * [097](problems/097/main.py) - Large Non-Mersenne Prime
 
 ___
@@ -93,6 +94,5 @@ ___
 * [066](problems/066/main.py) - Diophantine Equation
 * [078](problems/078/main.py) - Coin Partitions - *Correct but slow (1100s)*
 * [095](problems/095/main.py) - Amicable Chains - *Correct but slow (127s)*
-* [096](problems/096/main.py) - Su Doku
 * [100](problems/100/main.py) - Arranged Probability
 

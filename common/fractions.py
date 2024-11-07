@@ -3,10 +3,12 @@
 __author__ = "Liam Anthian"
 
 # --- Import --- 
+from functools import total_ordering
 from common.primes import ordered_factors, factor
 
 
 # First seen in 057 - Square Root Convergents
+@total_ordering
 class Fraction():
     numer: int
     denom: int
@@ -70,6 +72,15 @@ class Fraction():
                 self.numer = self.numer//f
                 self.denom = self.denom//f
                 return
+    
+    def __lt__(self, other: 'Fraction') -> bool:
+        return float(self) < float(other)
+    def __eq__(self, other: 'Fraction') -> bool:
+        if type(other) != type(self): return False
+        return float(self) == float(other)
+    
+    def __hash__(self):
+        return hash(str(self))
 
 
 # First seen in 057 - Square Root Convergents

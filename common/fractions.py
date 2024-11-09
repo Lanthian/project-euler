@@ -74,13 +74,32 @@ class Fraction():
                 return
     
     def __lt__(self, other: 'Fraction') -> bool:
-        return float(self) < float(other)
+        return self.numer*other.denom < other.numer*self.denom
     def __eq__(self, other: 'Fraction') -> bool:
         if type(other) != type(self): return False
-        return float(self) == float(other)
+        return self.numer*other.denom == other.numer*other.denom
     
     def __hash__(self):
         return hash(str(self))
+    
+    # BROKEN - commented out
+    # def __getitem__(self, indices):
+    #     """Allows retrieving Fraction instance numerator and denominator via 
+    #     [x] notation. Doesn't handle multiple negative indices."""
+    #     # Convert indices into a tuple if necessary
+    #     if not isinstance(indices, tuple):
+    #         indices = tuple(indices)
+
+    #     # Numerator - 0, Denominator - 1, Error - everything else
+    #     parts = [self.numer, self.denom]
+    #     if len(indices) == 1: return parts[indices[0]]
+        
+    #     # Unexpected but allowed multiple indices (for slicing, for example)
+    #     else: 
+    #         out = []
+    #         for i in indices:
+    #             if i in [0,1]: out += parts[i]
+    #         return out      
 
 
 # First seen in 057 - Square Root Convergents

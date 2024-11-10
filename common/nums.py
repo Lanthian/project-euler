@@ -3,6 +3,16 @@
 __author__ = "Liam Anthian"
 
 
+# First seen in 025 - 1000-digit Fibonacci Number
+def fibonacci_generator(a1: int=1, a2: int=1) :
+    """A generator for numbers in a fibonacci sequence, starting from a1."""
+    while(True):
+        yield a1
+        temp = a2
+        a2 = a2 + a1
+        a1 = temp
+
+
 # First seen in 012 - Highly Divisible Triangular Number
 def triangle(num: int) -> int:
     """Returns the `num`th triangle number."""

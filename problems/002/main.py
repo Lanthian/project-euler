@@ -10,20 +10,20 @@ https://projecteuler.net/problem=2
 
 __author__ = "Liam Anthian"
 
+# --- Imports ---
+from common.nums import fibonacci_generator
+
 # --- Conditions of the problem ---
 X0 = 1
 X1 = 2
 LIMIT = 4*10**6
 
 
-def fibonacci(a1: int, a2: int, limit: int) -> list[int]:
-    """Returns a list of all numbers less than `limit` in a fibonacci
-    sequence starting at ints `a1` and `a2`. Recursive."""
-    if a1 > limit: return []
-    return [a1] + fibonacci(a2, a1+a2, limit)
-
-
 # --- Calculation & Output ---
 def main():
-    sequence = fibonacci(X0,X1,LIMIT)
-    print(sum(filter(lambda x: x%2==0, sequence))) # 4,613,732
+    total = 0
+    for x in fibonacci_generator():
+        if x > LIMIT: break
+        elif x%2==0: total += x
+    
+    print(total)

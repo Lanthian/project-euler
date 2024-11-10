@@ -23,23 +23,17 @@ https://projecteuler.net/problem=25
 
 __author__ = "Liam Anthian"
 
+# --- Imports ---
+from common.nums import fibonacci_generator
+
 # --- Conditions of the problem ---
 LENGTH = 1000
 
 
-def fibonacci_generator(a1: int, a2: int) :
-    """A generator for numbers in a fibonacci sequence, starting from a1."""
-    while(True):
-        yield a1
-        temp = a2
-        a2 = a2 + a1
-        a1 = temp
-
-
 # --- Calculation & Output ---
 def main():
-    for i,fib in enumerate(fibonacci_generator(1,1),1):
+    for i,fib in enumerate(fibonacci_generator(),1):
         if len(str(fib)) >= LENGTH:
-            print(i) # 4,782
+            print(i)
             break
     return

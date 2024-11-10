@@ -92,6 +92,7 @@ ___
 ___
 ### Works in progress
 * [066](problems/066/main.py) - Diophantine Equation
+* [073](problems/073/main.py) - Counting Fractions in a Range - *Correct but slow (143s)*
 * [078](problems/078/main.py) - Coin Partitions - *Correct but slow (1100s)*
 * [095](problems/095/main.py) - Amicable Chains - *Correct but slow (127s)*
 * [100](problems/100/main.py) - Arranged Probability

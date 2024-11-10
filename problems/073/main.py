@@ -19,7 +19,7 @@ import time
 from common.fractions import *
 
 # --- Conditions of the problem ---
-LIMIT = 12000
+DENOM_LIMIT = 12000
 
 
 # --- Calculation ---
@@ -28,14 +28,12 @@ def main():
 
     bounds = [Fraction(1,3), Fraction(1,2)]
     seen = {*bounds}
-    print(seen)
-    for d in range(4,LIMIT+1):
-        for n in (d//3+1, d//2+1):
+    for d in range(4,DENOM_LIMIT+1):
+        for n in range(d//3 + 1, d//2 + (2-1)):
             f = Fraction(n,d)
-            # Skip if too small or too large
-            if f < bounds[0]: continue
-            elif f > bounds[1]: continue
-
+            # Skip if above boundary
+            if f > bounds[1]: break
+            
             # Simplify to HCF and drop duplicates
             f.simplify()
             if f in seen: continue

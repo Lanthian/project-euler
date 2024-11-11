@@ -5,11 +5,24 @@ __author__ = "Liam Anthian"
 
 # First seen in 025 - 1000-digit Fibonacci Number
 def fibonacci_generator(a1: int=1, a2: int=1) :
-    """A generator for numbers in a fibonacci sequence, starting from a1."""
+    """A generator for numbers in a fibonacci sequence starting from a1 & a2."""
     while(True):
         yield a1
         temp = a2
         a2 = a2 + a1
+        a1 = temp
+
+# First seen in 025 - 1000-digit Fibonacci Number
+def str_fibonacci_generator(a1: int=1, a2: int=1) :
+    """A generator for numbers in a fibonacci sequence starting from a1 & a2.
+    Slower than standard fibonacci_generator() as it works with strings directly 
+    to avoid errors later converting large numbers into strings - does so with
+    the function `sum_str_nums()`."""
+    a1, a2 = str(a1), str(a2)
+    while(True):
+        yield a1
+        temp = a2
+        a2 = sum_str_nums([a2,a1])
         a1 = temp
 
 
@@ -80,6 +93,30 @@ def n_gonal_generator(n: int):
         i += 1
         yield (n-2) * t + i
 
+
+# First seen in 013 - Large Sum
+def sum_str_nums(nums: list[str]) -> str:
+    """Recursively adds elements in a list of integers (in string form) `nums`. 
+    Done to work around arithmetic errors with large numbers in python. Returns
+    sum as a string."""
+    # Base case - no further recursion needed
+    if len(nums) == 0: return ""
+
+    prior = []
+    sum = 0
+
+    for num in nums:
+        if len(num) == 0: continue
+        # If number is longer than 1 digit, add front digits to prior
+        if len(num) > 1: prior.append(num[:-1])
+        sum += int(num[-1])
+
+    # If sum is longer than a single digit, add tens, hundreds, etc to prior
+    sum = str(sum)
+    if len(sum) > 1: prior.append(sum[:-1])
+
+    # Recursive step
+    return sum_str_nums(prior) + sum[-1]
 
 # First seen in 016 - Power Digit Sum
 def digit_sum(num: int) -> int:

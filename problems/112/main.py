@@ -50,15 +50,14 @@ def bouncy(n: int) -> bool:
 def main():
     start = time.time()
     
-    non_bouncy = 0
+    bouncy_count = 0
     for n in int_gen(1):
         # On non bouncy number discovery (less often than bouncy), update count
-        if not bouncy(n): 
-            non_bouncy += 1
+        if bouncy(n): 
+            bouncy_count += 1
 
             # Check if needed proportion is obtained exactly
-            f = Fraction(n-non_bouncy, n)
-            print(n, float(f))
+            f = Fraction(bouncy_count, n)
             if f == PROPORTION: break
 
 

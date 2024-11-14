@@ -77,7 +77,7 @@ class Fraction():
         return self.numer*other.denom < other.numer*self.denom
     def __eq__(self, other: 'Fraction') -> bool:
         if type(other) != type(self): return False
-        return self.numer*other.denom == other.numer*other.denom
+        return self.numer*other.denom == other.numer*self.denom
     
     def __hash__(self):
         return hash(str(self))

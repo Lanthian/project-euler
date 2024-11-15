@@ -96,27 +96,34 @@ def n_gonal_generator(n: int):
 
 # First seen in 013 - Large Sum
 def sum_str_nums(nums: list[str]) -> str:
-    """Recursively adds elements in a list of integers (in string form) `nums`. 
+    """Iteratively adds elements in a list of integers (in string form) `nums`. 
     Done to work around arithmetic errors with large numbers in python. Returns
-    sum as a string."""
-    # Base case - no further recursion needed
+    sum as a string. Avoids recursion so no limit on number length."""
+    # Base case - no number supplied
     if len(nums) == 0: return ""
 
-    prior = []
-    sum = 0
+    summed = ""
 
-    for num in nums:
-        if len(num) == 0: continue
-        # If number is longer than 1 digit, add front digits to prior
-        if len(num) > 1: prior.append(num[:-1])
-        sum += int(num[-1])
+    while len(nums):
+        prior = []
+        current_sum = 0
 
-    # If sum is longer than a single digit, add tens, hundreds, etc to prior
-    sum = str(sum)
-    if len(sum) > 1: prior.append(sum[:-1])
+        # Sum up current digit index
+        for num in nums:
+            if len(num) == 0: continue
+            # If number is longer than 1 digit, add front digits to prior
+            if len(num) > 1: prior.append(num[:-1])
+            current_sum += int(num[-1])
 
-    # Recursive step
-    return sum_str_nums(prior) + sum[-1]
+        # If sum is longer than a single digit, add tens, hundreds, etc to prior
+        current_sum = str(current_sum)
+        if len(current_sum) > 1: prior.append(current_sum[:-1])
+
+        # Prepare next digit index
+        nums = prior 
+        summed = current_sum[-1] + summed 
+    
+    return summed
 
 # First seen in 016 - Power Digit Sum
 def digit_sum(num: int) -> int:

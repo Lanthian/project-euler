@@ -84,34 +84,36 @@ def ruled_perm_gen(order: list, rules: dict[int,list['function']]={},
     if not any_valid: yield False
 
 # First seen in 113 - Non-bouncy Numbers
-def ruled_combo_gen(order: list, length: int, 
-                    rules: dict[int,list['function']]={}, prefix: list=[], 
-                    fixed_length: bool=False):
+def ruled_combo_gen(order: list, max_length: int, fixed_length: bool=False,
+                    rules: dict[int,list['function']]={}, prefix: list=[]):
     """A generator for combinations of elements in the list `order`. Recursively 
     passes previous items down through `cur` to check the properties `rules` 
     against - trimming any combinations which break any rules. Only returns 
     combinations at max length `length` if `fixed_length` flag set to true."""
     # If no possible combination additions, flag end by returning False
-    if length == 0: 
+    if max_length == 0: 
         yield False
         return
 
     # Loop through each possible head of permutation level. If no possible
     #   children can be generated, yield false
     any_valid = False
-    for i,item in enumerate(order):
+    for item in order:
         if not _check_rules(prefix+[item], rules): continue
         
         # Yield valid combination if not fixed
         if not fixed_length: yield [item]
 
         # Base case if fixed
-        if fixed_length and length == 1: yield [item]
+        if fixed_length and max_length == 1: 
+            yield [item]
+            any_valid = True
         
         # Otherwise, yield valid combinations then recursively attach on next 
         # possible combination suffixes.
         else: 
-            for suffix in ruled_combo_gen(order, length-1, rules, prefix+[item]):
+            for suffix in ruled_combo_gen(order, max_length-1, fixed_length, 
+                                          rules, prefix+[item]):
                 # Toggle flag if valid perm path found
                 if suffix == False: continue
                 else: any_valid = True

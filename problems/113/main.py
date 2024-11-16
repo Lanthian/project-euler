@@ -20,15 +20,36 @@ import time
 from common.iters import ruled_combo_gen
 
 # --- Conditions of the problem ---
-LIMIT = 10**6
+DIGIT_LIMIT = 6
+NUMBERS = list(range(0,10))
 
 # --- Calculation ---
 def main():
     start = time.time()
 
-    for i in ruled_combo_gen([1,2,3,4],2,{}):
-        print(i)
+    # Rules for forming all decreasing numbers 
+    # - can't start with 0
+    rules = {1: [lambda x: x[0] != 0]}
+    # - and can't be greater than predecessor
+    rules.update({
+        i: [lambda x, i=i: x[i-1] <= x[i-2]] for i in range(2,DIGIT_LIMIT+1)
+    })
+
+    # Generate all non-bouncy number combinations below the digit limit
+    count = 0
+    for i in ruled_combo_gen(NUMBERS, max_length=DIGIT_LIMIT, rules=rules):
+        if not i:
+            print("No valid combinations discovered.")
+            break
+
+        # print("".join([str(c) for c in i]))
+
+        # If number neutral (both increasing and decreasing), only count once
+        if len(set(i)) == 1: count += 1
+        # Otherwise count twice to include the increasing numbers
+        else: count += 2
 
     # --- Output ---
     print("Time:", time.time() - start)
+    print(count)
     return

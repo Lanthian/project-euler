@@ -20,8 +20,9 @@ import time
 from common.iters import ruled_combo_gen
 
 # --- Conditions of the problem ---
-DIGIT_LIMIT = 6
+DIGIT_LIMIT = 100
 NUMBERS = list(range(0,10))
+
 
 # --- Calculation ---
 def main():
@@ -37,17 +38,18 @@ def main():
 
     # Generate all non-bouncy number combinations below the digit limit
     count = 0
+    x = set()
     for i in ruled_combo_gen(NUMBERS, max_length=DIGIT_LIMIT, rules=rules):
         if not i:
             print("No valid combinations discovered.")
             break
 
-        # print("".join([str(c) for c in i]))
-
-        # If number neutral (both increasing and decreasing), only count once
-        if len(set(i)) == 1: count += 1
+        # If number ends with 0, cannot be reversed to find another non-bouncy,
+        # or if number neutral (both increasing and decreasing), only count once
+        if i[-1] == 0 or len(set(i)) == 1: count += 1
         # Otherwise count twice to include the increasing numbers
         else: count += 2
+
 
     # --- Output ---
     print("Time:", time.time() - start)

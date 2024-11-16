@@ -39,33 +39,33 @@ def permutation_generator(order: str, sep: str=''):
                 yield sep.join([item, i_next])
 
 # First seen in 043 - Sub-string Divisibility
+def _check_rules(state: list, rules: dict) -> bool:
+    """Helper function for `ruled_perm_gen` and `ruled_combo_gen`. By length, 
+    checks if `state` (current combo prefix as a list) passes all boolean 
+    functions `rules` at related depth/length. Returns a boolean."""
+    # Current length
+    cur = len(state)
+
+    # Check rules at current depth/length
+    if cur in rules:
+        for rl in rules[cur]:
+            # If a rule is not passed, state is invalid
+            if not rl(state): return False
+
+    # Otherwise, all rules passed -> true!
+    return True
+
+# First seen in 043 - Sub-string Divisibility
 def ruled_perm_gen(order: list, rules: dict[int,list['function']]={}, 
                    prefix: list=[]):
     """A generator for permutations of elements in the list `order`. Recursively 
     passes previous items down through `cur` to check the properties `rules` 
     against - trimming any permutations which break any rules."""
-
-    def check_rules(state: list, rules: dict) -> bool:
-            """Helper function for `ruled_perm_gen`. By length, checks if 
-            `state` (current permutation prefix as a list) passes all boolean 
-            functions `rules` at related depth/length. Returns a boolean."""
-            # Current length
-            cur = len(state)
-
-            # Check rules at current depth/length
-            if cur in rules:
-                for rl in rules[cur]:
-                    # If a rule is not passed, state is invalid
-                    if not rl(state): return False
-
-            # Otherwise, all rules passed -> true!
-            return True
-
     # Loop through each possible head of permutation level. If no possible
     #   children can be generated, yield false
     any_valid = False
     for i,item in enumerate(order):
-        if not check_rules(prefix+[item], rules): continue
+        if not _check_rules(prefix+[item], rules): continue
 
         rest = order[:i] + order[i+1:]
         # Base case (last item in iterable)
@@ -81,6 +81,44 @@ def ruled_perm_gen(order: list, rules: dict[int,list['function']]={},
                 yield [item] + suffix
     
     # No possible children means this permutation branch needs to be terminated
+    if not any_valid: yield False
+
+# First seen in 113 - Non-bouncy Numbers
+def ruled_combo_gen(order: list, length: int, 
+                    rules: dict[int,list['function']]={}, prefix: list=[], 
+                    fixed_length: bool=False):
+    """A generator for combinations of elements in the list `order`. Recursively 
+    passes previous items down through `cur` to check the properties `rules` 
+    against - trimming any combinations which break any rules. Only returns 
+    combinations at max length `length` if `fixed_length` flag set to true."""
+    # If no possible combination additions, flag end by returning False
+    if length == 0: 
+        yield False
+        return
+
+    # Loop through each possible head of permutation level. If no possible
+    #   children can be generated, yield false
+    any_valid = False
+    for i,item in enumerate(order):
+        if not _check_rules(prefix+[item], rules): continue
+        
+        # Yield valid combination if not fixed
+        if not fixed_length: yield [item]
+
+        # Base case if fixed
+        if fixed_length and length == 1: yield [item]
+        
+        # Otherwise, yield valid combinations then recursively attach on next 
+        # possible combination suffixes.
+        else: 
+            for suffix in ruled_combo_gen(order, length-1, rules, prefix+[item]):
+                # Toggle flag if valid perm path found
+                if suffix == False: continue
+                else: any_valid = True
+
+                yield [item] + suffix
+    
+    # No possible children means this combination branch needs to be terminated
     if not any_valid: yield False
 
 # First seen in 049 - Prime Permutations

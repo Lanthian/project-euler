@@ -52,6 +52,7 @@ from common.iters import ruled_combo_gen
 
 # --- Conditions of the problem ---
 DARTS = 3
+MAX_CHECKOUT = 170
 LIMIT = 100
 
 class DartMult(Enum):
@@ -74,8 +75,19 @@ class DartRegion():
         return str(self)  # f"DartRegion(num={self.num},mult={self.mult})"
     
     def __lt__(self, other):
+        """Less-than magic function. Compares on actual value first, and then 
+        base number if values are equal for other DartRegions."""
+        if type(other) == DartRegion:
+            if int(self) == int(other):
+                return self.num < other.num
         return int(self) < int(other)
     def __eq__(self, other):
+        """Equal-to magic function. Compares on actual value first, and then 
+        base number if values are equal for other DartRegions."""
+        if type(other) == DartRegion:
+            if int(self) == int(other):
+                return self.num == other.num
+            return False
         return int(self) == int(other)
 
     # Functions for adding DartRegions simply (for use in sum())
@@ -84,6 +96,9 @@ class DartRegion():
         else: return self.__add__(other)
     def __add__(self, val):
         return int(self)+int(val)
+
+    def __hash__(self):
+        return hash(str(self))
 
 
 # --- Calculation ---
@@ -96,20 +111,23 @@ def main():
 
     total = 0
     # Work through each possible checkout value and count distinct combinations
-    for checkout in range(1,171):
+    for checkout in range(1, MAX_CHECKOUT+1):
         if checkout == LIMIT: break
 
         # Simple rules for generation
         rules = {i: [lambda x, y=checkout: sum(x) <= y] for i in range(1,DARTS)}
         rules[DARTS] = [lambda x, y=checkout: sum(x) == y]
 
-        valid = []
+        valid = set()
         for combo in ruled_combo_gen(regions, DARTS, rules=rules):
             # If no valid combinations, pass
             if not combo: break
-            # If valid checkout combination, add to list
+            
+            # Check if valid checkout combination
             elif combo[-1].mult == DartMult.DOUBLE and sum(combo) == checkout: 
-                valid.append(combo)
+                # If combination is new (not already seen before), track it
+                combo = sorted(combo[:-1])
+                valid.add(tuple(combo))
                 
         total += len(valid)
 

@@ -88,6 +88,10 @@ ___
 <!-- ... -->
 * [096](problems/096/main.py) - Su Doku
 * [097](problems/097/main.py) - Large Non-Mersenne Prime
+<!-- ... -->
+* [109](problems/109/main.py) - Darts
+<!-- ... -->
+* [112](problems/112/main.py) - Bouncy Numbers
 
 ___
 ### Works in progress
@@ -96,4 +100,5 @@ ___
 * [078](problems/078/main.py) - Coin Partitions - *Correct but slow (1100s)*
 * [095](problems/095/main.py) - Amicable Chains - *Correct but slow (127s)*
 * [100](problems/100/main.py) - Arranged Probability
-
+* [104](problems/104/main.py) - Pandigital Fibonacci Ends
+* [113](problems/113/main.py) - Non-bouncy Numbers

@@ -51,6 +51,9 @@ from functools import total_ordering
 from common.iters import ruled_combo_gen
 
 # --- Conditions of the problem ---
+DARTS = 3
+LIMIT = 100
+
 class DartMult(Enum):
     SINGLE = 1
     DOUBLE = 2
@@ -75,6 +78,13 @@ class DartRegion():
     def __eq__(self, other):
         return int(self) == int(other)
 
+    # Functions for adding DartRegions simply (for use in sum())
+    def __radd__(self, other):
+        if other == 0: return self
+        else: return self.__add__(other)
+    def __add__(self, val):
+        return int(self)+int(val)
+
 
 # --- Calculation ---
 def main():
@@ -84,10 +94,27 @@ def main():
     regions = [DartRegion(n,m) for n in range(1,21) for m in range(1,4)]
     regions.extend([DartRegion(25,m) for m in range(1,3)])
 
-    regions.sort()
-    print(regions)
+    total = 0
+    # Work through each possible checkout value and count distinct combinations
+    for checkout in range(1,171):
+        if checkout == LIMIT: break
+
+        # Simple rules for generation
+        rules = {i: [lambda x, y=checkout: sum(x) <= y] for i in range(1,DARTS)}
+        rules[DARTS] = [lambda x, y=checkout: sum(x) == y]
+
+        valid = []
+        for combo in ruled_combo_gen(regions, DARTS, rules=rules):
+            # If no valid combinations, pass
+            if not combo: break
+            # If valid checkout combination, add to list
+            elif combo[-1].mult == DartMult.DOUBLE and sum(combo) == checkout: 
+                valid.append(combo)
+                
+        total += len(valid)
 
 
     # --- Output ---
     print("Time:", time.time() - start)
+    print(total)
     return
